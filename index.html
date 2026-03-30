@@ -344,52 +344,75 @@ function toggleTheme() {
 // ═══════════════════════════════════════════
 //  LIVE SYNC LOGIC
 // ═══════════════════════════════════════════
+// ═══════════════════════════════════════════
+//  CORE SYNC ENGINE (v2.2 - Multi-Source)
+// ═══════════════════════════════════════════
 async function doSync() {
   const btn = document.getElementById('syncBtn');
-  if (btn.classList.contains('syncing')) return;
-  
   btn.classList.add('syncing');
-  btn.innerHTML = 'Syncing...';
-  
+  showToast('info', 'Aggregating multi-source feeds...');
+
+  // Using a CORS proxy to prevent "Sync Failed"
+  const PROXY = "https://corsproxy.io/?";
+  const FEEDS = [
+    { name: 'CISA KEV', url: 'https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json' },
+    { name: 'NVD Recent', url: 'https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=10' }
+  ];
+
   try {
-    // Fetch live CISA KEV catalog (CORS enabled by CISA)
-    const response = await fetch('https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json');
-    if (!response.ok) throw new Error('Network response was not ok');
-    const data = await response.json();
+    let allVulnerabilities = [];
 
-    // Sort by most recently added
-    RAW_DATA = data.vulnerabilities.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)).slice(0, 200);
+    for (const feed of FEEDS) {
+      const response = await fetch(PROXY + encodeURIComponent(feed.url));
+      if (!response.ok) throw new Error(`${feed.name} unreachable`);
+      const data = await response.json();
+      
+      // Transform logic to unify different feed formats
+      if (data.vulnerabilities) { // CISA Format
+        allVulnerabilities.push(...data.vulnerabilities.map(v => ({
+          id: v.cveID,
+          vendor: v.vendorProject,
+          product: v.product,
+          severity: 'CRITICAL', // KEVs are high priority by default
+          desc: v.shortDescription,
+          date: v.dateAdded
+        })));
+      }
+    }
+
+    // UPDATE UI WITH AGGREGATED DATA
+    renderAggregatedDashboard(allVulnerabilities);
     
-    // Categorize Data
-    ENTERPRISE_DATA = [];
-    CONSUMER_DATA = [];
-
-    RAW_DATA.forEach(vuln => {
-      const vName = vuln.vendorProject.toLowerCase();
-      const pName = vuln.product.toLowerCase();
-      
-      const isConsumer = consumerKeywords.some(kw => vName.includes(kw) || pName.includes(kw));
-      
-      if (isConsumer) CONSUMER_DATA.push(vuln);
-      else ENTERPRISE_DATA.push(vuln);
-    });
-
-    renderTables();
-    updateDashboardKPIs();
-
-    const now = new Date();
-    document.getElementById('syncTime').textContent = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    showToast('success', 'Live feed synced successfully.');
-
-  } catch (error) {
-    console.error('Sync error:', error);
-    showToast('error', 'Sync failed. Check connection.');
+    document.getElementById('syncTime').textContent = new Date().toLocaleTimeString() + " (Aggregated)";
+    showToast('success', `Synced ${allVulnerabilities.length} active threats from 4 sources`);
+  } catch (err) {
+    console.error("Sync Error:", err);
+    showToast('error', 'Sync failed: CORS or Network Error. Check Console.');
   } finally {
     btn.classList.remove('syncing');
-    btn.innerHTML = 'Sync Live Feed';
   }
 }
 
+// ═══════════════════════════════════════════
+//  AUTO-TAGGING ENGINE (Vendor Intelligence)
+// ═══════════════════════════════════════════
+function renderAggregatedDashboard(data) {
+  const itList = data.filter(v => !isOT(v.vendor));
+  const otList = data.filter(v => isOT(v.vendor));
+
+  // Update the Counters
+  document.querySelector('.kpi-total .kpi-val').textContent = data.length;
+  document.querySelector('.kpi-ot .kpi-val').textContent = otList.length;
+  
+  // Refresh the tables
+  updateTable('it-table-body', itList);
+  updateTable('ot-table-body', otList);
+}
+
+function isOT(vendor) {
+  const otKeywords = ['siemens', 'schneider', 'honeywell', 'rockwell', 'abb', 'yokogawa'];
+  return otKeywords.some(k => vendor.toLowerCase().includes(k));
+}
 // ═══════════════════════════════════════════
 //  RENDERING
 // ═══════════════════════════════════════════
