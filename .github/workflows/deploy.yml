@@ -1,0 +1,26 @@
+name: ZeroGuard Deploy
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      # This environment variable tells GitHub to use Node 24 for all steps
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4 # V4 supports Node 24
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # Example: If you are using GitHub Pages, add your upload step here
+      - name: Upload Build Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
