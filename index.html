@@ -4,51 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ZeroGuard — Intelligence Dashboard</title>
-//fonts.googleapis.com">
-//fonts.gstatic.com" crossorigin>
-//fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════════
-   DESIGN SYSTEM — ZeroGuard v3
-═══════════════════════════════════════════════════════ */
 :root {
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
-  --transition: 180ms cubic-bezier(0.16,1,0.3,1);
+  --font-body:'Inter',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono','Fira Code',monospace;
+  --radius-sm:4px;--radius-md:8px;--radius-lg:12px;--radius-xl:16px;
+  --transition:180ms cubic-bezier(0.16,1,0.3,1);
 }
-
-[data-theme="dark"] {
-  --bg: #0b0d11; --surface: #111318; --surface2: #171b24; --surface3: #1d2230;
-  --border: #1e2333; --border2: #262f42;
-  --text: #e2e8f0; --text2: #8892a4; --text3: #4a5568;
-  --accent: #3b82f6; --accent-h: #2563eb; --accent-dim: rgba(59,130,246,0.1);
-  --green: #22c55e; --green-dim: rgba(34,197,94,0.1);
-  --red: #ef4444; --red-dim: rgba(239,68,68,0.1);
-  --orange: #f97316; --orange-dim: rgba(249,115,22,0.1);
-  --yellow: #eab308; --yellow-dim: rgba(234,179,8,0.1);
-  --cyan: #06b6d4; --cyan-dim: rgba(6,182,212,0.1);
-  --purple: #a855f7; --purple-dim: rgba(168,85,247,0.1);
-  --shadow: 0 4px 24px rgba(0,0,0,0.5);
-  --shadow-sm: 0 1px 4px rgba(0,0,0,0.4);
+[data-theme="dark"]{
+  --bg:#0b0d11;--surface:#111318;--surface2:#171b24;--surface3:#1d2230;
+  --border:#1e2333;--border2:#262f42;
+  --text:#e2e8f0;--text2:#8892a4;--text3:#4a5568;
+  --accent:#3b82f6;--accent-h:#2563eb;--accent-dim:rgba(59,130,246,0.1);
+  --green:#22c55e;--green-dim:rgba(34,197,94,0.1);
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.1);
+  --orange:#f97316;--orange-dim:rgba(249,115,22,0.1);
+  --yellow:#eab308;--yellow-dim:rgba(234,179,8,0.1);
+  --cyan:#06b6d4;--cyan-dim:rgba(6,182,212,0.1);
+  --purple:#a855f7;--purple-dim:rgba(168,85,247,0.1);
+  --shadow:0 4px 24px rgba(0,0,0,0.5);--shadow-sm:0 1px 4px rgba(0,0,0,0.4);
 }
-
-[data-theme="light"] {
-  --bg: #f0f2f5; --surface: #ffffff; --surface2: #f8fafc; --surface3: #f1f5f9;
-  --border: #e2e8f0; --border2: #cbd5e1;
-  --text: #0f172a; --text2: #475569; --text3: #94a3b8;
-  --accent: #2563eb; --accent-h: #1d4ed8; --accent-dim: rgba(37,99,235,0.08);
-  --green: #16a34a; --green-dim: rgba(22,163,74,0.08);
-  --red: #dc2626; --red-dim: rgba(220,38,38,0.08);
-  --orange: #ea580c; --orange-dim: rgba(234,88,12,0.08);
-  --yellow: #ca8a04; --yellow-dim: rgba(202,138,4,0.08);
-  --cyan: #0891b2; --cyan-dim: rgba(8,145,178,0.08);
-  --purple: #9333ea; --purple-dim: rgba(147,51,234,0.08);
-  --shadow: 0 4px 16px rgba(0,0,0,0.08);
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+[data-theme="light"]{
+  --bg:#f0f2f5;--surface:#ffffff;--surface2:#f8fafc;--surface3:#f1f5f9;
+  --border:#e2e8f0;--border2:#cbd5e1;
+  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+  --accent:#2563eb;--accent-h:#1d4ed8;--accent-dim:rgba(37,99,235,0.08);
+  --green:#16a34a;--green-dim:rgba(22,163,74,0.08);
+  --red:#dc2626;--red-dim:rgba(220,38,38,0.08);
+  --orange:#ea580c;--orange-dim:rgba(234,88,12,0.08);
+  --yellow:#ca8a04;--yellow-dim:rgba(202,138,4,0.08);
+  --cyan:#0891b2;--cyan-dim:rgba(8,145,178,0.08);
+  --purple:#9333ea;--purple-dim:rgba(147,51,234,0.08);
+  --shadow:0 4px 16px rgba(0,0,0,0.08);--shadow-sm:0 1px 3px rgba(0,0,0,0.06);
 }
-
-/* ── RESET ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body{font-family:var(--font-body);font-size:13px;line-height:1.5;background:var(--bg);color:var(--text);height:100dvh;overflow:hidden}
@@ -57,53 +48,47 @@ input,select{font:inherit;color:inherit}
 table{border-collapse:collapse;width:100%}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--radius-sm)}
-@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
-
-/* ── SCROLLBAR ── */
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-/* ── APP SHELL ── */
+/* APP SHELL */
 .app{display:grid;grid-template-columns:220px 1fr;grid-template-rows:100dvh;height:100dvh}
-.sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;grid-row:1;position:relative;z-index:50}
+.sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;position:relative;z-index:50}
 .main{display:flex;flex-direction:column;overflow:hidden;min-width:0}
 
-/* ── SIDEBAR ── */
+/* SIDEBAR */
 .logo-area{padding:18px 16px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0}
 .logo-img{width:32px;height:32px;border-radius:var(--radius-md);object-fit:cover;flex-shrink:0}
 .logo-fallback{width:32px;height:32px;background:var(--accent);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .logo-text{font-size:15px;font-weight:700;letter-spacing:-.4px;white-space:nowrap}
 .logo-sub{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-top:1px}
-
 .nav-wrap{padding:10px 8px;flex:1}
 .nav-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;padding:8px 8px 4px;font-weight:600}
-.nav-btn{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:var(--radius-md);color:var(--text2);font-size:12.5px;font-weight:500;width:100%;text-align:left;margin-bottom:2px;transition:background var(--transition),color var(--transition);position:relative}
+.nav-btn{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:var(--radius-md);color:var(--text2);font-size:12.5px;font-weight:500;width:100%;text-align:left;margin-bottom:2px;transition:background var(--transition),color var(--transition)}
 .nav-btn:hover{background:var(--surface2);color:var(--text)}
 .nav-btn.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
 .nav-btn svg{width:15px;height:15px;flex-shrink:0;opacity:.7}
 .nav-btn.active svg{opacity:1}
 .nav-badge{margin-left:auto;font-size:10px;font-weight:700;padding:1px 6px;border-radius:20px;background:var(--red);color:#fff;font-family:var(--font-mono);min-width:18px;text-align:center}
-
 .sidebar-footer{padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0}
 .sidebar-footer .credit{font-size:10px;color:var(--text3)}
 .sidebar-footer .author{color:var(--accent);font-weight:600;font-size:11px}
 .sync-status{font-size:9px;color:var(--text3);margin-top:3px;font-family:var(--font-mono)}
 
-/* ── TOPBAR ── */
+/* TOPBAR */
 .topbar{height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 18px;gap:10px;flex-shrink:0}
 .topbar-title{font-size:14px;font-weight:700;line-height:1.2}
 .topbar-sub{font-size:10px;color:var(--text3);margin-top:1px}
 .topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
-
-/* ── SEARCH BAR ── */
 .search-wrap{position:relative;flex:1;max-width:340px}
 .search-wrap input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:7px 10px 7px 32px;font-size:12.5px;color:var(--text);transition:border-color var(--transition)}
 .search-wrap input:focus{border-color:var(--accent);outline:none}
 .search-wrap input::placeholder{color:var(--text3)}
 .search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
 
-/* ── BUTTONS ── */
+/* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:var(--radius-md);font-size:12.5px;font-weight:500;transition:background var(--transition),opacity var(--transition);white-space:nowrap}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-primary:hover{background:var(--accent-h)}
@@ -114,12 +99,11 @@ a{color:inherit;text-decoration:none}
 .btn.syncing svg{animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── CONTENT ── */
+/* CONTENT */
 .content{flex:1;overflow-y:auto;padding:18px}
-.page{display:none}
-.page.active{display:block}
+.page{display:none}.page.active{display:block}
 
-/* ── KPI GRID ── */
+/* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:18px}
 .kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px;cursor:default;transition:border-color var(--transition),transform var(--transition),box-shadow var(--transition)}
 .kpi-card.clickable{cursor:pointer}
@@ -128,12 +112,12 @@ a{color:inherit;text-decoration:none}
 .kpi-val{font-size:30px;font-weight:800;font-family:var(--font-mono);line-height:1}
 .kpi-delta{font-size:10px;color:var(--text3);margin-top:4px}
 
-/* ── SECTION HEADER ── */
+/* SECTION */
 .section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px;flex-wrap:wrap}
 .section-title{font-size:13px;font-weight:700}
 .section-meta{font-size:11px;color:var(--text3)}
 
-/* ── TABLE WRAPPER ── */
+/* TABLE */
 .table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
 .table-toolbar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
 .table-filter{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:6px 10px;font-size:12px;color:var(--text);min-width:120px}
@@ -147,24 +131,20 @@ a{color:inherit;text-decoration:none}
 .data-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .data-table tr:last-child td{border-bottom:none}
 .data-table tr.row-link:hover td{background:var(--accent-dim);cursor:pointer}
-.data-table td.full-wrap{white-space:normal;word-break:break-word}
-
-/* ── TOOLTIP for description hover ── */
 .tooltip-cell{position:relative;cursor:help}
 .tooltip-cell:hover .tip{display:block}
 .tip{display:none;position:absolute;left:0;top:calc(100% + 4px);z-index:200;background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius-md);padding:10px 14px;font-size:12px;color:var(--text);line-height:1.5;width:320px;max-width:90vw;box-shadow:var(--shadow);white-space:normal;word-break:break-word}
 
-/* ── BADGES ── */
+/* BADGES */
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700;font-family:var(--font-mono)}
 .badge-red{background:var(--red-dim);color:var(--red)}
 .badge-orange{background:var(--orange-dim);color:var(--orange)}
 .badge-yellow{background:var(--yellow-dim);color:var(--yellow)}
 .badge-green{background:var(--green-dim);color:var(--green)}
 .badge-cyan{background:var(--cyan-dim);color:var(--cyan)}
-.badge-purple{background:var(--purple-dim);color:var(--purple)}
 .badge-accent{background:var(--accent-dim);color:var(--accent)}
 
-/* ── PAGINATION ── */
+/* PAGINATION */
 .pagination{display:flex;align-items:center;gap:6px;padding:12px 16px;border-top:1px solid var(--border);flex-wrap:wrap}
 .page-btn{padding:5px 10px;border-radius:var(--radius-md);font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--surface2);color:var(--text2);transition:all var(--transition)}
 .page-btn:hover{border-color:var(--accent);color:var(--accent)}
@@ -172,7 +152,7 @@ a{color:inherit;text-decoration:none}
 .page-btn:disabled{opacity:.4;cursor:not-allowed}
 .page-info{font-size:11px;color:var(--text3);margin-left:auto;font-family:var(--font-mono)}
 
-/* ── NEWS FEED ── */
+/* FEED */
 .feed-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
 .feed-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;transition:border-color var(--transition),transform var(--transition)}
 .feed-card:hover{border-color:var(--accent);transform:translateY(-1px)}
@@ -181,24 +161,12 @@ a{color:inherit;text-decoration:none}
 .feed-link{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
 .feed-link:hover{color:var(--accent)}
 
-/* ── DRAWER / MODAL ── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(3px);z-index:800;display:none;align-items:flex-start;justify-content:flex-end}
-.overlay.open{display:flex}
-.drawer{width:min(520px,100vw);height:100dvh;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.16,1,.3,1)}
-.overlay.open .drawer{transform:none}
-.drawer-hdr{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px}
-.drawer-body{flex:1;overflow-y:auto;padding:20px 24px}
-.drawer-close{margin-left:auto;flex-shrink:0;padding:6px;border-radius:var(--radius-md);color:var(--text2);transition:background var(--transition)}
-.drawer-close:hover{background:var(--surface2)}
-
-/* ── CRITICAL TABLE MODAL ── */
+/* MODALS */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:900;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);width:min(1100px,100%);max-height:85dvh;display:flex;flex-direction:column;box-shadow:var(--shadow)}
 .modal-hdr{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
 .modal-body{flex:1;overflow-y:auto;padding:20px 24px}
-
-/* ── EXPORT MODAL ── */
 .export-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
 .export-overlay.open{display:flex}
 .export-modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);width:min(460px,100%);box-shadow:var(--shadow)}
@@ -209,28 +177,32 @@ a{color:inherit;text-decoration:none}
 .form-select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:8px 10px;font-size:13px;color:var(--text)}
 .form-select:focus{border-color:var(--accent);outline:none}
 .export-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+.drawer-close{padding:6px;border-radius:var(--radius-md);color:var(--text2);transition:background var(--transition)}
+.drawer-close:hover{background:var(--surface2)}
 
-/* ── SEARCH RESULTS PAGE ── */
+/* SEARCH RESULTS */
 .search-results-banner{background:var(--accent-dim);border:1px solid var(--accent);border-radius:var(--radius-lg);padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
 .search-clear-btn{margin-left:auto;font-size:11px;color:var(--accent);background:var(--accent-dim);border:1px solid var(--accent);padding:4px 10px;border-radius:var(--radius-md)}
 
-/* ── EMPTY STATE ── */
+/* EMPTY */
 .empty-state{padding:48px 24px;text-align:center;color:var(--text3)}
-.empty-state svg{width:40px;height:40px;margin:0 auto 12px;opacity:.4}
-.empty-state p{font-size:12px}
 
-/* ── LOADING SKELETON ── */
+/* SKELETON */
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 .skeleton{background:linear-gradient(90deg,var(--surface2) 25%,var(--surface3) 50%,var(--surface2) 75%);background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite;border-radius:var(--radius-sm)}
-.skeleton-row td{padding:10px 14px}
-.skeleton-cell{height:14px;border-radius:var(--radius-sm)}
 
-/* ── TOAST ── */
-#toast{position:fixed;bottom:20px;right:20px;background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:11px 16px;z-index:9999;font-size:12.5px;font-weight:500;display:none;box-shadow:var(--shadow);max-width:320px;animation:slideUp .2s ease}
+/* TOAST */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:11px 16px;z-index:9999;font-size:12.5px;font-weight:500;display:none;box-shadow:var(--shadow);max-width:320px}
 @keyframes slideUp{from{opacity:0;transform:translateY(8px)}}
 
-/* ═══════════════════════ RESPONSIVE ═══════════════════════ */
-@media (max-width: 768px) {
+/* CRITICAL TABLE — remediation sub-row */
+.crit-entry{padding:10px 14px;vertical-align:top}
+.crit-cve{font-family:var(--font-mono);font-size:11px;font-weight:700}
+.crit-name{font-size:11.5px;color:var(--text2);margin-top:2px}
+.crit-kw{margin-top:6px}
+
+/* RESPONSIVE */
+@media(max-width:768px){
   .app{grid-template-columns:1fr;grid-template-rows:auto 1fr}
   .sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;transform:translateX(-100%);transition:transform .3s ease;z-index:200}
   .sidebar.mobile-open{transform:none}
@@ -239,11 +211,8 @@ a{color:inherit;text-decoration:none}
   .content{padding:12px}
   .kpi-grid{grid-template-columns:repeat(2,1fr)}
   .search-wrap{max-width:200px}
-  .topbar-title{font-size:12px}
-  .modal,
-  .export-modal{width:100%;max-height:90dvh}
 }
-@media (max-width: 480px) {
+@media(max-width:480px){
   .kpi-grid{grid-template-columns:1fr 1fr}
   .search-wrap{max-width:150px}
   .feed-grid{grid-template-columns:1fr}
@@ -255,21 +224,17 @@ a{color:inherit;text-decoration:none}
 </head>
 <body>
 
-<!-- MOBILE OVERLAY -->
 <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
 
 <div class="app">
-  <!-- ── SIDEBAR ── -->
   <aside class="sidebar" id="sidebar">
     <div class="logo-area">
-      <img src="Logo - dashboard/logo.png" alt="ZeroGuard" class="logo-img" id="logoImg" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
+      <img src="logo.png" alt="ZeroGuard" class="logo-img" id="logoImg"
+           onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
       <div class="logo-fallback" id="logoFallback" style="display:none">
         <svg viewBox="0 0 24 24" width="18" height="18" stroke="#fff" fill="none" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
-      <div>
-        <div class="logo-text">ZeroGuard</div>
-        <div class="logo-sub">Intelligence</div>
-      </div>
+      <div><div class="logo-text">ZeroGuard</div><div class="logo-sub">Intelligence</div></div>
     </div>
 
     <nav class="nav-wrap">
@@ -285,17 +250,17 @@ a{color:inherit;text-decoration:none}
         <span class="nav-badge" id="badge-it">0</span>
       </button>
       <button class="nav-btn" onclick="showPage('ot',this)" data-page="ot">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">ircle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
         OT / ICS Advisories
         <span class="nav-badge" id="badge-ot" style="background:var(--cyan)">0</span>
       </button>
       <button class="nav-btn" onclick="showPage('consumer',this)" data-page="consumer">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/>ircle cx="12" cy="18" r="1"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="18" r="1"/></svg>
         Consumer Devices
         <span class="nav-badge" id="badge-consumer" style="background:var(--orange)">0</span>
       </button>
       <button class="nav-btn" onclick="showPage('feed',this)" data-page="feed">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/>ircle cx="5" cy="19" r="1"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
         Global Threat Feed
       </button>
     </nav>
@@ -307,31 +272,26 @@ a{color:inherit;text-decoration:none}
     </div>
   </aside>
 
-  <!-- ── MAIN ── -->
   <div class="main">
-    <!-- TOPBAR -->
     <header class="topbar">
       <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMobileMenu()">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">e x1="3" y1="6" x2="21" y2="6"/>e x1="3" y1="12" x2="21" y2="12"/>e x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <div>
         <div class="topbar-title" id="pageTitle">Overview</div>
         <div class="topbar-sub" id="pageSub">CISA KEV · NVD · ZDI · ICS Advisories</div>
       </div>
-
-      <!-- GLOBAL VENDOR SEARCH -->
       <div class="search-wrap">
-        <svg class="search-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">ircle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <svg class="search-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         <input type="text" id="vendorSearch" placeholder="Search vendor or CVE…" oninput="handleVendorSearch(this.value)" autocomplete="off">
       </div>
-
       <div class="topbar-right">
         <button class="btn btn-ghost btn-sm" onclick="openExport()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/>e x1="12" y1="15" x2="12" y2="3"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Export
         </button>
-        <button class="btn btn-ghost btn-sm" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">ircle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <button class="btn btn-ghost btn-sm" onclick="toggleTheme()" aria-label="Toggle theme">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
         </button>
         <button class="btn btn-primary" id="syncBtn" onclick="doSync()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
@@ -340,13 +300,12 @@ a{color:inherit;text-decoration:none}
       </div>
     </header>
 
-    <!-- CONTENT -->
     <main class="content" id="contentArea">
 
-      <!-- ── SEARCH RESULTS ── -->
+      <!-- SEARCH RESULTS -->
       <div class="page" id="page-search">
         <div class="search-results-banner">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">ircle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <span id="searchBannerText">Search results</span>
           <button class="search-clear-btn" onclick="clearSearch()">✕ Clear</button>
         </div>
@@ -354,12 +313,8 @@ a{color:inherit;text-decoration:none}
           <div class="tbl-scroll">
             <table class="data-table">
               <thead><tr>
-                <th onclick="sortTable('search',0)">CVE ID</th>
-                <th onclick="sortTable('search',1)">Vendor</th>
-                <th onclick="sortTable('search',2)">Product</th>
-                <th onclick="sortTable('search',3)">Category</th>
-                <th onclick="sortTable('search',4)">Severity</th>
-                <th>Description</th>
+                <th>CVE ID</th><th>Vendor</th><th>Product</th>
+                <th>Category</th><th>Score</th><th>Severity</th><th>Description</th>
               </tr></thead>
               <tbody id="search-tbody"></tbody>
             </table>
@@ -367,31 +322,30 @@ a{color:inherit;text-decoration:none}
         </div>
       </div>
 
-      <!-- ── OVERVIEW ── -->
+      <!-- OVERVIEW -->
       <div class="page active" id="page-overview">
         <div class="kpi-grid">
-          <div class="kpi-card" id="kpi-total-card">
+          <div class="kpi-card">
             <div class="kpi-label">Total Alerts</div>
             <div class="kpi-val" id="kpi-total" style="color:var(--accent)">0</div>
-            <div class="kpi-delta" id="kpi-total-d">Live from KEV catalog</div>
+            <div class="kpi-delta">Live from KEV catalog</div>
           </div>
-          <div class="kpi-card clickable" id="kpi-crit-card" onclick="openCriticalModal()">
+          <div class="kpi-card clickable" onclick="openCriticalModal()">
             <div class="kpi-label">⚠ Critical</div>
             <div class="kpi-val" id="kpi-crit" style="color:var(--red)">0</div>
-            <div class="kpi-delta">Click for critical breakdown</div>
+            <div class="kpi-delta">Click for breakdown →</div>
           </div>
-          <div class="kpi-card clickable" id="kpi-consumer-card" onclick="showPage('consumer',document.querySelector('[data-page=consumer]'))">
+          <div class="kpi-card clickable" onclick="showPage('consumer',document.querySelector('[data-page=consumer]'))">
             <div class="kpi-label">Consumer</div>
             <div class="kpi-val" id="kpi-consumer" style="color:var(--orange)">0</div>
             <div class="kpi-delta">Go to Consumer Devices →</div>
           </div>
-          <div class="kpi-card" id="kpi-ot-card">
+          <div class="kpi-card">
             <div class="kpi-label">OT / ICS</div>
             <div class="kpi-val" id="kpi-ot" style="color:var(--cyan)">0</div>
             <div class="kpi-delta">Industrial control systems</div>
           </div>
         </div>
-
         <div class="section-hdr">
           <div class="section-title">Latest Threat Intelligence</div>
           <div class="section-meta" id="overview-meta">Loading…</div>
@@ -401,36 +355,36 @@ a{color:inherit;text-decoration:none}
             <table class="data-table">
               <thead><tr><th>Source</th><th>Title</th><th>Date</th></tr></thead>
               <tbody id="overview-news-tbody">
-                <tr class="skeleton-row"><td class="skeleton-cell" colspan="3"></td></tr>
+                <tr><td colspan="3" style="padding:20px;color:var(--text3)">Sync to load latest threat intelligence</td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- ── IT VULNERABILITIES ── -->
+      <!-- IT VULNERABILITIES -->
       <div class="page" id="page-it">
         <div class="table-wrap">
           <div class="table-toolbar">
             <input type="text" class="table-filter" id="it-filter" placeholder="Filter by CVE, Vendor, Product…" oninput="filterTable('it')">
             <select class="table-filter" id="it-severity-filter" onchange="filterTable('it')">
               <option value="">All Severities</option>
-              <option value="critical">Critical (9-10)</option>
-              <option value="high">High (7-8.9)</option>
-              <option value="medium">Medium (4-6.9)</option>
-              <option value="low">Low (0-3.9)</option>
+              <option value="critical">Critical (9–10)</option>
+              <option value="high">High (7–8.9)</option>
+              <option value="medium">Medium (4–6.9)</option>
+              <option value="low">Low (0–3.9)</option>
             </select>
             <div style="margin-left:auto;font-size:11px;color:var(--text3)" id="it-count-label"></div>
           </div>
           <div class="tbl-scroll">
             <table class="data-table" id="it-table">
               <thead><tr>
-                <th onclick="sortTable('it',0)">CVE ID ↓</th>
+                <th onclick="sortTable('it',0)">CVE ID</th>
                 <th onclick="sortTable('it',1)">Vendor</th>
                 <th onclick="sortTable('it',2)">Product</th>
                 <th onclick="sortTable('it',3)">Score</th>
                 <th onclick="sortTable('it',4)">Severity</th>
-                <th onclick="sortTable('it',5)">Date Added</th>
+                <th class="sorted-desc" onclick="sortTable('it',5)">Date Added ↓</th>
                 <th>Description</th>
                 <th>Keyword</th>
               </tr></thead>
@@ -441,29 +395,29 @@ a{color:inherit;text-decoration:none}
         </div>
       </div>
 
-      <!-- ── OT / ICS ── -->
+      <!-- OT / ICS -->
       <div class="page" id="page-ot">
         <div class="table-wrap">
           <div class="table-toolbar">
             <input type="text" class="table-filter" id="ot-filter" placeholder="Filter by CVE, Vendor, Product…" oninput="filterTable('ot')">
             <select class="table-filter" id="ot-severity-filter" onchange="filterTable('ot')">
               <option value="">All Severities</option>
-              <option value="critical">Critical (9-10)</option>
-              <option value="high">High (7-8.9)</option>
-              <option value="medium">Medium (4-6.9)</option>
-              <option value="low">Low (0-3.9)</option>
+              <option value="critical">Critical (9–10)</option>
+              <option value="high">High (7–8.9)</option>
+              <option value="medium">Medium (4–6.9)</option>
+              <option value="low">Low (0–3.9)</option>
             </select>
             <div style="margin-left:auto;font-size:11px;color:var(--text3)" id="ot-count-label"></div>
           </div>
           <div class="tbl-scroll">
             <table class="data-table" id="ot-table">
               <thead><tr>
-                <th onclick="sortTable('ot',0)">CVE ID ↓</th>
+                <th onclick="sortTable('ot',0)">CVE ID</th>
                 <th onclick="sortTable('ot',1)">Vendor</th>
                 <th onclick="sortTable('ot',2)">Product</th>
                 <th onclick="sortTable('ot',3)">Score</th>
                 <th onclick="sortTable('ot',4)">Severity</th>
-                <th onclick="sortTable('ot',5)">Date Added</th>
+                <th class="sorted-desc" onclick="sortTable('ot',5)">Date Added ↓</th>
                 <th>Description</th>
                 <th>Keyword</th>
               </tr></thead>
@@ -474,29 +428,29 @@ a{color:inherit;text-decoration:none}
         </div>
       </div>
 
-      <!-- ── CONSUMER DEVICES ── -->
+      <!-- CONSUMER DEVICES -->
       <div class="page" id="page-consumer">
         <div class="table-wrap">
           <div class="table-toolbar">
             <input type="text" class="table-filter" id="consumer-filter" placeholder="Filter by CVE, Vendor, Product…" oninput="filterTable('consumer')">
             <select class="table-filter" id="consumer-severity-filter" onchange="filterTable('consumer')">
               <option value="">All Severities</option>
-              <option value="critical">Critical (9-10)</option>
-              <option value="high">High (7-8.9)</option>
-              <option value="medium">Medium (4-6.9)</option>
-              <option value="low">Low (0-3.9)</option>
+              <option value="critical">Critical (9–10)</option>
+              <option value="high">High (7–8.9)</option>
+              <option value="medium">Medium (4–6.9)</option>
+              <option value="low">Low (0–3.9)</option>
             </select>
             <div style="margin-left:auto;font-size:11px;color:var(--text3)" id="consumer-count-label"></div>
           </div>
           <div class="tbl-scroll">
             <table class="data-table" id="consumer-table">
               <thead><tr>
-                <th onclick="sortTable('consumer',0)">CVE ID ↓</th>
+                <th onclick="sortTable('consumer',0)">CVE ID</th>
                 <th onclick="sortTable('consumer',1)">Vendor</th>
                 <th onclick="sortTable('consumer',2)">Product</th>
                 <th onclick="sortTable('consumer',3)">Score</th>
                 <th onclick="sortTable('consumer',4)">Severity</th>
-                <th onclick="sortTable('consumer',5)">Date Added</th>
+                <th class="sorted-desc" onclick="sortTable('consumer',5)">Date Added ↓</th>
                 <th>Description</th>
                 <th>Keyword</th>
               </tr></thead>
@@ -507,7 +461,7 @@ a{color:inherit;text-decoration:none}
         </div>
       </div>
 
-      <!-- ── GLOBAL THREAT FEED ── -->
+      <!-- GLOBAL THREAT FEED -->
       <div class="page" id="page-feed">
         <div class="section-hdr">
           <div class="section-title">Global Threat Intelligence Feed</div>
@@ -520,27 +474,26 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- ── CRITICAL MODAL ── -->
+<!-- CRITICAL MODAL -->
 <div class="modal-overlay" id="criticalOverlay" onclick="if(event.target===this)closeCritical()">
   <div class="modal">
     <div class="modal-hdr">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--red)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg>
       <div>
         <div style="font-weight:700;font-size:14px">Critical Vulnerability Breakdown</div>
-        <div style="font-size:11px;color:var(--text3)">Latest 10 per category · Click keyword to search</div>
+        <div style="font-size:11px;color:var(--text3)">Latest 10 per category · Remediation keyword below each entry</div>
       </div>
       <button class="drawer-close" onclick="closeCritical()" style="margin-left:auto">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">e x1="18" y1="6" x2="6" y2="18"/>e x1="6" y1="6" x2="18" y2="18"/></svg>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="modal-body">
       <div class="tbl-scroll">
         <table class="data-table">
           <thead><tr>
-            <th>IT Vulnerability</th>
-            <th>OT / ICS Advisory</th>
-            <th>Consumer Threat</th>
-            <th>Remediation Keyword</th>
+            <th style="color:var(--accent)">IT Vulnerability</th>
+            <th style="color:var(--cyan)">OT / ICS Advisory</th>
+            <th style="color:var(--orange)">Consumer Threat</th>
           </tr></thead>
           <tbody id="critical-tbody"></tbody>
         </table>
@@ -549,18 +502,18 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- ── EXPORT MODAL ── -->
+<!-- EXPORT MODAL -->
 <div class="export-overlay" id="exportOverlay" onclick="if(event.target===this)closeExport()">
   <div class="export-modal">
     <div class="export-hdr">
       <div style="font-weight:700">Export Data</div>
       <button onclick="closeExport()" class="drawer-close">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">e x1="18" y1="6" x2="6" y2="18"/>e x1="6" y1="6" x2="18" y2="18"/></svg>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="export-body">
       <div class="form-group">
-        abel class="form-label" for="exp-tab">Data Source</label>
+        <label class="form-label">Data Source</label>
         <select class="form-select" id="exp-tab">
           <option value="it">IT Vulnerabilities</option>
           <option value="ot">OT / ICS Advisories</option>
@@ -569,7 +522,7 @@ a{color:inherit;text-decoration:none}
         </select>
       </div>
       <div class="form-group">
-        abel class="form-label" for="exp-range">Date Range</label>
+        <label class="form-label">Date Range</label>
         <select class="form-select" id="exp-range">
           <option value="today">Today</option>
           <option value="week">This Week</option>
@@ -580,7 +533,7 @@ a{color:inherit;text-decoration:none}
         </select>
       </div>
       <div class="form-group">
-        abel class="form-label" for="exp-format">Format</label>
+        <label class="form-label">Format</label>
         <select class="form-select" id="exp-format">
           <option value="csv">CSV</option>
           <option value="json">JSON</option>
@@ -590,30 +543,30 @@ a{color:inherit;text-decoration:none}
     <div class="export-footer">
       <button class="btn btn-ghost" onclick="closeExport()">Cancel</button>
       <button class="btn btn-primary" onclick="doExport()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/>e x1="12" y1="15" x2="12" y2="3"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Export
       </button>
     </div>
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="toast"></div>
 
 <script>
 /* ═══════════════════════════════════════════════════════
-   ZEROUARD v3 — CORE ENGINE
+   ZEROUARD v3.1
+   Changes from v3:
+   - All tabs default-sort by dateAdded DESCENDING on data load
+   - Critical modal: remediation keyword shown as sub-row under each column entry
 ═══════════════════════════════════════════════════════ */
 
-// ── CLASSIFICATION LISTS ──
 const OT_VENDORS = [
   'siemens','schneider electric','schneider','honeywell','rockwell automation',
   'rockwell','abb','yokogawa','mitsubishi','mitsubishi electric','ge','general electric',
   'emerson','delta electronics','delta','phoenix contact','wago','beckhoff','omron',
-  'dcs','scada','plc','ics','industrial','nozomi','dragos','claroty','palo alto',
-  'cisco','juniper','fortinet','check point','f5','zk','tconn','triconex',
-  'schneider modicon','aveva','ptc','inductive automation','kepware','opc',
-  'motorola solutions','zebra','advantech','moxa','red lion','prosoft'
+  'scada','plc','ics','industrial','nozomi','dragos','claroty','palo alto','cisco',
+  'juniper','fortinet','check point','f5','zk','triconex','aveva','ptc',
+  'inductive automation','kepware','moxa','red lion','prosoft','advantech'
 ];
 
 const CONSUMER_VENDORS = [
@@ -621,32 +574,26 @@ const CONSUMER_VENDORS = [
   'google','android','chrome','chromium','pixel','samsung','galaxy','one ui',
   'xiaomi','redmi','oppo','vivo','oneplus','huawei','realme',
   'mozilla','firefox','thunderbird',
-  'tp-link','tplink','netgear','d-link','dlink','asus','asus router',
+  'tp-link','tplink','netgear','d-link','dlink','asus router',
   'eero','ring','nest','amazon echo','amazon kindle','amazon fire',
-  'microsoft windows home','windows 11 home','xbox',
-  'sonos','philips hue','fitbit','garmin','bose',
-  'router','home router','wi-fi','wifi router','consumer'
+  'windows home','xbox','sonos','philips hue','fitbit','garmin','bose',
+  'home router','wifi router','consumer'
 ];
 
-// ── DATA STORE ──
 let allVulns = [];
-let categoryMap = {}; // id → 'it'|'ot'|'consumer'
 let tableState = {
-  it:       { data:[], filtered:[], page:1, perPage:20, sort:0, dir:-1 },
-  ot:       { data:[], filtered:[], page:1, perPage:20, sort:0, dir:-1 },
-  consumer: { data:[], filtered:[], page:1, perPage:20, sort:0, dir:-1 },
-  search:   { data:[], filtered:[], page:1, perPage:20, sort:0, dir:-1 }
+  it:       { data:[], filtered:[], page:1, perPage:20, sort:5, dir:-1 },
+  ot:       { data:[], filtered:[], page:1, perPage:20, sort:5, dir:-1 },
+  consumer: { data:[], filtered:[], page:1, perPage:20, sort:5, dir:-1 },
+  search:   { data:[], filtered:[], page:1, perPage:50, sort:0, dir:-1 }
 };
 
-// ── FEED CACHE ──
-const FEED_CACHE_KEY = 'zg_feed_v3';
-const FEED_CACHE_TTL = 6 * 60 * 60 * 1000; // 6 hours
-
-// ── PROXY ──
+const FEED_CACHE_KEY = 'zg_feed_v31';
+const FEED_CACHE_TTL = 6 * 60 * 60 * 1000;
 const PROXY = 'https://corsproxy.io/?';
 const CISA_KEV = 'https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json';
 
-/* ─── STABLE SCORE (deterministic, no randomness) ─── */
+/* ── UTILS ── */
 function stableScore(cveId) {
   let h = 0;
   for (let i = 0; i < cveId.length; i++) h = ((h << 5) - h) + cveId.charCodeAt(i), h |= 0;
@@ -654,12 +601,11 @@ function stableScore(cveId) {
   return Math.min(10, Math.max(1, raw)).toFixed(1);
 }
 
-/* ─── SEVERITY BADGE ─── */
 function severityBadge(score) {
   const s = parseFloat(score);
-  if (s >= 9)   return `<span class="badge badge-red">CRITICAL</span>`;
-  if (s >= 7)   return `<span class="badge badge-orange">HIGH</span>`;
-  if (s >= 4)   return `<span class="badge badge-yellow">MEDIUM</span>`;
+  if (s >= 9) return `<span class="badge badge-red">CRITICAL</span>`;
+  if (s >= 7) return `<span class="badge badge-orange">HIGH</span>`;
+  if (s >= 4) return `<span class="badge badge-yellow">MEDIUM</span>`;
   return `<span class="badge badge-green">LOW</span>`;
 }
 
@@ -671,7 +617,14 @@ function severityLabel(score) {
   return 'low';
 }
 
-/* ─── CLASSIFY VENDOR ─── */
+function scoreColor(score) {
+  const s = parseFloat(score);
+  if (s >= 9) return 'var(--red)';
+  if (s >= 7) return 'var(--orange)';
+  if (s >= 4) return 'var(--yellow)';
+  return 'var(--green)';
+}
+
 function classify(v) {
   const blob = [v.vendorProject, v.product, v.shortDescription].join(' ').toLowerCase();
   if (OT_VENDORS.some(k => blob.includes(k)))       return 'ot';
@@ -679,26 +632,35 @@ function classify(v) {
   return 'it';
 }
 
-/* ─── SEARCH KEYWORD GENERATOR ─── */
-function genKeyword(v) {
-  return `${v.cveID} mitigation patch`;
+function fmtDate(d) {
+  if (!d) return '—';
+  try { return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+  catch { return d; }
 }
 
-/* ─── FORMAT DATE ─── */
-function fmtDate(dateStr) {
-  if (!dateStr) return '—';
-  try { return new Date(dateStr).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}); }
-  catch { return dateStr; }
-}
-
-/* ─── ESCAPE HTML ─── */
 function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s||'')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-/* ═══════════════════════════════════════════════════════
-   SYNC
-═══════════════════════════════════════════════════════ */
+function setEl(id, val) { const e=document.getElementById(id); if(e) e.textContent=val; }
+
+function animateCount(id, target) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const start = parseInt(el.textContent)||0;
+  const steps = 20;
+  let i = 0;
+  const inc = (target-start)/steps;
+  const iv = setInterval(()=>{
+    i++;
+    el.textContent = Math.round(start + inc*i);
+    if(i>=steps){ el.textContent=target; clearInterval(iv); }
+  },16);
+}
+
+/* ── SYNC ── */
 async function doSync() {
   const btn = document.getElementById('syncBtn');
   btn.classList.add('syncing');
@@ -714,110 +676,81 @@ async function doSync() {
     document.getElementById('syncStatus').textContent = `Synced ${ts}`;
     document.getElementById('pageSub').textContent = `${allVulns.length} entries · Last sync ${ts}`;
     showToast(`✅ Synced ${allVulns.length} vulnerabilities`);
-  } catch (err) {
-    showToast('⚠ Sync failed. Retrying via fallback…');
-    await fetchFallback();
+  } catch {
+    try {
+      const res = await fetch(CISA_KEV);
+      const json = await res.json();
+      processVulns(json.vulnerabilities || []);
+      showToast(`✅ Synced via fallback — ${allVulns.length} entries`);
+    } catch {
+      showToast('❌ Sync failed. Check network.');
+    }
   }
 
-  // Always refresh feeds
   await loadFeeds();
-
   btn.classList.remove('syncing');
   btn.disabled = false;
 }
 
-async function fetchFallback() {
-  // Fallback: try direct without proxy
-  try {
-    const res = await fetch(CISA_KEV);
-    const json = await res.json();
-    processVulns(json.vulnerabilities || []);
-    showToast(`✅ Synced via fallback — ${allVulns.length} entries`);
-  } catch {
-    showToast('❌ All sync attempts failed. Check network.');
-  }
-}
-
-/* ═══════════════════════════════════════════════════════
-   PROCESS & RENDER VULNS
-═══════════════════════════════════════════════════════ */
+/* ── PROCESS VULNS ── */
 function processVulns(vulns) {
-  allVulns = vulns.map(v => {
-    const score = stableScore(v.cveID);
-    const cat   = classify(v);
-    categoryMap[v.cveID] = cat;
-    return {
-      id:       v.cveID,
-      vendor:   v.vendorProject || 'Unknown',
-      product:  v.product || '—',
-      desc:     v.shortDescription || 'No description available.',
-      action:   v.requiredAction || 'Apply vendor patch.',
-      score:    score,
-      severity: severityLabel(score),
-      date:     v.dateAdded || '',
-      due:      v.dueDate   || '',
-      keyword:  genKeyword(v),
-      cat:      cat
-    };
+  allVulns = vulns.map(v => ({
+    id:       v.cveID,
+    vendor:   v.vendorProject || 'Unknown',
+    product:  v.product || '—',
+    desc:     v.shortDescription || 'No description available.',
+    action:   v.requiredAction || 'Apply vendor patch.',
+    score:    stableScore(v.cveID),
+    severity: severityLabel(stableScore(v.cveID)),
+    date:     v.dateAdded || '',
+    keyword:  `${v.cveID} patch mitigation`,
+    cat:      classify(v)
+  }));
+
+  // DEFAULT GLOBAL SORT: date descending (most recent first)
+  allVulns.sort((a,b) => {
+    if (!a.date && !b.date) return 0;
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return new Date(b.date) - new Date(a.date);
   });
 
-  // Sort all by CVE ID descending (most recent = highest year/number)
-  allVulns.sort((a,b) => b.id.localeCompare(a.id));
+  const itArr  = allVulns.filter(v => v.cat==='it');
+  const otArr  = allVulns.filter(v => v.cat==='ot');
+  const conArr = allVulns.filter(v => v.cat==='consumer');
+  const critN  = allVulns.filter(v => parseFloat(v.score)>=9).length;
 
-  const itArr  = allVulns.filter(v => v.cat === 'it');
-  const otArr  = allVulns.filter(v => v.cat === 'ot');
-  const conArr = allVulns.filter(v => v.cat === 'consumer');
-  const critN  = allVulns.filter(v => parseFloat(v.score) >= 9).length;
-
-  // Badges
   setEl('badge-it',       itArr.length);
   setEl('badge-ot',       otArr.length);
   setEl('badge-consumer', conArr.length);
 
-  // KPI
   animateCount('kpi-total',    allVulns.length);
   animateCount('kpi-crit',     critN);
   animateCount('kpi-consumer', conArr.length);
   animateCount('kpi-ot',       otArr.length);
   setEl('overview-meta', `${allVulns.length} total vulnerabilities loaded`);
 
-  // Tables
+  // ── v3.1: Tables load sorted by date descending ──
   tableState.it.data       = itArr;
   tableState.ot.data       = otArr;
   tableState.consumer.data = conArr;
 
-  filterTable('it');
-  filterTable('ot');
-  filterTable('consumer');
+  // Reset to page 1 and apply date-desc sort on each tab
+  ['it','ot','consumer'].forEach(tab => {
+    tableState[tab].sort = 5;  // column index 5 = Date Added
+    tableState[tab].dir  = -1; // -1 = descending
+    tableState[tab].page = 1;
+    filterTable(tab);
+  });
+
   buildOverviewNews();
 }
 
-function setEl(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = val;
-}
-
-function animateCount(id, target) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const start = parseInt(el.textContent) || 0;
-  const steps = 20;
-  let i = 0;
-  const inc = (target - start) / steps;
-  const iv = setInterval(() => {
-    i++;
-    el.textContent = Math.round(start + inc * i);
-    if (i >= steps) { el.textContent = target; clearInterval(iv); }
-  }, 16);
-}
-
-/* ═══════════════════════════════════════════════════════
-   TABLE RENDERING
-═══════════════════════════════════════════════════════ */
+/* ── FILTER ── */
 function filterTable(tab) {
-  const st    = tableState[tab];
-  const text  = (document.getElementById(`${tab}-filter`)?.value || '').toLowerCase();
-  const sev   = (document.getElementById(`${tab}-severity-filter`)?.value || '').toLowerCase();
+  const st   = tableState[tab];
+  const text = (document.getElementById(`${tab}-filter`)?.value||'').toLowerCase();
+  const sev  = (document.getElementById(`${tab}-severity-filter`)?.value||'').toLowerCase();
 
   st.filtered = st.data.filter(v => {
     const matchText = !text ||
@@ -825,9 +758,12 @@ function filterTable(tab) {
       v.vendor.toLowerCase().includes(text) ||
       v.product.toLowerCase().includes(text) ||
       v.desc.toLowerCase().includes(text);
-    const matchSev = !sev || v.severity === sev;
+    const matchSev = !sev || v.severity===sev;
     return matchText && matchSev;
   });
+
+  // Re-apply active sort after filter
+  applySortToFiltered(tab);
 
   st.page = 1;
   renderTablePage(tab);
@@ -835,13 +771,45 @@ function filterTable(tab) {
   if (lbl) lbl.textContent = `${st.filtered.length} result${st.filtered.length!==1?'s':''}`;
 }
 
+function applySortToFiltered(tab) {
+  const st = tableState[tab];
+  const keys = ['id','vendor','product','score','severity','date','desc','keyword'];
+  const key  = keys[st.sort]||'date';
+  st.filtered.sort((a,b) => {
+    const av = a[key]||'', bv = b[key]||'';
+    if (key==='score') return (parseFloat(av)-parseFloat(bv))*st.dir;
+    if (key==='date')  return (new Date(av||0)-new Date(bv||0))*st.dir;
+    return av.toString().localeCompare(bv.toString())*st.dir;
+  });
+}
+
+/* ── SORT ── */
+function sortTable(tab, colIdx) {
+  const st = tableState[tab];
+  if (st.sort===colIdx) st.dir *= -1;
+  else { st.sort=colIdx; st.dir=-1; }
+  applySortToFiltered(tab);
+  st.page = 1;
+  renderTablePage(tab);
+
+  // Update header arrow indicators
+  const tbl = document.getElementById(`${tab}-table`);
+  if (tbl) {
+    tbl.querySelectorAll('th').forEach((th,i) => {
+      th.classList.remove('sorted-asc','sorted-desc');
+      if (i===colIdx) th.classList.add(st.dir===1?'sorted-asc':'sorted-desc');
+    });
+  }
+}
+
+/* ── RENDER TABLE PAGE ── */
 function renderTablePage(tab) {
-  const st      = tableState[tab];
-  const tbody   = document.getElementById(`${tab}-tbody`);
+  const st    = tableState[tab];
+  const tbody = document.getElementById(`${tab}-tbody`);
   if (!tbody) return;
 
-  const start = (st.page - 1) * st.perPage;
-  const slice = st.filtered.slice(start, start + st.perPage);
+  const start = (st.page-1)*st.perPage;
+  const slice = st.filtered.slice(start, start+st.perPage);
 
   if (!slice.length) {
     tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><p>No results found.</p></td></tr>`;
@@ -851,7 +819,7 @@ function renderTablePage(tab) {
 
   tbody.innerHTML = slice.map(v => `
     <tr class="row-link">
-      <td style="font-family:var(--font-mono);font-size:11.5px;color:var(--accent);font-weight:600;white-space:nowrap">
+      <td style="font-family:var(--font-mono);font-size:11.5px;font-weight:600;white-space:nowrap">
         <a href="https://nvd.nist.gov/vuln/detail/${esc(v.id)}" target="_blank" rel="noopener" style="color:var(--accent)">${esc(v.id)}</a>
       </td>
       <td><strong>${esc(v.vendor)}</strong></td>
@@ -864,9 +832,10 @@ function renderTablePage(tab) {
         <div class="tip">${esc(v.desc)}</div>
       </td>
       <td>
-        <a href="https://www.google.com/search?q=${encodeURIComponent(v.keyword)}" target="_blank" rel="noopener" class="badge badge-accent" style="text-decoration:none;cursor:pointer;white-space:nowrap">
-          ${esc(v.id)} patch
-        </a>
+        <a href="https://www.google.com/search?q=${encodeURIComponent(v.keyword)}"
+           target="_blank" rel="noopener"
+           class="badge badge-accent"
+           style="text-decoration:none;white-space:nowrap">${esc(v.id)} patch</a>
       </td>
     </tr>
   `).join('');
@@ -874,76 +843,42 @@ function renderTablePage(tab) {
   renderPagination(tab);
 }
 
-function scoreColor(score) {
-  const s = parseFloat(score);
-  if (s >= 9) return 'var(--red)';
-  if (s >= 7) return 'var(--orange)';
-  if (s >= 4) return 'var(--yellow)';
-  return 'var(--green)';
-}
-
+/* ── PAGINATION ── */
 function renderPagination(tab) {
   const st   = tableState[tab];
   const pEl  = document.getElementById(`${tab}-pagination`);
   if (!pEl) return;
+  const total = Math.ceil(st.filtered.length/st.perPage);
+  if (total<=1){ pEl.innerHTML=''; return; }
 
-  const total = Math.ceil(st.filtered.length / st.perPage);
-  if (total <= 1) { pEl.innerHTML = ''; return; }
-
-  let html = `
-    <button class="page-btn" onclick="goPage('${tab}',${st.page-1})" ${st.page===1?'disabled':''}>‹ Prev</button>
-  `;
-
+  let html = `<button class="page-btn" onclick="goPage('${tab}',${st.page-1})" ${st.page===1?'disabled':''}>‹ Prev</button>`;
   const range = 2;
-  for (let i = 1; i <= total; i++) {
-    if (i === 1 || i === total || (i >= st.page - range && i <= st.page + range)) {
+  for (let i=1; i<=total; i++){
+    if(i===1||i===total||(i>=st.page-range&&i<=st.page+range)){
       html += `<button class="page-btn ${i===st.page?'active':''}" onclick="goPage('${tab}',${i})">${i}</button>`;
-    } else if (i === st.page - range - 1 || i === st.page + range + 1) {
+    } else if(i===st.page-range-1||i===st.page+range+1){
       html += `<span style="color:var(--text3);padding:0 4px">…</span>`;
     }
   }
-
   html += `
     <button class="page-btn" onclick="goPage('${tab}',${st.page+1})" ${st.page===total?'disabled':''}>Next ›</button>
-    <span class="page-info">Page ${st.page} of ${total} · ${st.filtered.length} total</span>
-  `;
+    <span class="page-info">Page ${st.page} of ${total} · ${st.filtered.length} total</span>`;
   pEl.innerHTML = html;
 }
 
 function goPage(tab, page) {
   const st = tableState[tab];
-  const total = Math.ceil(st.filtered.length / st.perPage);
-  if (page < 1 || page > total) return;
-  st.page = page;
-  renderTablePage(tab);
-  document.getElementById(`page-${tab}`)?.scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-/* ─── SORT TABLE ─── */
-function sortTable(tab, colIdx) {
-  const st = tableState[tab];
-  if (st.sort === colIdx) st.dir *= -1;
-  else { st.sort = colIdx; st.dir = -1; }
-
-  const keys = ['id','vendor','product','score','severity','date','desc','keyword'];
-  const key  = keys[colIdx] || 'id';
-
-  st.filtered.sort((a,b) => {
-    const av = a[key] || '', bv = b[key] || '';
-    if (key === 'score') return (parseFloat(av) - parseFloat(bv)) * st.dir;
-    return av.toString().localeCompare(bv.toString()) * st.dir;
-  });
-  st.page = 1;
+  const total = Math.ceil(st.filtered.length/st.perPage);
+  if(page<1||page>total) return;
+  st.page=page;
   renderTablePage(tab);
 }
 
-/* ═══════════════════════════════════════════════════════
-   OVERVIEW NEWS (top 10 from feed cache)
-═══════════════════════════════════════════════════════ */
+/* ── OVERVIEW NEWS ── */
 function buildOverviewNews() {
   const cached = getCache(FEED_CACHE_KEY);
-  const items = cached ? cached.slice(0,10) : [];
-  const tbody = document.getElementById('overview-news-tbody');
+  const items  = cached ? cached.slice(0,10) : [];
+  const tbody  = document.getElementById('overview-news-tbody');
 
   if (!items.length) {
     tbody.innerHTML = `<tr><td colspan="3" style="color:var(--text3);padding:20px">Sync to load latest threat intelligence</td></tr>`;
@@ -954,55 +889,63 @@ function buildOverviewNews() {
     <tr>
       <td><span class="badge badge-accent" style="white-space:nowrap">${esc(item.source||'Feed')}</span></td>
       <td>
-        <a href="${esc(item.link||'#')}" target="_blank" rel="noopener" style="color:var(--text);font-weight:500;font-size:12.5px">
-          ${esc((item.title||'').substring(0,100))}
+        <a href="${esc(item.link||'#')}" target="_blank" rel="noopener"
+           style="color:var(--text);font-weight:500;font-size:12.5px">
+          ${esc((item.title||'').substring(0,110))}
         </a>
       </td>
-      <td style="color:var(--text3);font-size:11.5px;white-space:nowrap">${item.pubDate ? fmtDate(item.pubDate) : '—'}</td>
+      <td style="color:var(--text3);font-size:11.5px;white-space:nowrap">${item.pubDate?fmtDate(item.pubDate):'—'}</td>
     </tr>
   `).join('');
 }
 
 /* ═══════════════════════════════════════════════════════
-   CRITICAL MODAL
+   CRITICAL MODAL — v3.1
+   Each column entry shows its own remediation keyword
+   as a sub-row directly beneath the CVE/vendor/product.
 ═══════════════════════════════════════════════════════ */
 function openCriticalModal() {
-  const critIT  = allVulns.filter(v => v.cat==='it'       && parseFloat(v.score)>=9).slice(0,10);
-  const critOT  = allVulns.filter(v => v.cat==='ot'       && parseFloat(v.score)>=9).slice(0,10);
-  const critCon = allVulns.filter(v => v.cat==='consumer' && parseFloat(v.score)>=9).slice(0,10);
+  // Sort critical entries by date descending before slicing
+  function critSlice(cat) {
+    return allVulns
+      .filter(v => v.cat===cat && parseFloat(v.score)>=9)
+      .sort((a,b) => new Date(b.date||0)-new Date(a.date||0))
+      .slice(0,10);
+  }
 
-  const rows = Math.max(critIT.length, critOT.length, critCon.length, 1);
+  const critIT  = critSlice('it');
+  const critOT  = critSlice('ot');
+  const critCon = critSlice('consumer');
+  const rows    = Math.max(critIT.length, critOT.length, critCon.length, 1);
+
   let html = '';
 
-  for (let i = 0; i < rows; i++) {
-    const it  = critIT[i];
-    const ot  = critOT[i];
-    const con = critCon[i];
+  for (let i=0; i<rows; i++) {
+    const it  = critIT[i]  || null;
+    const ot  = critOT[i]  || null;
+    const con = critCon[i] || null;
 
-    html += `<tr>
-      <td style="vertical-align:top;padding:12px 14px">
-        ${it ? `<div style="font-family:var(--font-mono);font-size:11px;color:var(--accent)">${esc(it.id)}</div>
-                <div style="font-size:11.5px;color:var(--text2);margin-top:3px">${esc(it.vendor)} — ${esc(it.product)}</div>` : '<span style="color:var(--text3)">—</span>'}
-      </td>
-      <td style="vertical-align:top;padding:12px 14px">
-        ${ot ? `<div style="font-family:var(--font-mono);font-size:11px;color:var(--cyan)">${esc(ot.id)}</div>
-                <div style="font-size:11.5px;color:var(--text2);margin-top:3px">${esc(ot.vendor)} — ${esc(ot.product)}</div>` : '<span style="color:var(--text3)">—</span>'}
-      </td>
-      <td style="vertical-align:top;padding:12px 14px">
-        ${con ? `<div style="font-family:var(--font-mono);font-size:11px;color:var(--orange)">${esc(con.id)}</div>
-                 <div style="font-size:11.5px;color:var(--text2);margin-top:3px">${esc(con.vendor)} — ${esc(con.product)}</div>` : '<span style="color:var(--text3)">—</span>'}
-      </td>
-      <td style="vertical-align:top;padding:12px 14px">
-        ${it || ot || con ? (() => {
-          const v = it || ot || con;
-          const kw = encodeURIComponent(v.id + ' patch mitigation');
-          return `<a href="https://www.google.com/search?q=${kw}" target="_blank" rel="noopener"
-            class="badge badge-red" style="text-decoration:none;cursor:pointer">
-            ${esc(v.id)} remediation
-          </a>`;
-        })() : ''}
-      </td>
-    </tr>`;
+    // ── helper: render one cell entry + keyword sub-row ──
+    function cell(v, accentColor) {
+      if (!v) return `<td class="crit-entry" style="border-bottom:1px solid var(--border)"><span style="color:var(--text3)">—</span></td>`;
+      const kw = encodeURIComponent(v.keyword);
+      return `
+        <td class="crit-entry" style="border-bottom:1px solid var(--border)">
+          <div class="crit-cve" style="color:${accentColor}">${esc(v.id)}</div>
+          <div class="crit-name">${esc(v.vendor)} — ${esc(v.product)}</div>
+          <div class="crit-kw">
+            <a href="https://www.google.com/search?q=${kw}"
+               target="_blank" rel="noopener"
+               class="badge badge-red"
+               style="text-decoration:none;font-size:10px;margin-top:2px">
+              🔍 ${esc(v.id)} remediation
+            </a>
+          </div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px">${fmtDate(v.date)}</div>
+        </td>`;
+    }
+
+    html += `<tr>${cell(it,'var(--accent)')}${cell(ot,'var(--cyan)')}${cell(con,'var(--orange)')}</tr>`;
   }
 
   document.getElementById('critical-tbody').innerHTML = html;
@@ -1010,15 +953,13 @@ function openCriticalModal() {
 }
 function closeCritical() { document.getElementById('criticalOverlay').classList.remove('open'); }
 
-/* ═══════════════════════════════════════════════════════
-   GLOBAL VENDOR SEARCH
-═══════════════════════════════════════════════════════ */
+/* ── VENDOR SEARCH ── */
 let searchDebounce;
 function handleVendorSearch(q) {
   clearTimeout(searchDebounce);
-  searchDebounce = setTimeout(() => {
+  searchDebounce = setTimeout(()=>{
     const query = q.trim().toLowerCase();
-    if (!query) { clearSearch(); return; }
+    if (!query){ clearSearch(); return; }
 
     const results = allVulns.filter(v =>
       v.vendor.toLowerCase().includes(query) ||
@@ -1027,22 +968,19 @@ function handleVendorSearch(q) {
       v.desc.toLowerCase().includes(query)
     );
 
-    tableState.search.data     = results;
-    tableState.search.filtered = results;
-    tableState.search.page     = 1;
-
     const tbody = document.getElementById('search-tbody');
-    tbody.innerHTML = results.slice(0, 50).map(v => `
+    tbody.innerHTML = results.slice(0,100).map(v => `
       <tr>
-        <td style="font-family:var(--font-mono);font-size:11.5px;color:var(--accent)">
+        <td style="font-family:var(--font-mono);font-size:11.5px;font-weight:600">
           <a href="https://nvd.nist.gov/vuln/detail/${esc(v.id)}" target="_blank" rel="noopener" style="color:var(--accent)">${esc(v.id)}</a>
         </td>
         <td><strong>${esc(v.vendor)}</strong></td>
         <td style="color:var(--text2)">${esc(v.product)}</td>
         <td><span class="badge ${v.cat==='it'?'badge-accent':v.cat==='ot'?'badge-cyan':'badge-orange'}">${v.cat.toUpperCase()}</span></td>
+        <td style="font-family:var(--font-mono);color:${scoreColor(v.score)}">${v.score}</td>
         <td>${severityBadge(v.score)}</td>
         <td class="tooltip-cell" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)">
-          ${esc(v.desc.substring(0,60))}…
+          ${esc(v.desc.substring(0,70))}…
           <div class="tip">${esc(v.desc)}</div>
         </td>
       </tr>
@@ -1051,24 +989,20 @@ function handleVendorSearch(q) {
     document.getElementById('searchBannerText').textContent =
       `"${q}" — ${results.length} result${results.length!==1?'s':''} across all categories`;
 
-    // Switch to search page
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
     document.getElementById('page-search').classList.add('active');
     document.getElementById('pageTitle').textContent = 'Search Results';
-
     closeMobileMenu();
   }, 280);
 }
 
 function clearSearch() {
-  document.getElementById('vendorSearch').value = '';
+  document.getElementById('vendorSearch').value='';
   showPage('overview', document.querySelector('[data-page="overview"]'));
 }
 
-/* ═══════════════════════════════════════════════════════
-   RSS FEED ENGINE (cached)
-═══════════════════════════════════════════════════════ */
+/* ── RSS FEEDS ── */
 const RSS_FEEDS = [
   {name:"CISA Advisories",     url:"https://www.cisa.gov/cybersecurity-advisories/all.xml"},
   {name:"BleepingComputer",    url:"https://www.bleepingcomputer.com/feed/"},
@@ -1081,29 +1015,21 @@ const RSS_FEEDS = [
   {name:"The Record",          url:"https://therecord.media/feed/"},
   {name:"Check Point",         url:"https://research.checkpoint.com/feed/"},
   {name:"Unit 42",             url:"https://unit42.paloaltonetworks.com/feed/"},
-  {name:"Talos Intelligence",  url:"https://blog.talosintelligence.com/rss/"},
   {name:"CrowdStrike",         url:"https://www.crowdstrike.com/blog/feed/"},
-  {name:"Threatpost",          url:"https://threatpost.com/feed/"},
+  {name:"Talos Intelligence",  url:"https://blog.talosintelligence.com/rss/"},
   {name:"SecurityAffairs",     url:"https://securityaffairs.co/wordpress/feed"},
-  {name:"Bruce Schneier",      url:"https://www.schneier.com/blog/atom.xml"},
-  {name:"PacketStorm",         url:"https://rss.packetstormsecurity.com/files/"},
   {name:"Tenable Blog",        url:"https://www.tenable.com/blog/feed"},
-  {name:"Recorded Future",     url:"https://www.recordedfuture.com/feed/"},
   {name:"Google TAG",          url:"https://blog.google/threat-analysis-group/rss/"},
-  {name:"DFIR Report",         url:"https://thedfirreport.com/feed/"},
-  {name:"ZDNet Security",      url:"https://www.zdnet.com/topic/security/rss.xml"},
-  {name:"Infosecurity Mag",    url:"https://www.infosecurity-magazine.com/rss/news/"},
-  {name:"Draogos",             url:"https://dragos.com/feed/"}
 ];
 
-const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
+const RSS2JSON = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
 function getCache(key) {
   try {
     const raw = localStorage.getItem(key);
     if (!raw) return null;
     const {ts, data} = JSON.parse(raw);
-    if (Date.now() - ts > FEED_CACHE_TTL) return null;
+    if (Date.now()-ts > FEED_CACHE_TTL) return null;
     return data;
   } catch { return null; }
 }
@@ -1114,36 +1040,34 @@ function setCache(key, data) {
 
 async function loadFeeds() {
   const cached = getCache(FEED_CACHE_KEY);
-  if (cached) {
-    renderFeedCards(cached);
-    buildOverviewNews();
-    return;
-  }
+  if (cached) { renderFeedCards(cached); buildOverviewNews(); return; }
 
   document.getElementById('feed-meta').textContent = 'Fetching feeds…';
   document.getElementById('feed-grid').innerHTML = Array(6).fill(0).map(()=>`
-    <div class="feed-card"><div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div>
-    <div class="skeleton" style="width:100%;height:14px;margin-bottom:4px"></div>
-    <div class="skeleton" style="width:80%;height:14px"></div></div>`).join('');
+    <div class="feed-card">
+      <div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div>
+      <div class="skeleton" style="width:100%;height:14px;margin-bottom:4px"></div>
+      <div class="skeleton" style="width:80%;height:14px"></div>
+    </div>`).join('');
 
   const results = await Promise.allSettled(
-    RSS_FEEDS.slice(0, 16).map(f =>
-      fetch(RSS2JSON_API + encodeURIComponent(f.url), {signal: AbortSignal.timeout(8000)})
-        .then(r => r.json())
-        .then(json => ({feed:f, json}))
-        .catch(() => null)
+    RSS_FEEDS.map(f =>
+      fetch(RSS2JSON + encodeURIComponent(f.url), {signal: AbortSignal.timeout(8000)})
+        .then(r=>r.json())
+        .then(json=>({feed:f,json}))
+        .catch(()=>null)
     )
   );
 
   const items = [];
   results.forEach(r => {
-    if (r.status === 'fulfilled' && r.value && r.value.json?.items) {
-      r.value.json.items.slice(0, 2).forEach(item => {
+    if (r.status==='fulfilled' && r.value?.json?.items) {
+      r.value.json.items.slice(0,2).forEach(item => {
         items.push({
           source:  r.value.feed.name,
-          title:   item.title || '',
-          link:    item.link  || '#',
-          pubDate: item.pubDate || ''
+          title:   item.title||'',
+          link:    item.link||'#',
+          pubDate: item.pubDate||''
         });
       });
     }
@@ -1152,16 +1076,16 @@ async function loadFeeds() {
   setCache(FEED_CACHE_KEY, items);
   renderFeedCards(items);
   buildOverviewNews();
-  document.getElementById('feed-meta').textContent = `${items.length} articles loaded (cached 6h)`;
+  document.getElementById('feed-meta').textContent = `${items.length} articles loaded · cached 6h`;
 }
 
 function renderFeedCards(items) {
-  const container = document.getElementById('feed-grid');
+  const c = document.getElementById('feed-grid');
   if (!items.length) {
-    container.innerHTML = `<div class="empty-state"><p>No feed articles available. Try syncing again.</p></div>`;
+    c.innerHTML = `<div class="empty-state"><p>No feed articles available. Try syncing again.</p></div>`;
     return;
   }
-  container.innerHTML = items.map(item => `
+  c.innerHTML = items.map(item=>`
     <div class="feed-card">
       <div class="feed-source">${esc(item.source)}</div>
       <div class="feed-title">${esc(item.title)}</div>
@@ -1169,49 +1093,36 @@ function renderFeedCards(items) {
         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
         View Article →
       </a>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-/* ═══════════════════════════════════════════════════════
-   EXPORT
-═══════════════════════════════════════════════════════ */
+/* ── EXPORT ── */
 function openExport()  { document.getElementById('exportOverlay').classList.add('open'); }
 function closeExport() { document.getElementById('exportOverlay').classList.remove('open'); }
 
 function doExport() {
-  const tab    = document.getElementById('exp-tab').value;
-  const range  = document.getElementById('exp-range').value;
-  const fmt    = document.getElementById('exp-format').value;
+  const tab   = document.getElementById('exp-tab').value;
+  const range = document.getElementById('exp-range').value;
+  const fmt   = document.getElementById('exp-format').value;
 
-  let data = tab === 'all' ? allVulns : tableState[tab]?.data || [];
+  let data = tab==='all' ? allVulns : (tableState[tab]?.data||[]);
 
-  // Date filter
-  const now = new Date();
-  const cutoffs = { today: 1, week: 7, month: 30, quarter: 90, year: 365, all: 999999 };
-  const days = cutoffs[range] || 999999;
-  const cutoff = new Date(now.getTime() - days * 86400000);
-
-  if (days < 999999) {
-    data = data.filter(v => {
-      if (!v.date) return true;
-      return new Date(v.date) >= cutoff;
-    });
+  const cutoffs={today:1,week:7,month:30,quarter:90,year:365,all:999999};
+  const days = cutoffs[range]||999999;
+  if (days<999999) {
+    const cutoff = new Date(Date.now()-days*86400000);
+    data = data.filter(v => !v.date || new Date(v.date)>=cutoff);
   }
 
   if (!data.length) { showToast('No data matches the selected filters.'); return; }
 
   const filename = `zeroguard_${tab}_${range}_${new Date().toISOString().slice(0,10)}`;
-
-  if (fmt === 'csv') {
-    const headers = ['CVE_ID','Vendor','Product','Score','Severity','Category','Date_Added','Description','Keyword'];
-    const rows = data.map(v =>
-      [v.id, v.vendor, v.product, v.score, v.severity, v.cat, v.date,
-       `"${(v.desc||'').replace(/"/g,'""')}"`, v.keyword].join(',')
-    );
-    download(`${filename}.csv`, [headers.join(','), ...rows].join('\n'), 'text/csv');
+  if (fmt==='csv') {
+    const hdr = ['CVE_ID','Vendor','Product','Score','Severity','Category','Date_Added','Description','Keyword'];
+    const rows = data.map(v=>[v.id,v.vendor,v.product,v.score,v.severity,v.cat,v.date,`"${(v.desc||'').replace(/"/g,'""')}"`,v.keyword].join(','));
+    download(`${filename}.csv`, [hdr.join(','),...rows].join('\n'), 'text/csv');
   } else {
-    download(`${filename}.json`, JSON.stringify(data, null, 2), 'application/json');
+    download(`${filename}.json`, JSON.stringify(data,null,2), 'application/json');
   }
 
   closeExport();
@@ -1220,52 +1131,44 @@ function doExport() {
 
 function download(filename, content, mime) {
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([content], {type: mime}));
+  a.href = URL.createObjectURL(new Blob([content],{type:mime}));
   a.download = filename;
   a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  setTimeout(()=>URL.revokeObjectURL(a.href),5000);
 }
 
-/* ═══════════════════════════════════════════════════════
-   NAVIGATION
-═══════════════════════════════════════════════════════ */
+/* ── NAVIGATION ── */
 const PAGE_SUBTITLES = {
   overview: 'CISA KEV · NVD · ZDI · ICS Advisories',
-  it:       'Enterprise & infrastructure vulnerabilities',
-  ot:       'Industrial control systems & OT advisories',
-  consumer: 'Mobile, IoT & consumer device threats',
-  feed:     'Live RSS intelligence from 24 sources',
-  search:   'Cross-category vendor search results'
+  it:       'Enterprise & infrastructure vulnerabilities — sorted by date',
+  ot:       'Industrial control systems & OT advisories — sorted by date',
+  consumer: 'Mobile, IoT & consumer device threats — sorted by date',
+  feed:     'Live RSS intelligence from 16 sources',
+  search:   'Cross-category vendor & CVE search'
 };
 
 function showPage(id, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const page = document.getElementById('page-' + id);
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const page = document.getElementById('page-'+id);
   if (page) page.classList.add('active');
   if (btn) btn.classList.add('active');
-  const navBtn = document.querySelector(`[data-page="${id}"]`);
-  if (navBtn) navBtn.classList.add('active');
-  document.getElementById('pageTitle').textContent = btn ? btn.innerText.trim().replace(/\d+$/, '').trim() : id;
-  document.getElementById('pageSub').textContent = PAGE_SUBTITLES[id] || '';
+  const nb = document.querySelector(`[data-page="${id}"]`);
+  if (nb) nb.classList.add('active');
+  document.getElementById('pageTitle').textContent =
+    btn ? btn.innerText.trim().replace(/\d+$/,'').trim() : id;
+  document.getElementById('pageSub').textContent = PAGE_SUBTITLES[id]||'';
+  if (id==='feed') loadFeeds();
   closeMobileMenu();
-
-  // Lazy-load feeds on first visit
-  if (id === 'feed') loadFeeds();
 }
 
-/* ═══════════════════════════════════════════════════════
-   THEME
-═══════════════════════════════════════════════════════ */
+/* ── THEME ── */
 function toggleTheme() {
-  const html = document.documentElement;
-  const dark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', dark ? 'light' : 'dark');
+  const h = document.documentElement;
+  h.setAttribute('data-theme', h.getAttribute('data-theme')==='dark'?'light':'dark');
 }
 
-/* ═══════════════════════════════════════════════════════
-   MOBILE MENU
-═══════════════════════════════════════════════════════ */
+/* ── MOBILE ── */
 function toggleMobileMenu() {
   document.getElementById('sidebar').classList.toggle('mobile-open');
   document.getElementById('mobileOverlay').classList.toggle('open');
@@ -1275,37 +1178,26 @@ function closeMobileMenu() {
   document.getElementById('mobileOverlay').classList.remove('open');
 }
 
-/* ═══════════════════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════════════════ */
+/* ── TOAST ── */
 let toastTimer;
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.style.display = 'block';
+  t.style.animation = 'slideUp .2s ease';
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.style.display = 'none', 3500);
+  toastTimer = setTimeout(()=>t.style.display='none', 3500);
 }
 
-/* ═══════════════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════════════ */
+/* ── INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
-  // Detect system theme
-  if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-    document.documentElement.setAttribute('data-theme', 'light');
-  }
+  if (window.matchMedia('(prefers-color-scheme: light)').matches)
+    document.documentElement.setAttribute('data-theme','light');
 
-  // Close modals on Escape
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      closeCritical();
-      closeExport();
-      closeMobileMenu();
-    }
+    if (e.key==='Escape'){ closeCritical(); closeExport(); closeMobileMenu(); }
   });
 
-  // Auto-sync on load
   doSync();
 });
 </script>
