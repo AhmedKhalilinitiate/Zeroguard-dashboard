@@ -363,10 +363,81 @@ const OT_VENDORS_STRICT = [
   'mbconnectline','tosibox','ibase','cincoze','axiomtek','kontron',
 
   // OT Security / Visibility Platforms
-  'nozomi networks','claroty','dragos','ot-base','cylera','armis ot',
-  'fortinet ot','tenable ot','medigate','forescout ot','radiflow',
-  'waterfall security','cyberx','sentinel','asguard networks',
-  'otorio','indegy','tempered networks','pwc ics','ics2 security'
+  'nozomi networks','nozomi','claroty','dragos','ot-base','cylera','armis ot',
+  'fortinet ot','tenable ot','tenable ot security','medigate','forescout ot',
+  'radiflow','waterfall security','cyberx','asguard networks',
+  'otorio','indegy','tempered networks','pwc ics','ics2 security',
+  'claroty xdome','claroty edge','dragos worldview','nozomi guardian',
+  'nozomi vantage','nozomi arc','claroty continuous threat',
+
+  // Fortinet OT / Industrial Products
+  'fortinet','fortigate industrial','fortisiem ot','fortisoar ot',
+  'fortigate rugged','fortinet rugged','fortiswitch','fortied',
+  'fortiap industrial','fortiadc ot',
+
+  // Palo Alto Networks OT / Industrial Products
+  'palo alto networks','palo alto','pan-os ot','palo alto iot',
+  'palo alto industrial','cortex xdr ot','prisma ot',
+  'palo alto ngfw industrial','pa-220r','pa-440','palo alto rugged',
+
+  // Ruggedized Industrial Networking (L2/L3 Switches)
+  'cisco ie','cisco industrial ethernet','cisco catalyst ie',
+  'cisco ir1101','cisco ir8340','cisco cgr','cisco cgos',
+  'hirschmann mach','hirschmann rail','belden garrettcom','garrettcom',
+  'stratix 5000','stratix 5900','stratix 8000','allen-bradley stratix',
+  'siemens scalance','scalance x','scalance xr','scalance w',
+  'moxa pt','moxa eds','moxa awk','moxa nport',
+  'ruggedcom','siemens ruggedcom','ruggedcom ros','ruggedcom rox',
+  'westermo','westermo lynx','westermo mrd','westermo redfox',
+  'korenix','korenix jetnet','phoenix contact fl switch','fl mguard',
+  'hager eylon','advantech eks','advantech eki','comtrol rts',
+  'red lion nt','red lion dnt','red lion rl','sixnet','sixnet sl',
+  'antaira','antaira lns','antaira lmx','perle','perle iolan',
+  'raisecom','raisecom iscom','d-link industrial','netgear m4300',
+  'oring','oring igs','oring ies','lantech','lantech ics',
+
+  // Industrial NGFW / IPS / UTM (OT-rated)
+  'tofino security','tofino xenon','belden tofino','tofino firewalk',
+  'genua','genua genuscreen','genua genuwall','genua tele-border',
+  'rohde schwarz','r&s cybersecurity','r&s pace','r&s kenner',
+  'secunet','secunet sina','secunet wall','secunet heartbeat',
+  'uniscon','paloalto pa-220r','fortinet fgr-30e','fgr-30e',
+  'cradlepoint ibr','cradlepoint e3000','multitech','multitech conduit',
+  'peplink','peplink mediafast','sierra wireless','sierra wireless rv',
+
+  // Industrial IDS / Anomaly Detection (OT-specific)
+  'claroty ids','dragos ids','nozomi ids','medigate ids',
+  'darktrace ot','vectra ot','cylance ot','cyberbit',
+  'guard/ot','ot ids','ics ids','stamus networks ot',
+  'cimplicity','ge cimplicity','ge ifix','ge proficy',
+  'aspentech ip21','osisoft pi','aveva pi','aveva historian',
+
+  // OT / Industrial CCTV / Physical Security Integration
+  'bosch building technologies','bosch security systems',
+  'honeywell pro-watch','honeywell winpak','lenel s2','lenel onguard',
+  'genetec security','genetec synergis','milestone xprotect',
+  'axis communications','axis industrial','hanwha techwin',
+  'flir systems','flir thermal','dahua industrial','hikvision ds-2',
+  'pelco','pelco videoxpert','avigilon','avigilon oc',
+  'feenics','isonas','allegion','dormakaba','nedap',
+
+  // OEM / Embedded ICS Components
+  'wind river','wind river vxworks','vxworks','windriver',
+  'qnx','blackberry qnx','qnx neutrino','qnx hypervisor',
+  'green hills software','integrity rtos','green hills integrity',
+  'rti dds','real-time innovations','eclipse kura','eclipse iomt',
+  'azure iot edge industrial','aws iot greengrass ot',
+  'national instruments','ni compactrio','ni fieldpoint',
+  'opto 22','opto 22 groov','opto 22 snap','pac control',
+  'lenze','lenze i500','lenze i650','lenze smartmotor',
+  'sew-eurodrive','sew eurodrive','movitrac','movidrive',
+  'danfoss vlt','danfoss drives','abb acs','abb acs880',
+  'schneider altivar','altivar 32','altivar 61','altivar 71',
+  'yaskawa ga700','yaskawa a1000','yaskawa p1000',
+  'power xpert gateway','eaton powerxpert','eaton ems',
+  'schweitzer sel','sel-3530','sel-3555','sel-5056',
+  'ixon cloud','ixon security','ewon cosy','ewon flexy',
+  'secomea sitemanager','tosibox node','anybus x-gateway'
 ];
 
 // ── STRICT OT PRODUCT/PROTOCOL KEYWORDS ──
@@ -576,6 +647,7 @@ function processVulns(vulns){
   tableState.it.data=itArr;tableState.ot.data=otArr;tableState.consumer.data=conArr;
   tableState.it.sort=5;tableState.it.dir=-1;
   tableState.ot.sort=5;tableState.ot.dir=-1;
+  tableState.consumer.sort=5;tableState.consumer.dir=-1;
   filterTable('it');filterTable('ot');filterTable('consumer');
   buildOverviewNews();
 }
@@ -693,10 +765,32 @@ function openCriticalModal(){
   for(let i=0;i<rows;i++){
     const it=critIT[i],ot=critOT[i],con=critCon[i],v=it||ot||con;
     html+=`<tr>
-      <td style="vertical-align:top;padding:12px 14px">${it?`<div style="font-family:var(--font-mono);font-size:11px;color:var(--accent)">${esc(it.id)}</div><div style="font-size:11px;color:var(--text2)">${esc(it.vendor)}</div>`:'<span style="color:var(--text3)">—</span>'}</td>
-      <td style="vertical-align:top;padding:12px 14px">${ot?`<div style="font-family:var(--font-mono);font-size:11px;color:var(--cyan)">${esc(ot.id)}</div><div style="font-size:11px;color:var(--text2)">${esc(ot.vendor)}</div>`:'<span style="color:var(--text3)">—</span>'}</td>
-      <td style="vertical-align:top;padding:12px 14px">${con?`<div style="font-family:var(--font-mono);font-size:11px;color:var(--orange)">${esc(con.id)}</div><div style="font-size:11px;color:var(--text2)">${esc(con.vendor)}</div>`:'<span style="color:var(--text3)">—</span>'}</td>
-      <td style="vertical-align:top;padding:12px 14px">${v?`<a href="https://www.google.com/search?q=${encodeURIComponent(v.id+' patch mitigation remediation')}" target="_blank" rel="noopener" class="badge badge-red" style="text-decoration:none">${esc(v.id)} remediation</a>`:''}</td>
+      <td style="vertical-align:top;padding:12px 14px">
+        ${it?`<div style="font-family:var(--font-mono);font-size:11px;color:var(--accent)">${esc(it.id)}</div>
+              <div style="font-size:11px;color:var(--text2);margin-top:2px">${esc(it.vendor)}</div>
+              <a href="https://www.google.com/search?q=${encodeURIComponent(it.id+' patch remediation')}" target="_blank" rel="noopener"
+                style="display:inline-block;margin-top:5px;font-size:10px;color:var(--accent);background:var(--accent-dim);padding:2px 8px;border-radius:20px;text-decoration:none">${esc(it.id)} remediation →</a>`
+        :'<span style="color:var(--text3)">—</span>'}
+      </td>
+      <td style="vertical-align:top;padding:12px 14px">
+        ${ot?`<div style="font-family:var(--font-mono);font-size:11px;color:var(--cyan)">${esc(ot.id)}</div>
+              <div style="font-size:11px;color:var(--text2);margin-top:2px">${esc(ot.vendor)}</div>
+              <a href="https://www.google.com/search?q=${encodeURIComponent(ot.id+' ICS OT patch remediation')}" target="_blank" rel="noopener"
+                style="display:inline-block;margin-top:5px;font-size:10px;color:var(--cyan);background:var(--cyan-dim);padding:2px 8px;border-radius:20px;text-decoration:none">${esc(ot.id)} remediation →</a>`
+        :'<span style="color:var(--text3)">—</span>'}
+      </td>
+      <td style="vertical-align:top;padding:12px 14px">
+        ${con?`<div style="font-family:var(--font-mono);font-size:11px;color:var(--orange)">${esc(con.id)}</div>
+               <div style="font-size:11px;color:var(--text2);margin-top:2px">${esc(con.vendor)}</div>
+               <a href="https://www.google.com/search?q=${encodeURIComponent(con.id+' consumer device patch remediation')}" target="_blank" rel="noopener"
+                 style="display:inline-block;margin-top:5px;font-size:10px;color:var(--orange);background:var(--orange-dim);padding:2px 8px;border-radius:20px;text-decoration:none">${esc(con.id)} remediation →</a>`
+        :'<span style="color:var(--text3)">—</span>'}
+      </td>
+      <td style="vertical-align:top;padding:12px 14px">
+        ${v?`<a href="https://www.google.com/search?q=${encodeURIComponent(v.id+' patch mitigation remediation CVE')}" target="_blank" rel="noopener"
+          class="badge badge-red" style="text-decoration:none;display:inline-block;margin-bottom:6px">${esc(v.id)} remediation</a>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px">Search Google for full mitigation steps</div>`:''}
+      </td>
     </tr>`;
   }
   document.getElementById('critical-tbody').innerHTML=html;
