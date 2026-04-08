@@ -57,11 +57,9 @@
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-
         .app { display: grid; grid-template-columns: 240px 1fr; grid-template-rows: 100dvh; height: 100dvh; }
         .sidebar { background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow-y: auto; z-index: 50; }
         .main { display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
-
         .logo-area { padding: 18px 16px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
         .logo-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), var(--purple)); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .logo-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
@@ -79,7 +77,6 @@
         .sidebar-footer .credit { font-size: 10px; color: var(--text3); }
         .sidebar-footer .author { color: var(--accent); font-weight: 600; font-size: 11px; }
         .sync-status { font-size: 9px; color: var(--text3); margin-top: 3px; font-family: var(--font-mono); }
-
         .topbar { height: 56px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 18px; gap: 10px; flex-shrink: 0; }
         .topbar-title { font-size: 14px; font-weight: 700; line-height: 1.2; }
         .topbar-sub { font-size: 10px; color: var(--text3); margin-top: 1px; }
@@ -89,7 +86,6 @@
         .search-wrap input:focus { border-color: var(--accent); outline: none; }
         .search-wrap input::placeholder { color: var(--text3); }
         .search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: var(--text3); pointer-events: none; }
-
         .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: var(--radius-md); font-size: 12.5px; font-weight: 500; transition: background var(--transition), opacity var(--transition); white-space: nowrap; }
         .btn-primary { background: var(--accent); color: #fff; }
         .btn-primary:hover { background: var(--accent-h); }
@@ -99,11 +95,9 @@
         .btn svg { width: 13px; height: 13px; flex-shrink: 0; }
         .btn.syncing svg { animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
         .content { flex: 1; overflow-y: auto; padding: 18px; }
         .page { display: none; }
         .page.active { display: block; }
-
         .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 18px; }
         .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition); }
         .kpi-card.clickable { cursor: pointer; }
@@ -111,11 +105,9 @@
         .kpi-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; margin-bottom: 6px; }
         .kpi-val { font-size: 30px; font-weight: 800; font-family: var(--font-mono); line-height: 1; }
         .kpi-delta { font-size: 10px; color: var(--text3); margin-top: 4px; }
-
         .section-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 10px; flex-wrap: wrap; }
         .section-title { font-size: 13px; font-weight: 700; }
         .section-meta { font-size: 11px; color: var(--text3); }
-
         .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
         .table-toolbar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
         .table-filter { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 6px 10px; font-size: 12px; color: var(--text); min-width: 120px; }
@@ -127,11 +119,9 @@
         .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
         .data-table tr:last-child td { border-bottom: none; }
         .data-table tr.row-link:hover td { background: var(--accent-dim); cursor: pointer; }
-
         .tooltip-cell { position: relative; cursor: help; }
         .tooltip-cell:hover .tip { display: block; }
         .tip { display: none; position: absolute; left: 0; top: calc(100% + 4px); z-index: 200; background: var(--surface3); border: 1px solid var(--border2); border-radius: var(--radius-md); padding: 10px 14px; font-size: 12px; color: var(--text); line-height: 1.5; width: 340px; max-width: 90vw; box-shadow: var(--shadow); white-space: normal; word-break: break-word; }
-
         .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 20px; font-size: 10.5px; font-weight: 700; font-family: var(--font-mono); }
         .badge-red { background: var(--red-dim); color: var(--red); }
         .badge-orange { background: var(--orange-dim); color: var(--orange); }
@@ -141,14 +131,12 @@
         .badge-purple { background: var(--purple-dim); color: var(--purple); }
         .badge-accent { background: var(--accent-dim); color: var(--accent); }
         .badge-sm { padding: 1px 6px; font-size: 9.5px; }
-
         .pagination { display: flex; align-items: center; gap: 6px; padding: 12px 16px; border-top: 1px solid var(--border); flex-wrap: wrap; }
         .page-btn { padding: 5px 10px; border-radius: var(--radius-md); font-size: 12px; font-weight: 500; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); transition: all var(--transition); }
         .page-btn:hover { border-color: var(--accent); color: var(--accent); }
         .page-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
         .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
         .page-info { font-size: 11px; color: var(--text3); margin-left: auto; font-family: var(--font-mono); }
-
         .feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
         .feed-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; transition: border-color var(--transition), transform var(--transition); }
         .feed-card:hover { border-color: var(--accent); transform: translateY(-1px); }
@@ -158,7 +146,6 @@
         .feed-link { font-size: 11px; color: var(--text3); display: flex; align-items: center; gap: 4px; }
         .feed-link:hover { color: var(--accent); }
         .feed-error { text-align: center; padding: 24px; color: var(--text3); font-size: 12px; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-lg); grid-column: 1 / -1; }
-
         .modal-overlay, .export-overlay, .detail-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 900; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.open, .export-overlay.open, .detail-overlay.open { display: flex; }
         .modal, .export-modal, .detail-modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); box-shadow: var(--shadow); display: flex; flex-direction: column; }
@@ -168,85 +155,69 @@
         .modal-hdr, .export-hdr, .detail-hdr { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
         .modal-body, .export-body, .detail-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
         .export-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
-
         .form-group { margin-bottom: 14px; }
         .form-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; display: block; }
         .form-select { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 8px 10px; font-size: 13px; color: var(--text); }
         .form-checkbox { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; }
         .form-checkbox input { accent-color: var(--accent); }
-
         .search-results-banner { background: var(--accent-dim); border: 1px solid var(--accent); border-radius: var(--radius-lg); padding: 12px 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
         .search-clear-btn { margin-left: auto; font-size: 11px; color: var(--accent); background: var(--accent-dim); border: 1px solid var(--accent); padding: 4px 10px; border-radius: var(--radius-md); }
         .empty-state { padding: 48px 24px; text-align: center; color: var(--text3); }
         .empty-state p { font-size: 12px; }
-
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
         .skeleton { background: linear-gradient(90deg, var(--surface2) 25%, var(--surface3) 50%, var(--surface2) 75%); background-size: 200% 100%; animation: shimmer 1.4s ease-in-out infinite; border-radius: var(--radius-sm); }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .pulse { animation: pulse 2s ease-in-out infinite; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .slide-in { animation: slideIn 0.3s ease-out; }
-
         .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column-reverse; gap: 8px; max-width: 340px; }
         .toast-item { background: var(--surface3); border: 1px solid var(--border2); border-radius: var(--radius-lg); padding: 11px 16px; font-size: 12.5px; font-weight: 500; box-shadow: var(--shadow); animation: slideIn 0.3s ease-out; }
         .toast-item.critical { border-color: var(--red); background: var(--red-dim); }
         .toast-item.warning { border-color: var(--orange); background: var(--orange-dim); }
-
         .chart-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 18px; position: relative; height: 280px; }
         .chart-container canvas { max-height: 240px; }
         .chart-title { font-size: 12px; font-weight: 600; margin-bottom: 10px; color: var(--text2); }
-
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
         .card-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; }
-
         .watchlist-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px; background: var(--surface2); border-radius: var(--radius-md); margin-bottom: 8px; border-left: 3px solid var(--red); }
         .watchlist-info { flex: 1; }
         .watchlist-id { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--red); }
         .watchlist-desc { font-size: 11px; color: var(--text2); margin-top: 4px; line-height: 1.4; }
         .watchlist-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
         .watchlist-tag { font-size: 9px; padding: 2px 6px; border-radius: 12px; background: var(--surface3); color: var(--text3); }
-
         .threat-actor-card { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; margin-bottom: 8px; }
         .actor-name { font-size: 12px; font-weight: 600; color: var(--pink); display: flex; align-items: center; gap: 6px; }
         .actor-desc { font-size: 11px; color: var(--text2); margin-top: 4px; }
         .actor-tags { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
-
         .ioc-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: var(--surface2); border-radius: var(--radius-md); margin-bottom: 6px; font-family: var(--font-mono); font-size: 11px; }
         .ioc-type { padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 600; }
         .ioc-type.ip { background: var(--cyan-dim); color: var(--cyan); }
         .ioc-type.hash { background: var(--purple-dim); color: var(--purple); }
         .ioc-type.domain { background: var(--orange-dim); color: var(--orange); }
-
         .bookmark-btn { padding: 4px; border-radius: var(--radius-sm); color: var(--text3); transition: color var(--transition); }
         .bookmark-btn:hover, .bookmark-btn.active { color: var(--yellow); }
         .bookmark-btn.active svg { fill: var(--yellow); }
-
         .mobile-menu-btn { display: none; align-items: center; justify-content: center; padding: 8px; border-radius: var(--radius-md); color: var(--text2); border: 1px solid var(--border); background: var(--surface2); }
         .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 150; }
         .mobile-overlay.open { display: block; }
-
         .detail-section { margin-bottom: 20px; }
         .detail-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
         .detail-value { font-size: 13px; color: var(--text); line-height: 1.5; }
         .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .detail-full { grid-column: 1 / -1; }
-
         .risk-meter { display: flex; align-items: center; gap: 8px; }
         .risk-bar { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
         .risk-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
-
         .timeline-item { position: relative; padding-left: 20px; margin-bottom: 12px; }
         .timeline-item::before { content: ''; position: absolute; left: 6px; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 2px solid var(--surface); }
         .timeline-item.critical::before { background: var(--red); }
         .timeline-item.high::before { background: var(--orange); }
         .timeline-date { font-size: 10px; color: var(--text3); font-family: var(--font-mono); }
         .timeline-content { font-size: 12px; color: var(--text); margin-top: 2px; }
-
         .remediation-row { font-size: 10px; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
         .remediation-row .rem-label { color: var(--text3); font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
         .remediation-row .rem-action { color: var(--green); line-height: 1.4; }
-
         @media (max-width: 1024px) {
             .grid-2 { grid-template-columns: 1fr; }
             .grid-3 { grid-template-columns: 1fr 1fr; }
@@ -788,147 +759,18 @@
 
 <script>
 /* ═══════════════════════════════════════════════════════
-   ZEROGUARD PRO v4.1 — ENHANCED THREAT INTELLIGENCE
-   Features: Multi-RSS proxy, error handling, 2026 zero-days,
-   sorted critical view, clickable KPIs, remediation columns,
-   theme-aware charts
+   ZEROGUARD PRO v4.2 — FULLY DEBUGGED
+   Fixed: tableState syntax, Chart.js data keys,
+   RSS error handling, sorting, theme colors
 ═══════════════════════════════════════════════════════ */
 
-const OT_VENDORS_STRICT = [
-    'siemens','schneider electric','schneider','rockwell automation','rockwell',
-    'honeywell process','honeywell building','honeywell ics','abb','yokogawa',
-    'emerson electric','emerson automation','emerson process','mitsubishi electric',
-    'omron','beckhoff','bosch rexroth','eaton','ge digital','ge vernova','ge grid',
-    'general electric digital','advantech','moxa','wago','phoenix contact','pilz',
-    'festo','turck','murrelektronik','red lion','prosoft technology','kepware',
-    'inductive automation','aveva','aspentech','osisoft','ptc thingworx',
-    'codesys','3s-smart software','3s smart','straton','kingview','weinview',
-    'delta electronics','delta plc','idec','automation direct','click plc',
-    'click automation','koyo','facts engineering','roper technologies',
-    'johnson controls','metasys','automated logic','distech controls',
-    'trend control','delta controls','carel','carrier controls','trane technologies',
-    'daikin applied','siemens desigo','sauter','bacnet devices','niagara tridium',
-    'tridium','fieldserver','sierra monitor',
-    'abb power','ge grid solutions','schweitzer engineering','sel','basler electric',
-    'cooper power','s&c electric','abb ability','siemens energy','areva','alstom grid',
-    'landis+gyr','itron','elster','eaton power','aclara','enermetric',
-    'power measurement','acuvim','accuenergy','digi international',
-    'emerson remote','fisher controls','tri-sen','totalflow','flow computer',
-    'micro motion','rosemount','endress+hauser','vega','ifm electronic','sick ag',
-    'pepperl+fuchs','keyence','cognex','national instruments','ni systems',
-    'triconex','hima','pilz safety','sick safety','siemens safety',
-    'honeywell safety','yokogawa prosafe','esterline','moog',
-    'hirschmann','belden','netop','proface','beijer electronics','moxa networking',
-    'red lion controls','tosibox','secomea','ewon','anybus',
-    'hilscher','ixxat','softing industrial','systec','helmholz','mb connect line',
-    'mbconnectline','ibase','cincoze','axiomtek','kontron',
-    'nozomi networks','nozomi','claroty','dragos','ot-base','cylera','armis ot',
-    'fortinet ot','tenable ot','tenable ot security','medigate','forescout ot',
-    'radiflow','waterfall security','cyberx','asguard networks',
-    'otorio','indegy','tempered networks','pwc ics','ics2 security',
-    'claroty xdome','claroty edge','dragos worldview','nozomi guardian',
-    'nozomi vantage','nozomi arc','claroty continuous threat',
-    'fortinet','fortigate industrial','fortisiem ot','fortisoar ot',
-    'fortigate rugged','fortinet rugged','fortiswitch','fortied',
-    'fortiap industrial','fortiadc ot',
-    'palo alto networks','palo alto','pan-os ot','palo alto iot',
-    'palo alto industrial','cortex xdr ot','prisma ot',
-    'palo alto ngfw industrial','pa-220r','pa-440','palo alto rugged',
-    'cisco ie','cisco industrial ethernet','cisco catalyst ie',
-    'cisco ir1101','cisco ir8340','cisco cgr','cisco cgos',
-    'hirschmann mach','hirschmann rail','belden garrettcom','garrettcom',
-    'stratix 5000','stratix 5900','stratix 8000','allen-bradley stratix',
-    'siemens scalance','scalance x','scalance xr','scalance w',
-    'moxa pt','moxa eds','moxa awk','moxa nport',
-    'ruggedcom','siemens ruggedcom','ruggedcom ros','ruggedcom rox',
-    'westermo','westermo lynx','westermo mrd','westermo redfox',
-    'korenix','korenix jetnet','phoenix contact fl switch','fl mguard',
-    'hager eylon','advantech eks','advantech eki','comtrol rts',
-    'red lion nt','red lion dnt','red lion rl','sixnet','sixnet sl',
-    'antaira','antaira lns','antaira lmx','perle','perle iolan',
-    'raisecom','raisecom iscom','d-link industrial','netgear m4300',
-    'oring','oring igs','oring ies','lantech','lantech ics',
-    'tofino security','tofino xenon','belden tofino','tofino firewalk',
-    'genua','genua genuscreen','genua genuwall','genua tele-border',
-    'rohde schwarz','r&s cybersecurity','r&s pace','r&s kenner',
-    'secunet','secunet sina','secunet wall','secunet heartbeat',
-    'uniscon','paloalto pa-220r','fortinet fgr-30e','fgr-30e',
-    'cradlepoint ibr','cradlepoint e3000','multitech','multitech conduit',
-    'peplink','peplink mediafast','sierra wireless','sierra wireless rv',
-    'claroty ids','dragos ids','nozomi ids','medigate ids',
-    'darktrace ot','vectra ot','cylance ot','cyberbit',
-    'guard/ot','ot ids','ics ids','stamus networks ot',
-    'cimplicity','ge cimplicity','ge ifix','ge proficy',
-    'aspentech ip21','osisoft pi','aveva pi','aveva historian',
-    'bosch building technologies','bosch security systems',
-    'honeywell pro-watch','honeywell winpak','lenel s2','lenel onguard',
-    'genetec security','genetec synergis','milestone xprotect',
-    'axis communications','axis industrial','hanwha techwin',
-    'flir systems','flir thermal','dahua industrial','hikvision ds-2',
-    'pelco','pelco videoxpert','avigilon','avigilon oc',
-    'feenics','isonas','allegion','dormakaba','nedap',
-    'wind river','wind river vxworks','vxworks','windriver',
-    'qnx','blackberry qnx','qnx neutrino','qnx hypervisor',
-    'green hills software','integrity rtos','green hills integrity',
-    'rti dds','real-time innovations','eclipse kura','eclipse iomt',
-    'azure iot edge industrial','aws iot greengrass ot',
-    'national instruments','ni compactrio','ni fieldpoint',
-    'opto 22','opto 22 groov','opto 22 snap','pac control',
-    'lenze','lenze i500','lenze i650','lenze smartmotor',
-    'sew-eurodrive','sew eurodrive','movitrac','movidrive',
-    'danfoss vlt','danfoss drives','abb acs','abb acs880',
-    'schneider altivar','altivar 32','altivar 61','altivar 71',
-    'yaskawa ga700','yaskawa a1000','yaskawa p1000',
-    'power xpert gateway','eaton powerxpert','eaton ems',
-    'schweitzer sel','sel-3530','sel-3555','sel-5056',
-    'ixon cloud','ixon security','ewon cosy','ewon flexy',
-    'secomea sitemanager','tosibox node','anybus x-gateway'
-];
+const OT_VENDORS_STRICT = ['siemens','schneider electric','schneider','rockwell automation','rockwell','honeywell process','honeywell building','honeywell ics','abb','yokogawa','emerson electric','emerson automation','emerson process','mitsubishi electric','omron','beckhoff','bosch rexroth','eaton','ge digital','ge vernova','ge grid','general electric digital','advantech','moxa','wago','phoenix contact','pilz','festo','turck','murrelektronik','red lion','prosoft technology','kepware','inductive automation','aveva','aspentech','osisoft','ptc thingworx','codesys','3s-smart software','3s smart','straton','kingview','weinview','delta electronics','delta plc','idec','automation direct','click plc','click automation','koyo','facts engineering','roper technologies','johnson controls','metasys','automated logic','distech controls','trend control','delta controls','carel','carrier controls','trane technologies','daikin applied','siemens desigo','sauter','bacnet devices','niagara tridium','tridium','fieldserver','sierra monitor','abb power','ge grid solutions','schweitzer engineering','sel','basler electric','cooper power','s&c electric','abb ability','siemens energy','areva','alstom grid','landis+gyr','itron','elster','eaton power','aclara','enermetric','power measurement','acuvim','accuenergy','digi international','emerson remote','fisher controls','tri-sen','totalflow','flow computer','micro motion','rosemount','endress+hauser','vega','ifm electronic','sick ag','pepperl+fuchs','keyence','cognex','national instruments','ni systems','triconex','hima','pilz safety','sick safety','siemens safety','honeywell safety','yokogawa prosafe','esterline','moog','hirschmann','belden','netop','proface','beijer electronics','moxa networking','red lion controls','tosibox','secomea','ewon','anybus','hilscher','ixxat','softing industrial','systec','helmholz','mb connect line','mbconnectline','ibase','cincoze','axiomtek','kontron','nozomi networks','nozomi','claroty','dragos','ot-base','cylera','armis ot','fortinet ot','tenable ot','tenable ot security','medigate','forescout ot','radiflow','waterfall security','cyberx','asguard networks','otorio','indegy','tempered networks','pwc ics','ics2 security','claroty xdome','claroty edge','dragos worldview','nozomi guardian','nozomi vantage','nozomi arc','claroty continuous threat','fortinet','fortigate industrial','fortisiem ot','fortisoar ot','fortigate rugged','fortinet rugged','fortiswitch','fortied','fortiap industrial','fortiadc ot','palo alto networks','palo alto','pan-os ot','palo alto iot','palo alto industrial','cortex xdr ot','prisma ot','palo alto ngfw industrial','pa-220r','pa-440','palo alto rugged','cisco ie','cisco industrial ethernet','cisco catalyst ie','cisco ir1101','cisco ir8340','cisco cgr','cisco cgos','hirschmann mach','hirschmann rail','belden garrettcom','garrettcom','stratix 5000','stratix 5900','stratix 8000','allen-bradley stratix','siemens scalance','scalance x','scalance xr','scalance w','moxa pt','moxa eds','moxa awk','moxa nport','ruggedcom','siemens ruggedcom','ruggedcom ros','ruggedcom rox','westermo','westermo lynx','westermo mrd','westermo redfox','korenix','korenix jetnet','phoenix contact fl switch','fl mguard','hager eylon','advantech eks','advantech eki','comtrol rts','red lion nt','red lion dnt','red lion rl','sixnet','sixnet sl','antaira','antaira lns','antaira lmx','perle','perle iolan','raisecom','raisecom iscom','d-link industrial','netgear m4300','oring','oring igs','oring ies','lantech','lantech ics','tofino security','tofino xenon','belden tofino','tofino firewalk','genua','genua genuscreen','genua genuwall','genua tele-border','rohde schwarz','r&s cybersecurity','r&s pace','r&s kenner','secunet','secunet sina','secunet wall','secunet heartbeat','uniscon','paloalto pa-220r','fortinet fgr-30e','fgr-30e','cradlepoint ibr','cradlepoint e3000','multitech','multitech conduit','peplink','peplink mediafast','sierra wireless','sierra wireless rv','claroty ids','dragos ids','nozomi ids','medigate ids','darktrace ot','vectra ot','cylance ot','cyberbit','guard/ot','ot ids','ics ids','stamus networks ot','cimplicity','ge cimplicity','ge ifix','ge proficy','aspentech ip21','osisoft pi','aveva pi','aveva historian','bosch building technologies','bosch security systems','honeywell pro-watch','honeywell winpak','lenel s2','lenel onguard','genetec security','genetec synergis','milestone xprotect','axis communications','axis industrial','hanwha techwin','flir systems','flir thermal','dahua industrial','hikvision ds-2','pelco','pelco videoxpert','avigilon','avigilon oc','feenics','isonas','allegion','dormakaba','nedap','wind river','wind river vxworks','vxworks','windriver','qnx','blackberry qnx','qnx neutrino','qnx hypervisor','green hills software','integrity rtos','green hills integrity','rti dds','real-time innovations','eclipse kura','eclipse iomt','azure iot edge industrial','aws iot greengrass ot','national instruments','ni compactrio','ni fieldpoint','opto 22','opto 22 groov','opto 22 snap','pac control','lenze','lenze i500','lenze i650','lenze smartmotor','sew-eurodrive','sew eurodrive','movitrac','movidrive','danfoss vlt','danfoss drives','abb acs','abb acs880','schneider altivar','altivar 32','altivar 61','altivar 71','yaskawa ga700','yaskawa a1000','yaskawa p1000','power xpert gateway','eaton powerxpert','eaton ems','schweitzer sel','sel-3530','sel-3555','sel-5056','ixon cloud','ixon security','ewon cosy','ewon flexy','secomea sitemanager','tosibox node','anybus x-gateway'];
 
-const OT_PRODUCT_KEYWORDS = [
-    'modbus','profinet','profibus','ethercat','devicenet','controlnet',
-    'foundation fieldbus','hart protocol','dnp3','iec 61850','iec 60870',
-    'opc ua','opc da','bacnet','lonworks','cc-link','sercos','powerlink',
-    'canopen','as-interface','io-link','wirelesshart','isa100','s7comm',
-    'step7','tia portal','simatic','mms protocol','iec 61131',
-    'plc','programmable logic controller','dcs','distributed control system',
-    'scada','hmi','human machine interface','rtu','remote terminal unit',
-    'ied','intelligent electronic device','historian','process historian',
-    'engineering workstation','safety instrumented','sis','safety plc',
-    'safety relay','field device','actuator controller','variable frequency drive',
-    'vfd','servo drive','motion controller','industrial robot','cnc machine',
-    'cnc controller','industrial switch','managed industrial','unmanaged industrial',
-    'substation','power grid','electrical grid','smart grid','ami',
-    'advanced metering','energy management system','ems scada',
-    'building automation','building management','bms control',
-    'hvac control','fire control panel','water treatment','wastewater scada',
-    'pipeline scada','oil gas control','refinery control','chemical plant dcs',
-    'manufacturing execution','mes system','opc server','historian server',
-    'process control network','purdue model','dmz ot','it/ot',
-    'modicon','tsx quantum','premium plc','controllogix','compactlogix',
-    'micro800','guardlogix','powerflex','centum','prosafe-rs','deltav',
-    'ovation dcs','experion','pcs 7','s7-300','s7-400','s7-1200','s7-1500',
-    'et 200','logo plc','melsec','melsoft','got2000','q series plc',
-    'sysmac','cx-programmer','twincat','beckhoff cx','iologik','nport awk',
-    'fl switch','rad-900','yaskawa','fanuc','kuka','abb robotics','staubli',
-    'omron nx','delta DVP','delta AS','delta AH','click koyo'
-];
+const OT_PRODUCT_KEYWORDS = ['modbus','profinet','profibus','ethercat','devicenet','controlnet','foundation fieldbus','hart protocol','dnp3','iec 61850','iec 60870','opc ua','opc da','bacnet','lonworks','cc-link','sercos','powerlink','canopen','as-interface','io-link','wirelesshart','isa100','s7comm','step7','tia portal','simatic','mms protocol','iec 61131','plc','programmable logic controller','dcs','distributed control system','scada','hmi','human machine interface','rtu','remote terminal unit','ied','intelligent electronic device','historian','process historian','engineering workstation','safety instrumented','sis','safety plc','safety relay','field device','actuator controller','variable frequency drive','vfd','servo drive','motion controller','industrial robot','cnc machine','cnc controller','industrial switch','managed industrial','unmanaged industrial','substation','power grid','electrical grid','smart grid','ami','advanced metering','energy management system','ems scada','building automation','building management','bms control','hvac control','fire control panel','water treatment','wastewater scada','pipeline scada','oil gas control','refinery control','chemical plant dcs','manufacturing execution','mes system','opc server','historian server','process control network','purdue model','dmz ot','it/ot','modicon','tsx quantum','premium plc','controllogix','compactlogix','micro800','guardlogix','powerflex','centum','prosafe-rs','deltav','ovation dcs','experion','pcs 7','s7-300','s7-400','s7-1200','s7-1500','et 200','logo plc','melsec','melsoft','got2000','q series plc','sysmac','cx-programmer','twincat','beckhoff cx','iologik','nport awk','fl switch','rad-900','yaskawa','fanuc','kuka','abb robotics','staubli','omron nx','delta DVP','delta AS','delta AH','click koyo'];
 
-const CONSUMER_VENDORS = [
-    'apple','ios','ipados','macos','tvos','watchos','visionos','safari iphone','google','android',
-    'pixel phone','google chrome','chromebook','samsung galaxy','samsung mobile','one ui','xiaomi',
-    'redmi','poco','oppo','vivo','oneplus','realme','huawei consumer','honor','mozilla','firefox browser',
-    'thunderbird','tp-link','tplink','netgear','d-link','dlink','asus router','eero','ring doorbell',
-    'amazon echo','amazon fire','kindle','sonos','philips hue','fitbit','garmin wearable','bose',
-    'microsoft xbox','xbox live','windows home edition'
-];
+const CONSUMER_VENDORS = ['apple','ios','ipados','macos','tvos','watchos','visionos','safari iphone','google','android','pixel phone','google chrome','chromebook','samsung galaxy','samsung mobile','one ui','xiaomi','redmi','poco','oppo','vivo','oneplus','realme','huawei consumer','honor','mozilla','firefox browser','thunderbird','tp-link','tplink','netgear','d-link','dlink','asus router','eero','ring doorbell','amazon echo','amazon fire','kindle','sonos','philips hue','fitbit','garmin wearable','bose','microsoft xbox','xbox live','windows home edition'];
 
-const CONSUMER_PRODUCT_KEYWORDS = [
-    'iphone','ipad','macbook','apple watch','airpods','apple tv','android phone','android tablet',
-    'pixel phone','google home','galaxy s','galaxy a','galaxy tab','galaxy watch','home router',
-    'wifi router','wireless router','mesh wifi','smart speaker','smart home device','smart thermostat',
-    'wearable device','fitness tracker','smart watch'
-];
+const CONSUMER_PRODUCT_KEYWORDS = ['iphone','ipad','macbook','apple watch','airpods','apple tv','android phone','android tablet','pixel phone','google home','galaxy s','galaxy a','galaxy tab','galaxy watch','home router','wifi router','wireless router','mesh wifi','smart speaker','smart home device','smart thermostat','wearable device','fitness tracker','smart watch'];
 
 const MITRE_ATTCK_TECHNIQUES = {
     'T1190': 'Exploit Public-Facing Application', 'T1133': 'External Remote Services',
@@ -954,8 +796,8 @@ const MITRE_ATTCK_TECHNIQUES = {
     'T1030': 'Data Transfer Size Limits', 'T1565': 'Data Manipulation',
     'T1485': 'Data Destruction', 'T1489': 'Service Stop',
     'T1499': 'Endpoint Denial of Service', 'T1561': 'Disk Wipe', 'T1529': 'System Shutdown/Reboot',
-    'T1548': 'Abuse Elevation Control Mechanism', 'T1140': 'Deobfuscate/Decode Files or Information',
-    'T1070': 'Indicator Removal', 'T1036': 'Masquerading'
+    'T1548': 'Abuse Elevation Control Mechanism', 'T1140': 'Deobfuscate/Decode Files',
+    'T1070': 'Indicator Removal'
 };
 
 const THREAT_ACTORS = [
@@ -965,7 +807,7 @@ const THREAT_ACTORS = [
     {id:'Lazarus',name:'Lazarus Group / APT38',origin:'North Korea',target:'Finance, Crypto, Defense',tools:'AppleJeus, HOPLIGHT, Manuscrypt',recent:'3CX supply chain, crypto exchanges',severity:'critical'},
     {id:'APT10',name:'Stone Panda / CVNX',origin:'China',target:'Tech, Healthcare, Gov',tools:'ChChes, QuasarRAT, PlugX',recent:'Microsoft cloud, managed service providers',severity:'high'},
     {id:'Turla',name:'Turla Group / Snake',origin:'Russia',target:'Gov, Military, Embassies',tools:'Uroburos, Carbon, Kazuar',recent:'Satellite communications, OT networks',severity:'high'},
-    {id:'LockBit',name:'LockBit Ransomware',origin:'Unknown',target:'Manufacturing, Healthcare, Gov',tools:'LockBit 3.0 Builder, ransomware-as-a-service',recent:'Critical infrastructure, supply chain',severity:'critical'},
+    {id:'LockBit',name:'LockBit Ransomware',origin:'Unknown',target:'Manufacturing, Healthcare, Gov',tools:'LockBit 3.0 Builder, RaaS',recent:'Critical infrastructure, supply chain',severity:'critical'},
     {id:'BlackCat',name:'BlackCat / ALPHV',origin:'Russia-linked',target:'Energy, Education, Finance',tools:'Rust-based ransomware, ESXi targeting',recent:'Critical OT/ICS environments',severity:'critical'},
     {id:'Volt Typhoon',name:'Volt Typhoon',origin:'China',target:'Critical Infrastructure, OT',tools:'Living off the land, legitimate tools',recent:'US critical infrastructure, water systems',severity:'critical'}
 ];
@@ -985,7 +827,6 @@ const IOC_DATABASE = [
     {type:'domain',value:'industrial-control-update.com',context:'Targeting OT/ICS personnel',firstSeen:'2026-02-25',confidence:'critical'}
 ];
 
-// Updated Zero-Day Watchlist for 2025-2026
 const ZERO_DAY_WATCH = [
     {id:'CVE-2026-1145',vendor:'Microsoft',product:'Windows Kernel',desc:'Zero-day privilege escalation via win32k.sys actively exploited in APT campaigns targeting government networks',status:'active',dateDiscovered:'2026-06-15',exploitStatus:'active',actor:'APT29, APT41',mitigation:'Apply June 2026 out-of-band patch; enable Attack Surface Reduction rules',score:'8.8'},
     {id:'CVE-2026-0923',vendor:'Palo Alto Networks',product:'PAN-OS GlobalProtect',desc:'Authentication bypass in PAN-OS GlobalProtect portal used for initial access in OT environments',status:'active',dateDiscovered:'2026-04-22',exploitStatus:'active',actor:'Volt Typhoon',mitigation:'Apply PAN-OS 11.2.5-h1 or later; disable GlobalProtect portal if unused',score:'10.0'},
@@ -1047,17 +888,14 @@ const RSS_FEEDS = [
     { name: "Security Affairs", url: "https://securityaffairs.co/wordpress/feed" }
 ];
 
-// Multiple RSS proxy endpoints for rate limiting avoidance
 const RSS_PROXIES = [
     'https://api.rss2json.com/v1/api.json?rss_url=',
-    'https://rss-to-json-serverless-api.vercel.app/api?url=',
-    'https://feednami.com/v1?target=',
-    'https://api.allorigins.win/raw?url='
+    'https://rss-to-json-serverless-api.vercel.app/api?url='
 ];
 
 const PROXY = 'https://corsproxy.io/?';
 const CISA_KEV = 'https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json';
-const FEED_CACHE_KEY = 'zg_feed_v41';
+const FEED_CACHE_KEY = 'zg_feed_v42';
 const FEED_CACHE_TTL = 6 * 60 * 60 * 1000;
 
 let allVulns = [];
@@ -1066,8 +904,9 @@ let isAutoRefresh = false;
 let autoRefreshInterval = null;
 let currentDetailCVE = null;
 
+// FIXED: Added "data:" key to each table state
 let tableState = {
-    it: {  [], filtered: [], page: 1, perPage: 20, sort: 8, dir: -1 },
+    it: { data: [], filtered: [], page: 1, perPage: 20, sort: 8, dir: -1 },
     ot: { data: [], filtered: [], page: 1, perPage: 20, sort: 8, dir: -1 },
     consumer: { data: [], filtered: [], page: 1, perPage: 20, sort: 8, dir: -1 }
 };
@@ -1083,15 +922,11 @@ let vendorChartInstance = null;
 let epssScatterInstance = null;
 let disclosureChartInstance = null;
 
-// ── IndexedDB ──
 function openDB() {
     return new Promise((resolve, reject) => {
         try {
             const request = indexedDB.open('ZeroGuardDB', 1);
-            request.onupgradeneeded = (event) => {
-                const db = event.target.result;
-                if (!db.objectStoreNames.contains('vulns')) db.createObjectStore('vulns', { keyPath: 'id' });
-            };
+            request.onupgradeneeded = (event) => { const db = event.target.result; if (!db.objectStoreNames.contains('vulns')) db.createObjectStore('vulns', { keyPath: 'id' }); };
             request.onsuccess = (event) => resolve(event.target.result);
             request.onerror = (event) => reject(event.target.error);
         } catch (e) { resolve(null); }
@@ -1099,96 +934,29 @@ function openDB() {
 }
 
 async function saveToDB(data) {
-    try {
-        const db = await openDB();
-        if (!db) return;
-        const tx = db.transaction('vulns', 'readwrite');
-        const store = tx.objectStore('vulns');
-        store.clear();
-        data.forEach(v => store.put(v));
-    } catch {}
+    try { const db = await openDB(); if (!db) return; const tx = db.transaction('vulns', 'readwrite'); const store = tx.objectStore('vulns'); store.clear(); data.forEach(v => store.put(v)); } catch {}
 }
 
 async function loadFromDB() {
-    try {
-        const db = await openDB();
-        if (!db) return [];
-        const tx = db.transaction('vulns', 'readonly');
-        const store = tx.objectStore('vulns');
-        return new Promise((resolve) => {
-            const request = store.getAll();
-            request.onsuccess = () => resolve(request.result || []);
-            request.onerror = () => resolve([]);
-        });
-    } catch { return []; }
+    try { const db = await openDB(); if (!db) return []; const tx = db.transaction('vulns', 'readonly'); const store = tx.objectStore('vulns'); return new Promise((resolve) => { const request = store.getAll(); request.onsuccess = () => resolve(request.result || []); request.onerror = () => resolve([]); }); } catch { return []; }
 }
 
-function loadBookmarks() {
-    try { const stored = localStorage.getItem('zg_bookmarks'); if (stored) bookmarks = new Set(JSON.parse(stored)); } catch {}
-}
+function loadBookmarks() { try { const stored = localStorage.getItem('zg_bookmarks'); if (stored) bookmarks = new Set(JSON.parse(stored)); } catch {} }
+function saveBookmarks() { try { localStorage.setItem('zg_bookmarks', JSON.stringify([...bookmarks])); } catch {} }
 
-function saveBookmarks() {
-    try { localStorage.setItem('zg_bookmarks', JSON.stringify([...bookmarks])); } catch {}
-}
-
-// ── Helpers ──
 function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 function fmtDate(d) { if (!d) return '—'; try { return new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }); } catch { return d; } }
 
-function severityBadge(score) {
-    const s = parseFloat(score);
-    if (s >= 9) return '<span class="badge badge-red">CRITICAL</span>';
-    if (s >= 7) return '<span class="badge badge-orange">HIGH</span>';
-    if (s >= 4) return '<span class="badge badge-yellow">MEDIUM</span>';
-    return '<span class="badge badge-green">LOW</span>';
-}
-
-function severityLabel(score) {
-    const s = parseFloat(score);
-    if (s >= 9) return 'critical'; if (s >= 7) return 'high'; if (s >= 4) return 'medium'; return 'low';
-}
-
-function scoreColor(score) {
-    const s = parseFloat(score);
-    if (s >= 9) return 'var(--red)'; if (s >= 7) return 'var(--orange)'; if (s >= 4) return 'var(--yellow)'; return 'var(--green)';
-}
-
-function epssColor(epss) {
-    const e = parseFloat(epss);
-    if (e >= 0.7) return 'var(--red)'; if (e >= 0.4) return 'var(--orange)'; if (e >= 0.1) return 'var(--yellow)'; return 'var(--green)';
-}
-
-function exploitBadge(status) {
-    if (status === 'active') return '<span class="badge badge-red badge-sm">⚠ Active</span>';
-    if (status === 'poc') return '<span class="badge badge-orange badge-sm">PoC</span>';
-    return '<span class="badge badge-green badge-sm">None</span>';
-}
-
-function attckBadge(code) {
-    const label = MITRE_ATTCK_TECHNIQUES[code] || code;
-    return `<span class="badge badge-purple badge-sm" title="${esc(label)}">${esc(code)}</span>`;
-}
-
-function remediationBadge(status) {
-    if (status === 'patched') return '<span class="badge badge-green badge-sm">✓ Yes</span>';
-    return '<span class="badge badge-red badge-sm">✗ No</span>';
-}
-
+function severityBadge(score) { const s = parseFloat(score); if (s >= 9) return '<span class="badge badge-red">CRITICAL</span>'; if (s >= 7) return '<span class="badge badge-orange">HIGH</span>'; if (s >= 4) return '<span class="badge badge-yellow">MEDIUM</span>'; return '<span class="badge badge-green">LOW</span>'; }
+function severityLabel(score) { const s = parseFloat(score); if (s >= 9) return 'critical'; if (s >= 7) return 'high'; if (s >= 4) return 'medium'; return 'low'; }
+function scoreColor(score) { const s = parseFloat(score); if (s >= 9) return 'var(--red)'; if (s >= 7) return 'var(--orange)'; if (s >= 4) return 'var(--yellow)'; return 'var(--green)'; }
+function epssColor(epss) { const e = parseFloat(epss); if (e >= 0.7) return 'var(--red)'; if (e >= 0.4) return 'var(--orange)'; if (e >= 0.1) return 'var(--yellow)'; return 'var(--green)'; }
+function exploitBadge(status) { if (status === 'active') return '<span class="badge badge-red badge-sm">⚠ Active</span>'; if (status === 'poc') return '<span class="badge badge-orange badge-sm">PoC</span>'; return '<span class="badge badge-green badge-sm">None</span>'; }
+function attckBadge(code) { const label = MITRE_ATTCK_TECHNIQUES[code] || code; return `<span class="badge badge-purple badge-sm" title="${esc(label)}">${esc(code)}</span>`; }
+function remediationBadge(status) { if (status === 'patched') return '<span class="badge badge-green badge-sm">✓ Yes</span>'; return '<span class="badge badge-red badge-sm">✗ No</span>'; }
 function genKeyword(id) { return `${id} patch mitigation`; }
-
-function calcRiskScore(cvss, epss, exploitStatus, inKEV) {
-    let score = (parseFloat(cvss) || 0) * 0.3;
-    score += (parseFloat(epss) || 0) * 10 * 0.3;
-    if (exploitStatus === 'active') score += 3;
-    else if (exploitStatus === 'poc') score += 1.5;
-    if (inKEV) score += 1;
-    return Math.min(10, Math.max(0, score)).toFixed(1);
-}
-
-function getCache(key) {
-    try { const r = localStorage.getItem(key); if (!r) return null; const d = JSON.parse(r); if (Date.now() - d.ts > FEED_CACHE_TTL) return null; return d.data; } catch { return null; }
-}
-
+function calcRiskScore(cvss, epss, exploitStatus, inKEV) { let score = (parseFloat(cvss) || 0) * 0.3; score += (parseFloat(epss) || 0) * 10 * 0.3; if (exploitStatus === 'active') score += 3; else if (exploitStatus === 'poc') score += 1.5; if (inKEV) score += 1; return Math.min(10, Math.max(0, score)).toFixed(1); }
+function getCache(key) { try { const r = localStorage.getItem(key); if (!r) return null; const d = JSON.parse(r); if (Date.now() - d.ts > FEED_CACHE_TTL) return null; return d.data; } catch { return null; } }
 function setCache(key, data) { try { localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch {} }
 
 function isOT(v) {
@@ -1197,63 +965,53 @@ function isOT(v) {
     const dL = (v.shortDescription || v.desc || '').toLowerCase();
     return OT_VENDORS_STRICT.some(k => vL.includes(k)) || OT_PRODUCT_KEYWORDS.some(k => pL.includes(k)) || (OT_PRODUCT_KEYWORDS.some(k => dL.includes(k)) && OT_VENDORS_STRICT.some(k => vL.includes(k)));
 }
-
 function isConsumer(v) {
     const combinedStr = [(v.vendorProject || v.vendor || ''), (v.product || ''), (v.shortDescription || v.desc || '')].join(' ').toLowerCase();
     return CONSUMER_VENDORS.some(k => combinedStr.includes(k)) || CONSUMER_PRODUCT_KEYWORDS.some(k => combinedStr.includes(k));
 }
-
 function classify(v) { if (isOT(v)) return 'ot'; if (isConsumer(v)) return 'consumer'; return 'it'; }
-
 function findSupplemental(cveId) { return OT_SUPPLEMENTAL.find(s => s.id === cveId); }
 
-// ── Toast ──
-function showToast(msg, type = 'info') {
+function showToast(msg, type) {
+    type = type || 'info';
     const container = document.getElementById('toastContainer');
     const toast = document.createElement('div');
-    toast.className = `toast-item ${type}`;
+    toast.className = 'toast-item ' + type;
     toast.textContent = msg;
     container.appendChild(toast);
-    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(100px)'; toast.style.transition = 'all 0.3s ease'; setTimeout(() => toast.remove(), 300); }, 3500);
+    setTimeout(function() { toast.style.opacity = '0'; toast.style.transform = 'translateX(100px)'; toast.style.transition = 'all 0.3s ease'; setTimeout(function() { toast.remove(); }, 300); }, 3500);
 }
 
-// ── RSS Feed Fetching with Multiple Proxies & Error Handling ──
+// RSS fetch with multiple proxies and proper error handling
 async function fetchRSSWithFallback(url) {
-    // Try each proxy sequentially with proper error handling
     for (let i = 0; i < RSS_PROXIES.length; i++) {
         try {
             const proxyUrl = RSS_PROXIES[i] + encodeURIComponent(url);
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 6000);
-            
+            const timeoutId = setTimeout(function() { controller.abort(); }, 6000);
             const response = await fetch(proxyUrl, { signal: controller.signal });
             clearTimeout(timeoutId);
-            
-            if (!response.ok) {
-                console.warn(`RSS Fetch Error [${RSS_PROXIES[i].split('/')[2]}]: HTTP ${response.status} for ${url}`);
-                continue;
-            }
-            
+            if (!response.ok) { console.warn('RSS Fetch Error: HTTP ' + response.status + ' for ' + url); continue; }
             const data = await response.json();
-            
-            // Validate response has expected structure
-            if (!data || (!data.items && !data.entries)) {
-                console.warn(`RSS Fetch Error [${RSS_PROXIES[i].split('/')[2]}]: Invalid response structure`);
-                continue;
+            if (!data) continue;
+            var items = data.items || data.entries || [];
+            if (!items || !Array.isArray(items)) {
+                // Try parsing nested data structure
+                if (data.data && data.data.entries) items = data.data.entries;
+                else if (data.channel && data.channel.items) items = data.channel.items;
+                else { console.warn('RSS Fetch Error: No items array found'); continue; }
             }
-            
-            return { success: true, data: data.items || data.entries || [], source: RSS_PROXIES[i].split('/')[2] };
+            return { success: true, items: items };
         } catch (err) {
-            console.warn(`RSS Fetch Error [${RSS_PROXIES[i].split('/')[2]}]: ${err.message}`);
+            console.warn('RSS Fetch Error [' + (i+1) + '/' + RSS_PROXIES.length + ']: ' + err.message);
             continue;
         }
     }
-    
-    return { success: false, data: [], source: 'all proxies failed' };
+    return { success: false, items: [] };
 }
 
 async function loadFeeds() {
-    const cached = getCache(FEED_CACHE_KEY);
+    var cached = getCache(FEED_CACHE_KEY);
     if (cached && cached.length > 0) {
         feedItems = cached;
         renderFeedPage();
@@ -1261,57 +1019,48 @@ async function loadFeeds() {
         return;
     }
     
-    const feedGrid = document.getElementById('feed-grid');
-    feedGrid.innerHTML = Array(6).fill(0).map(() => `
-        <div class="feed-card">
-            <div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div>
-            <div class="skeleton" style="height:14px;margin-bottom:4px"></div>
-            <div class="skeleton" style="width:80%;height:14px"></div>
-        </div>
-    `).join('');
-    
+    var feedGrid = document.getElementById('feed-grid');
+    feedGrid.innerHTML = '<div class="feed-card"><div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div><div class="skeleton" style="height:14px;margin-bottom:4px"></div></div><div class="feed-card"><div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div><div class="skeleton" style="height:14px;margin-bottom:4px"></div></div><div class="feed-card"><div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div><div class="skeleton" style="height:14px;margin-bottom:4px"></div></div><div class="feed-card"><div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div><div class="skeleton" style="height:14px;margin-bottom:4px"></div></div><div class="feed-card"><div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div><div class="skeleton" style="height:14px;margin-bottom:4px"></div></div><div class="feed-card"><div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div><div class="skeleton" style="height:14px;margin-bottom:4px"></div></div>';
     document.getElementById('feed-meta').textContent = 'Fetching intelligence feeds…';
 
-    const items = [];
-    const errors = [];
-    let successCount = 0;
+    var items = [];
+    var errors = [];
+    var successCount = 0;
+    var batchSize = 4;
     
-    // Fetch feeds with staggered delays to avoid rate limiting
-    const batchSize = 4;
-    for (let i = 0; i < RSS_FEEDS.length; i += batchSize) {
-        const batch = RSS_FEEDS.slice(i, i + batchSize);
-        
-        await Promise.allSettled(batch.map(async (feed, batchIndex) => {
-            // Stagger requests within batch
-            await new Promise(resolve => setTimeout(resolve, batchIndex * 300));
-            
-            const result = await fetchRSSWithFallback(feed.url);
-            
-            if (result.success) {
-                successCount++;
-                result.data.slice(0, 3).forEach(item => {
-                    items.push({
-                        source: feed.name,
-                        title: item.title || '',
-                        link: item.link || item.guid || '#',
-                        pubDate: item.pubDate || item.published || item.date || ''
+    for (var i = 0; i < RSS_FEEDS.length; i += batchSize) {
+        var batch = RSS_FEEDS.slice(i, i + batchSize);
+        var promises = batch.map(function(feed, batchIndex) {
+            return new Promise(function(resolve) {
+                setTimeout(function() {
+                    fetchRSSWithFallback(feed.url).then(function(result) {
+                        if (result.success) {
+                            successCount++;
+                            result.items.slice(0, 3).forEach(function(item) {
+                                items.push({
+                                    source: feed.name,
+                                    title: item.title || '',
+                                    link: item.link || item.guid || '#',
+                                    pubDate: item.pubDate || item.published || item.date || ''
+                                });
+                            });
+                        } else {
+                            errors.push(feed.name);
+                        }
+                        resolve();
                     });
-                });
-            } else {
-                errors.push(feed.name);
-            }
-        }));
-        
-        // Small delay between batches
+                }, batchIndex * 300);
+            });
+        });
+        await Promise.all(promises);
         if (i + batchSize < RSS_FEEDS.length) {
-            await new Promise(resolve => setTimeout(resolve, 800));
+            await new Promise(function(resolve) { setTimeout(resolve, 800); });
         }
     }
 
-    // Sort by pubDate descending (most recent first)
-    items.sort((a, b) => {
-        const da = a.pubDate ? new Date(a.pubDate).getTime() : 0;
-        const db = b.pubDate ? new Date(b.pubDate).getTime() : 0;
+    items.sort(function(a, b) {
+        var da = a.pubDate ? new Date(a.pubDate).getTime() : 0;
+        var db = b.pubDate ? new Date(b.pubDate).getTime() : 0;
         return db - da;
     });
 
@@ -1321,104 +1070,94 @@ async function loadFeeds() {
     renderFeedPage();
     buildOverviewNews();
     
-    const errorMsg = errors.length > 0 ? ` (${errors.length} feed${errors.length > 1 ? 's' : ''} failed)` : '';
-    document.getElementById('feed-meta').textContent = `${items.length} articles · ${successCount}/${RSS_FEEDS.length} sources${errorMsg} · cached 6h`;
-    
-    if (errors.length > 0) {
-        console.warn('Feed errors:', errors);
-    }
+    var errorMsg = errors.length > 0 ? ' (' + errors.length + ' feed' + (errors.length > 1 ? 's' : '') + ' failed)' : '';
+    document.getElementById('feed-meta').textContent = items.length + ' articles · ' + successCount + '/' + RSS_FEEDS.length + ' sources' + errorMsg + ' · cached 6h';
+    if (errors.length > 0) console.warn('Feed errors:', errors);
 }
 
-// ── Sync & Data Processing ──
 async function doSync() {
-    const btn = document.getElementById('syncBtn');
+    var btn = document.getElementById('syncBtn');
     btn.classList.add('syncing');
     btn.disabled = true;
     showToast('🔄 Syncing CISA KEV + ICS-CERT feeds…', 'info');
 
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
-        
-        const res = await fetch(PROXY + encodeURIComponent(CISA_KEV), { signal: controller.signal });
+        var controller = new AbortController();
+        var timeoutId = setTimeout(function() { controller.abort(); }, 15000);
+        var res = await fetch(PROXY + encodeURIComponent(CISA_KEV), { signal: controller.signal });
         clearTimeout(timeoutId);
-        
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        
-        const json = await res.json();
+        if (!res.ok) throw new Error('HTTP error! status: ' + res.status);
+        var json = await res.json();
         if (!json.vulnerabilities) throw new Error('Invalid KEV response structure');
-        
         await processVulns(json.vulnerabilities);
-        const ts = new Date().toLocaleTimeString();
-        document.getElementById('syncStatus').textContent = `Synced ${ts}`;
-        document.getElementById('pageSub').textContent = `${allVulns.length} entries · Last sync ${ts}`;
-        showToast(`✅ Synced ${allVulns.length} vulnerabilities`, 'info');
+        var ts = new Date().toLocaleTimeString();
+        document.getElementById('syncStatus').textContent = 'Synced ' + ts;
+        document.getElementById('pageSub').textContent = allVulns.length + ' entries · Last sync ' + ts;
+        showToast('✅ Synced ' + allVulns.length + ' vulnerabilities', 'info');
         updateLiveIndicator(true);
     } catch (err) {
         console.error('KEV Sync Error:', err);
         try {
-            // Fallback without proxy
-            const res = await fetch(CISA_KEV);
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            const json = await res.json();
-            await processVulns(json.vulnerabilities || []);
-            showToast(`✅ Fallback sync — ${allVulns.length} entries`, 'info');
+            var res2 = await fetch(CISA_KEV);
+            if (!res2.ok) throw new Error('HTTP error! status: ' + res2.status);
+            var json2 = await res2.json();
+            await processVulns(json2.vulnerabilities || []);
+            showToast('✅ Fallback sync — ' + allVulns.length + ' entries', 'info');
             updateLiveIndicator(true);
         } catch (err2) {
             console.error('Fallback KEV Sync Error:', err2);
-            const cached = await loadFromDB();
+            var cached = await loadFromDB();
             if (cached.length > 0) {
                 allVulns = cached;
                 rebuildTables();
-                showToast(`⚠ Using cached data — ${allVulns.length} entries`, 'warning');
+                showToast('⚠ Using cached data — ' + allVulns.length + ' entries', 'warning');
             } else {
                 showToast('⚠ Sync failed — check network connection', 'critical');
                 updateLiveIndicator(false);
             }
         }
     }
-    
     await loadFeeds();
     btn.classList.remove('syncing');
     btn.disabled = false;
 }
 
 async function processVulns(vulns) {
-    const kevMapped = vulns.map(v => {
-        const supp = findSupplemental(v.cveID);
-        const epss = supp?.epss || generateEPSS(v.cveID);
-        const exploit = supp?.exploit || 'none';
-        const attck = supp?.attck || generateAttck(v.cveID);
-        const actor = supp?.actor || null;
-        const cat = classify(v);
-        const score = supp?.score || stableScore(v.cveID);
-        const remediationStatus = supp ? (supp.exploit === 'none' ? 'patched' : 'unpatched') : 'patched';
-        
+    var kevMapped = vulns.map(function(v) {
+        var supp = findSupplemental(v.cveID);
+        var epss = supp ? supp.epss : generateEPSS(v.cveID);
+        var exploit = supp ? supp.exploit : 'none';
+        var attck = supp ? supp.attck : generateAttck(v.cveID);
+        var actor = supp ? supp.actor : null;
+        var cat = classify(v);
+        var score = supp ? supp.score : stableScore(v.cveID);
+        var remediationStatus = supp ? (supp.exploit === 'none' ? 'patched' : 'unpatched') : 'patched';
         return {
             id: v.cveID, vendor: v.vendorProject || 'Unknown', product: v.product || '—',
             desc: v.shortDescription || 'No description.', action: v.requiredAction || 'Apply vendor patch.',
-            score, severity: severityLabel(score), date: v.dateAdded || '',
-            keyword: genKeyword(v.cveID), cat, epss, exploit, attck, actor, inKEV: true,
-            riskScore: calcRiskScore(score, epss, exploit, true),
-            remediationStatus
+            score: score, severity: severityLabel(score), date: v.dateAdded || '',
+            keyword: genKeyword(v.cveID), cat: cat, epss: epss, exploit: exploit, attck: attck, actor: actor, inKEV: true,
+            riskScore: calcRiskScore(score, epss, exploit, true), remediationStatus: remediationStatus
         };
     });
 
-    const kevIds = new Set(kevMapped.map(v => v.id));
-    const suppMapped = OT_SUPPLEMENTAL.filter(v => !kevIds.has(v.id)).map(v => ({
-        id: v.id, vendor: v.vendor, product: v.product, desc: v.desc, action: v.action,
-        score: v.score, severity: severityLabel(v.score), date: v.date,
-        keyword: genKeyword(v.id), cat: 'ot',
-        epss: v.epss || generateEPSS(v.id), exploit: v.exploit || 'none',
-        attck: v.attck || generateAttck(v.id), actor: v.actor || null, inKEV: false,
-        riskScore: calcRiskScore(v.score, v.epss, v.exploit, false),
-        remediationStatus: v.exploit === 'none' ? 'patched' : 'unpatched'
-    }));
+    var kevIds = new Set(kevMapped.map(function(v) { return v.id; }));
+    var suppMapped = OT_SUPPLEMENTAL.filter(function(v) { return !kevIds.has(v.id); }).map(function(v) {
+        return {
+            id: v.id, vendor: v.vendor, product: v.product, desc: v.desc, action: v.action,
+            score: v.score, severity: severityLabel(v.score), date: v.date,
+            keyword: genKeyword(v.id), cat: 'ot',
+            epss: v.epss || generateEPSS(v.id), exploit: v.exploit || 'none',
+            attck: v.attck || generateAttck(v.id), actor: v.actor || null, inKEV: false,
+            riskScore: calcRiskScore(v.score, v.epss, v.exploit, false),
+            remediationStatus: v.exploit === 'none' ? 'patched' : 'unpatched'
+        };
+    });
 
-    allVulns = [...kevMapped, ...suppMapped];
-    allVulns.sort((a, b) => {
-        const da = a.date ? new Date(a.date).getTime() : 0;
-        const db = b.date ? new Date(b.date).getTime() : 0;
+    allVulns = kevMapped.concat(suppMapped);
+    allVulns.sort(function(a, b) {
+        var da = a.date ? new Date(a.date).getTime() : 0;
+        var db = b.date ? new Date(b.date).getTime() : 0;
         if (db !== da) return db - da;
         return b.id.localeCompare(a.id);
     });
@@ -1428,13 +1167,13 @@ async function processVulns(vulns) {
 }
 
 function rebuildTables() {
-    const itArr = allVulns.filter(v => v.cat === 'it');
-    const otArr = allVulns.filter(v => v.cat === 'ot');
-    const conArr = allVulns.filter(v => v.cat === 'consumer');
-    const critN = allVulns.filter(v => parseFloat(v.score) >= 9).length;
-    const exploitedN = allVulns.filter(v => v.exploit === 'active').length;
-    const epssHighN = allVulns.filter(v => parseFloat(v.epss) >= 0.7).length;
-    const zerodayCount = ZERO_DAY_WATCH.filter(z => z.status === 'active').length;
+    var itArr = allVulns.filter(function(v) { return v.cat === 'it'; });
+    var otArr = allVulns.filter(function(v) { return v.cat === 'ot'; });
+    var conArr = allVulns.filter(function(v) { return v.cat === 'consumer'; });
+    var critN = allVulns.filter(function(v) { return parseFloat(v.score) >= 9; }).length;
+    var exploitedN = allVulns.filter(function(v) { return v.exploit === 'active'; }).length;
+    var epssHighN = allVulns.filter(function(v) { return parseFloat(v.epss) >= 0.7; }).length;
+    var zerodayCount = ZERO_DAY_WATCH.filter(function(z) { return z.status === 'active'; }).length;
 
     document.getElementById('badge-it').textContent = itArr.length;
     document.getElementById('badge-ot').textContent = otArr.length;
@@ -1451,7 +1190,7 @@ function rebuildTables() {
     animateCount('kpi-ot', otArr.length);
     animateCount('kpi-bookmarks', bookmarks.size);
     
-    document.getElementById('overview-meta').textContent = `${allVulns.length} total · ${otArr.length} OT/ICS · ${conArr.length} Consumer · ${itArr.length} IT · ${exploitedN} actively exploited`;
+    document.getElementById('overview-meta').textContent = allVulns.length + ' total · ' + otArr.length + ' OT/ICS · ' + conArr.length + ' Consumer · ' + itArr.length + ' IT · ' + exploitedN + ' actively exploited';
 
     tableState.it.data = itArr;
     tableState.ot.data = otArr;
@@ -1473,122 +1212,120 @@ function rebuildTables() {
     updateCharts();
 }
 
-function generateEPSS(cveId) { let hash = 0; for (let i = 0; i < cveId.length; i++) { hash = ((hash << 5) - hash) + cveId.charCodeAt(i); hash |= 0; } return (Math.abs(hash) % 100) / 100; }
+function generateEPSS(cveId) { var hash = 0; for (var i = 0; i < cveId.length; i++) { hash = ((hash << 5) - hash) + cveId.charCodeAt(i); hash |= 0; } return (Math.abs(hash) % 100) / 100; }
 function generateAttck(cveId) {
-    const codes = Object.keys(MITRE_ATTCK_TECHNIQUES);
-    let hash = 0;
-    for (let i = 0; i < cveId.length; i++) { hash = ((hash << 5) - hash) + cveId.charCodeAt(i); hash |= 0; }
-    const numTechs = 1 + (Math.abs(hash) % 3);
-    const selected = [];
-    for (let i = 0; i < numTechs; i++) { selected.push(codes[(Math.abs(hash) + i * 37) % codes.length]); }
+    var codes = Object.keys(MITRE_ATTCK_TECHNIQUES);
+    var hash = 0;
+    for (var i = 0; i < cveId.length; i++) { hash = ((hash << 5) - hash) + cveId.charCodeAt(i); hash |= 0; }
+    var numTechs = 1 + (Math.abs(hash) % 3);
+    var selected = [];
+    for (var i = 0; i < numTechs; i++) { selected.push(codes[(Math.abs(hash) + i * 37) % codes.length]); }
     return selected;
 }
-function stableScore(cveId) { let hash = 0; for (let i = 0; i < cveId.length; i++) { hash = ((hash << 5) - hash) + cveId.charCodeAt(i); hash |= 0; } return Math.min(10, Math.max(3.5, 5.0 + (Math.abs(hash) % 50) / 10)).toFixed(1); }
+function stableScore(cveId) { var hash = 0; for (var i = 0; i < cveId.length; i++) { hash = ((hash << 5) - hash) + cveId.charCodeAt(i); hash |= 0; } return Math.min(10, Math.max(3.5, 5.0 + (Math.abs(hash) % 50) / 10)).toFixed(1); }
 
 function animateCount(id, target) {
-    const el = document.getElementById(id); if (!el) return;
-    const start = parseInt(el.textContent) || 0; const steps = 24; let i = 0; const inc = (target - start) / steps;
-    const iv = setInterval(() => { i++; el.textContent = Math.round(start + inc * i); if (i >= steps) { el.textContent = target; clearInterval(iv); } }, 16);
+    var el = document.getElementById(id); if (!el) return;
+    var start = parseInt(el.textContent) || 0; var steps = 24; var i = 0; var inc = (target - start) / steps;
+    var iv = setInterval(function() { i++; el.textContent = Math.round(start + inc * i); if (i >= steps) { el.textContent = target; clearInterval(iv); } }, 16);
 }
 
 function updateLiveIndicator(online) {
-    const indicator = document.getElementById('liveIndicator'); const text = document.getElementById('liveText');
+    var indicator = document.getElementById('liveIndicator'); var text = document.getElementById('liveText');
     if (online) { indicator.style.background = 'var(--green)'; indicator.classList.add('pulse'); text.textContent = 'Live'; text.style.color = 'var(--green)'; }
     else { indicator.style.background = 'var(--text3)'; indicator.classList.remove('pulse'); text.textContent = 'Offline'; text.style.color = 'var(--text3)'; }
 }
 
-// ── Table Engine ──
 function filterTable(tab) {
-    const st = tableState[tab];
-    const filterInput = document.getElementById(`${tab}-filter`);
-    const text = (filterInput ? filterInput.value : '').toLowerCase();
-    const sev = document.getElementById(`${tab}-severity-filter`)?.value || '';
-    const exploit = document.getElementById(`${tab}-exploit-filter`)?.value || '';
-    const remediation = document.getElementById(`${tab}-remediation-filter`)?.value || '';
-    const dateFrom = document.getElementById(`${tab}-date-from`)?.value;
-    const dateTo = document.getElementById(`${tab}-date-to`)?.value;
+    var st = tableState[tab];
+    var filterInput = document.getElementById(tab + '-filter');
+    var text = filterInput ? filterInput.value.toLowerCase() : '';
+    var sevEl = document.getElementById(tab + '-severity-filter');
+    var sev = sevEl ? sevEl.value : '';
+    var exploitEl = document.getElementById(tab + '-exploit-filter');
+    var exploit = exploitEl ? exploitEl.value : '';
+    var remedEl = document.getElementById(tab + '-remediation-filter');
+    var remediation = remedEl ? remedEl.value : '';
+    var dateFromEl = document.getElementById(tab + '-date-from');
+    var dateFrom = dateFromEl ? dateFromEl.value : '';
+    var dateToEl = document.getElementById(tab + '-date-to');
+    var dateTo = dateToEl ? dateToEl.value : '';
 
-    st.filtered = st.data.filter(v => {
-        const matchesText = !text || v.id.toLowerCase().includes(text) || v.vendor.toLowerCase().includes(text) || v.product.toLowerCase().includes(text) || v.desc.toLowerCase().includes(text) || (v.attck && v.attck.some(a => a.toLowerCase().includes(text)));
-        const matchesSev = !sev || v.severity === sev;
-        const matchesExploit = !exploit || v.exploit === exploit;
-        const matchesRemediation = !remediation || v.remediationStatus === remediation;
-        let matchesDate = true;
-        if (dateFrom) { const d = new Date(v.date); if (d < new Date(dateFrom)) matchesDate = false; }
-        if (dateTo) { const d = new Date(v.date); if (d > new Date(dateTo + 'T23:59:59')) matchesDate = false; }
+    st.filtered = st.data.filter(function(v) {
+        var matchesText = !text || v.id.toLowerCase().includes(text) || v.vendor.toLowerCase().includes(text) || v.product.toLowerCase().includes(text) || v.desc.toLowerCase().includes(text) || (v.attck && v.attck.some(function(a) { return a.toLowerCase().includes(text); }));
+        var matchesSev = !sev || v.severity === sev;
+        var matchesExploit = !exploit || v.exploit === exploit;
+        var matchesRemediation = !remediation || v.remediationStatus === remediation;
+        var matchesDate = true;
+        if (dateFrom) { var d = new Date(v.date); if (d < new Date(dateFrom)) matchesDate = false; }
+        if (dateTo) { var d = new Date(v.date); if (d > new Date(dateTo + 'T23:59:59')) matchesDate = false; }
         return matchesText && matchesSev && matchesExploit && matchesRemediation && matchesDate;
     });
 
     applySortToFiltered(tab); st.page = 1; renderTablePage(tab);
-    const lbl = document.getElementById(`${tab}-count-label`);
-    if (lbl) lbl.textContent = `${st.filtered.length} result${st.filtered.length !== 1 ? 's' : ''}`;
+    var lbl = document.getElementById(tab + '-count-label');
+    if (lbl) lbl.textContent = st.filtered.length + ' result' + (st.filtered.length !== 1 ? 's' : '');
 }
 
 function applySortToFiltered(tab) {
-    const st = tableState[tab];
-    const keys = ['id', 'vendor', 'product', 'score', 'epss', 'exploit', 'remediationStatus', 'attck', 'date', 'desc', 'keyword'];
-    const k = keys[st.sort] || 'date';
-    st.filtered.sort((a, b) => {
-        const av = a[k] || ''; const bv = b[k] || '';
+    var st = tableState[tab];
+    var keys = ['id', 'vendor', 'product', 'score', 'epss', 'exploit', 'remediationStatus', 'attck', 'date', 'desc', 'keyword'];
+    var k = keys[st.sort] || 'date';
+    st.filtered.sort(function(a, b) {
+        var av = a[k] || ''; var bv = b[k] || '';
         if (k === 'score' || k === 'epss') return (parseFloat(av) - parseFloat(bv)) * st.dir;
-        if (k === 'date') { const da = av ? new Date(av).getTime() : 0; const db = bv ? new Date(bv).getTime() : 0; return (da - db) * st.dir; }
+        if (k === 'date') { var da = av ? new Date(av).getTime() : 0; var db = bv ? new Date(bv).getTime() : 0; return (da - db) * st.dir; }
         return av.toString().localeCompare(bv.toString()) * st.dir;
     });
 }
 
 function renderTablePage(tab) {
-    const st = tableState[tab];
-    const tbody = document.getElementById(`${tab}-tbody`);
+    var st = tableState[tab];
+    var tbody = document.getElementById(tab + '-tbody');
     if (!tbody) return;
-    const slice = st.filtered.slice((st.page - 1) * st.perPage, st.page * st.perPage);
+    var slice = st.filtered.slice((st.page - 1) * st.perPage, st.page * st.perPage);
 
     if (!slice.length) { tbody.innerHTML = '<tr><td colspan="11" class="empty-state"><p>No results matching filters.</p></td></tr>'; renderPagination(tab); return; }
     
-    tbody.innerHTML = slice.map(v => {
-        const isBookmarked = bookmarks.has(v.id);
-        const attckHtml = v.attck ? v.attck.slice(0, 2).map(a => attckBadge(a)).join(' ') : '<span style="color:var(--text3)">—</span>';
-        return `<tr class="row-link">
-            <td style="font-family:var(--font-mono);font-size:11.5px;font-weight:600;white-space:nowrap">
-                <a href="https://nvd.nist.gov/vuln/detail/${esc(v.id)}" target="_blank" rel="noopener" style="color:var(--accent)" onclick="event.preventDefault();openDetail('${esc(v.id)}')">${esc(v.id)}</a>
-            </td>
-            <td><strong>${esc(v.vendor)}</strong></td>
-            <td style="color:var(--text2);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(v.product)}</td>
-            <td style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(v.score)}">${v.score}</td>
-            <td style="font-family:var(--font-mono);font-weight:600;color:${epssColor(v.epss)}">${parseFloat(v.epss).toFixed(2)}</td>
-            <td>${exploitBadge(v.exploit)}</td>
-            <td>${remediationBadge(v.remediationStatus)}</td>
-            <td style="max-width:120px;overflow:hidden">${attckHtml}</td>
-            <td style="color:var(--text3);font-size:11.5px;white-space:nowrap">${fmtDate(v.date)}</td>
-            <td class="tooltip-cell" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)">
-                ${esc(v.desc.substring(0, 50))}…<div class="tip">${esc(v.desc)}<br><br><strong style="color:var(--green)">Remediation:</strong> ${esc(v.action)}</div>
-            </td>
-            <td>
-                <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" onclick="event.stopPropagation();toggleBookmark('${esc(v.id)}')" title="Bookmark">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="${isBookmarked ? 'var(--yellow)' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
-                </button>
-            </td>
-        </tr>`;
-    }).join('');
+    var html = '';
+    for (var idx = 0; idx < slice.length; idx++) {
+        var v = slice[idx];
+        var isBookmarked = bookmarks.has(v.id);
+        var attckHtml = v.attck ? v.attck.slice(0, 2).map(function(a) { return attckBadge(a); }).join(' ') : '<span style="color:var(--text3)">—</span>';
+        html += '<tr class="row-link">' +
+            '<td style="font-family:var(--font-mono);font-size:11.5px;font-weight:600;white-space:nowrap"><a href="https://nvd.nist.gov/vuln/detail/' + esc(v.id) + '" target="_blank" rel="noopener" style="color:var(--accent)" onclick="event.preventDefault();openDetail(\'' + esc(v.id) + '\')">' + esc(v.id) + '</a></td>' +
+            '<td><strong>' + esc(v.vendor) + '</strong></td>' +
+            '<td style="color:var(--text2);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(v.product) + '</td>' +
+            '<td style="font-family:var(--font-mono);font-weight:700;color:' + scoreColor(v.score) + '">' + v.score + '</td>' +
+            '<td style="font-family:var(--font-mono);font-weight:600;color:' + epssColor(v.epss) + '">' + parseFloat(v.epss).toFixed(2) + '</td>' +
+            '<td>' + exploitBadge(v.exploit) + '</td>' +
+            '<td>' + remediationBadge(v.remediationStatus) + '</td>' +
+            '<td style="max-width:120px;overflow:hidden">' + attckHtml + '</td>' +
+            '<td style="color:var(--text3);font-size:11.5px;white-space:nowrap">' + fmtDate(v.date) + '</td>' +
+            '<td class="tooltip-cell" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)">' + esc(v.desc.substring(0, 50)) + '…<div class="tip">' + esc(v.desc) + '<br><br><strong style="color:var(--green)">Remediation:</strong> ' + esc(v.action) + '</div></td>' +
+            '<td><button class="bookmark-btn ' + (isBookmarked ? 'active' : '') + '" onclick="event.stopPropagation();toggleBookmark(\'' + esc(v.id) + '\')" title="Bookmark"><svg viewBox="0 0 24 24" width="15" height="15" fill="' + (isBookmarked ? 'var(--yellow)' : 'none') + '" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button></td>' +
+            '</tr>';
+    }
+    tbody.innerHTML = html;
     renderPagination(tab);
 }
 
 function renderPagination(tab) {
-    const st = tableState[tab]; const el = document.getElementById(`${tab}-pagination`);
-    if (!el) return; const tot = Math.ceil(st.filtered.length / st.perPage);
+    var st = tableState[tab]; var el = document.getElementById(tab + '-pagination');
+    if (!el) return; var tot = Math.ceil(st.filtered.length / st.perPage);
     if (tot <= 1) { el.innerHTML = ''; return; }
-    let h = `<button class="page-btn" onclick="goPage('${tab}', ${st.page - 1})" ${st.page === 1 ? 'disabled' : ''}>‹</button>`;
-    for (let i = 1; i <= tot; i++) {
-        if (i === 1 || i === tot || (i >= st.page - 2 && i <= st.page + 2)) { h += `<button class="page-btn ${i === st.page ? 'active' : ''}" onclick="goPage('${tab}', ${i})">${i}</button>`; }
+    var h = '<button class="page-btn" onclick="goPage(\'' + tab + '\', ' + (st.page - 1) + ')"' + (st.page === 1 ? ' disabled' : '') + '>‹</button>';
+    for (var i = 1; i <= tot; i++) {
+        if (i === 1 || i === tot || (i >= st.page - 2 && i <= st.page + 2)) { h += '<button class="page-btn ' + (i === st.page ? 'active' : '') + '" onclick="goPage(\'' + tab + '\', ' + i + ')">' + i + '</button>'; }
         else if (i === st.page - 3 || i === st.page + 3) { h += '<span style="color:var(--text3);padding:0 4px">…</span>'; }
     }
-    h += `<button class="page-btn" onclick="goPage('${tab}', ${st.page + 1})" ${st.page === tot ? 'disabled' : ''}>›</button><span class="page-info">${st.page}/${tot} · ${st.filtered.length} total</span>`;
+    h += '<button class="page-btn" onclick="goPage(\'' + tab + '\', ' + (st.page + 1) + ')"' + (st.page === tot ? ' disabled' : '') + '>›</button><span class="page-info">' + st.page + '/' + tot + ' · ' + st.filtered.length + ' total</span>';
     el.innerHTML = h;
 }
 
-function goPage(tab, p) { const tot = Math.ceil(tableState[tab].filtered.length / tableState[tab].perPage); if (p < 1 || p > tot) return; tableState[tab].page = p; renderTablePage(tab); }
-function sortTable(tab, col) { const st = tableState[tab]; st.dir = st.sort === col ? st.dir * -1 : -1; st.sort = col; applySortToFiltered(tab); st.page = 1; renderTablePage(tab); }
+function goPage(tab, p) { var tot = Math.ceil(tableState[tab].filtered.length / tableState[tab].perPage); if (p < 1 || p > tot) return; tableState[tab].page = p; renderTablePage(tab); }
+function sortTable(tab, col) { var st = tableState[tab]; st.dir = st.sort === col ? st.dir * -1 : -1; st.sort = col; applySortToFiltered(tab); st.page = 1; renderTablePage(tab); }
 
-// ── Bookmarking ──
 function toggleBookmark(cveId) {
     if (bookmarks.has(cveId)) { bookmarks.delete(cveId); showToast('🔖 Bookmark removed'); }
     else { bookmarks.add(cveId); showToast('🔖 Bookmark added'); }
@@ -1599,166 +1336,129 @@ function toggleBookmark(cveId) {
 }
 
 function buildBookmarksPage() {
-    const container = document.getElementById('bookmarks-container');
-    const bookmarked = allVulns.filter(v => bookmarks.has(v.id));
+    var container = document.getElementById('bookmarks-container');
+    var bookmarked = allVulns.filter(function(v) { return bookmarks.has(v.id); });
     if (!bookmarked.length) { container.innerHTML = '<div class="empty-state"><p>No bookmarked items yet.</p></div>'; return; }
-    container.innerHTML = bookmarked.map(v => `
-        <div class="watchlist-item">
-            <div class="watchlist-info">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                    <span class="watchlist-id">${esc(v.id)}</span>
-                    ${severityBadge(v.score)} ${exploitBadge(v.exploit)} ${remediationBadge(v.remediationStatus)}
-                </div>
-                <div style="font-size:11px;color:var(--text2);margin-bottom:4px">${esc(v.vendor)} — ${esc(v.product)}</div>
-                <div style="font-size:11px;color:var(--text3)">${esc(v.desc.substring(0, 120))}…</div>
-                <div style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
-                    <div style="font-size:9px;color:var(--text3);text-transform:uppercase;margin-bottom:2px">Remediation:</div>
-                    <div style="font-size:11px;color:var(--green)">${esc(v.action)}</div>
-                </div>
-                <div class="watchlist-meta">
-                    <span class="watchlist-tag">CVSS: ${v.score}</span><span class="watchlist-tag">EPSS: ${parseFloat(v.epss).toFixed(2)}</span>
-                    ${v.attck ? v.attck.slice(0, 2).map(a => `<span class="watchlist-tag">${esc(a)}</span>`).join('') : ''}
-                </div>
-            </div>
-            <button class="bookmark-btn active" onclick="toggleBookmark('${esc(v.id)}')" title="Remove bookmark">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="var(--yellow)" stroke="var(--yellow)" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
-            </button>
-        </div>
-    `).join('');
+    var html = '';
+    for (var i = 0; i < bookmarked.length; i++) {
+        var v = bookmarked[i];
+        html += '<div class="watchlist-item">' +
+            '<div class="watchlist-info">' +
+            '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span class="watchlist-id">' + esc(v.id) + '</span>' + severityBadge(v.score) + ' ' + exploitBadge(v.exploit) + ' ' + remediationBadge(v.remediationStatus) + '</div>' +
+            '<div style="font-size:11px;color:var(--text2);margin-bottom:4px">' + esc(v.vendor) + ' — ' + esc(v.product) + '</div>' +
+            '<div style="font-size:11px;color:var(--text3)">' + esc(v.desc.substring(0, 120)) + '…</div>' +
+            '<div style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;margin-bottom:2px">Remediation:</div><div style="font-size:11px;color:var(--green)">' + esc(v.action) + '</div></div>' +
+            '<div class="watchlist-meta"><span class="watchlist-tag">CVSS: ' + v.score + '</span><span class="watchlist-tag">EPSS: ' + parseFloat(v.epss).toFixed(2) + '</span>' + (v.attck ? v.attck.slice(0, 2).map(function(a) { return '<span class="watchlist-tag">' + esc(a) + '</span>'; }).join('') : '') + '</div>' +
+            '</div>' +
+            '<button class="bookmark-btn active" onclick="toggleBookmark(\'' + esc(v.id) + '\')" title="Remove bookmark"><svg viewBox="0 0 24 24" width="15" height="15" fill="var(--yellow)" stroke="var(--yellow)" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>' +
+            '</div>';
+    }
+    container.innerHTML = html;
 }
 
-// ── Zero-Day Watch ──
 function buildZeroDayWatch() {
-    const activeContainer = document.getElementById('zeroday-container');
-    const patchedContainer = document.getElementById('patched-zeroday-container');
+    var activeContainer = document.getElementById('zeroday-container');
+    var patchedContainer = document.getElementById('patched-zeroday-container');
     
-    // Sort by date discovered, newest first
-    const active = [...ZERO_DAY_WATCH.filter(z => z.status === 'active')].sort((a, b) => new Date(b.dateDiscovered) - new Date(a.dateDiscovered));
-    const patched = [...ZERO_DAY_WATCH.filter(z => z.status === 'patched')].sort((a, b) => new Date(b.dateDiscovered) - new Date(a.dateDiscovered));
+    var active = ZERO_DAY_WATCH.filter(function(z) { return z.status === 'active'; }).sort(function(a, b) { return new Date(b.dateDiscovered) - new Date(a.dateDiscovered); });
+    var patched = ZERO_DAY_WATCH.filter(function(z) { return z.status === 'patched'; }).sort(function(a, b) { return new Date(b.dateDiscovered) - new Date(a.dateDiscovered); });
     
-    activeContainer.innerHTML = active.map(z => `
-        <div class="watchlist-item">
-            <div class="watchlist-info">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-                    <span class="watchlist-id">${esc(z.id)}</span>
-                    <span class="badge badge-red badge-sm">⚠ Active Zero-Day</span>
-                    ${exploitBadge(z.exploitStatus)}
-                </div>
-                <div style="font-size:12px;font-weight:600;color:var(--text)">${esc(z.vendor)} — ${esc(z.product)}</div>
-                <div class="watchlist-desc">${esc(z.desc)}</div>
-                <div class="watchlist-meta">
-                    <span class="watchlist-tag">Discovered: ${fmtDate(z.dateDiscovered)}</span>
-                    <span class="watchlist-tag">Actor: ${esc(z.actor)}</span>
-                    <span class="watchlist-tag">CVSS: ${z.score}</span>
-                </div>
-                <div style="margin-top:8px">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-value" style="font-size:11.5px;color:var(--green)">${esc(z.mitigation)}</div>
-                </div>
-            </div>
-        </div>
-    `).join('');
+    var activeHtml = '';
+    for (var i = 0; i < active.length; i++) {
+        var z = active[i];
+        activeHtml += '<div class="watchlist-item">' +
+            '<div class="watchlist-info">' +
+            '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="watchlist-id">' + esc(z.id) + '</span><span class="badge badge-red badge-sm">⚠ Active Zero-Day</span>' + exploitBadge(z.exploitStatus) + '</div>' +
+            '<div style="font-size:12px;font-weight:600;color:var(--text)">' + esc(z.vendor) + ' — ' + esc(z.product) + '</div>' +
+            '<div class="watchlist-desc">' + esc(z.desc) + '</div>' +
+            '<div class="watchlist-meta"><span class="watchlist-tag">Discovered: ' + fmtDate(z.dateDiscovered) + '</span><span class="watchlist-tag">Actor: ' + esc(z.actor) + '</span><span class="watchlist-tag">CVSS: ' + z.score + '</span></div>' +
+            '<div style="margin-top:8px"><div class="detail-label">Remediation</div><div class="detail-value" style="font-size:11.5px;color:var(--green)">' + esc(z.mitigation) + '</div></div>' +
+            '</div></div>';
+    }
+    activeContainer.innerHTML = activeHtml || '<div class="empty-state"><p>No active zero-days.</p></div>';
     
-    patchedContainer.innerHTML = patched.map(z => `
-        <div class="watchlist-item" style="border-left-color:var(--green)">
-            <div class="watchlist-info">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                    <span class="watchlist-id" style="color:var(--green)">${esc(z.id)}</span>
-                    <span class="badge badge-green badge-sm">✓ Patched</span>
-                </div>
-                <div style="font-size:11px;color:var(--text2)">${esc(z.vendor)} — ${esc(z.product)}</div>
-                <div style="font-size:11px;color:var(--text3);margin-top:2px">${esc(z.desc.substring(0, 120))}…</div>
-                <div style="margin-top:6px">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-value" style="font-size:11px;color:var(--text2)">${esc(z.mitigation)}</div>
-                </div>
-            </div>
-        </div>
-    `).join('');
+    var patchedHtml = '';
+    for (var j = 0; j < patched.length; j++) {
+        var pz = patched[j];
+        patchedHtml += '<div class="watchlist-item" style="border-left-color:var(--green)">' +
+            '<div class="watchlist-info">' +
+            '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span class="watchlist-id" style="color:var(--green)">' + esc(pz.id) + '</span><span class="badge badge-green badge-sm">✓ Patched</span></div>' +
+            '<div style="font-size:11px;color:var(--text2)">' + esc(pz.vendor) + ' — ' + esc(pz.product) + '</div>' +
+            '<div style="font-size:11px;color:var(--text3);margin-top:2px">' + esc(pz.desc.substring(0, 120)) + '…</div>' +
+            '<div style="margin-top:6px"><div class="detail-label">Remediation</div><div class="detail-value" style="font-size:11px;color:var(--text2)">' + esc(pz.mitigation) + '</div></div>' +
+            '</div></div>';
+    }
+    patchedContainer.innerHTML = patchedHtml || '<div class="empty-state"><p>No patched zero-days.</p></div>';
 }
 
-// ── Threat Actors ──
 function buildThreatActors() {
-    document.getElementById('threat-actors-container').innerHTML = THREAT_ACTORS.map(actor => `
-        <div class="threat-actor-card">
-            <div class="actor-name">
-                <span class="badge ${actor.severity === 'critical' ? 'badge-red' : 'badge-orange'} badge-sm">${esc(actor.id)}</span>
-                ${esc(actor.name)}
-                <span style="margin-left:auto;font-size:10px;color:var(--text3)">${esc(actor.origin)}</span>
-            </div>
-            <div class="actor-desc">
-                <strong>Targets:</strong> ${esc(actor.target)}<br>
-                <strong>Tools:</strong> ${esc(actor.tools)}<br>
-                <strong>Recent Activity:</strong> ${esc(actor.recent)}
-            </div>
-            <div class="actor-tags"><span class="badge badge-accent badge-sm">${esc(actor.target.split(',')[0])}</span><span class="badge badge-purple badge-sm">${esc(actor.origin)}</span></div>
-        </div>
-    `).join('');
+    var html = '';
+    for (var i = 0; i < THREAT_ACTORS.length; i++) {
+        var actor = THREAT_ACTORS[i];
+        html += '<div class="threat-actor-card">' +
+            '<div class="actor-name"><span class="badge ' + (actor.severity === 'critical' ? 'badge-red' : 'badge-orange') + ' badge-sm">' + esc(actor.id) + '</span>' + esc(actor.name) + '<span style="margin-left:auto;font-size:10px;color:var(--text3)">' + esc(actor.origin) + '</span></div>' +
+            '<div class="actor-desc"><strong>Targets:</strong> ' + esc(actor.target) + '<br><strong>Tools:</strong> ' + esc(actor.tools) + '<br><strong>Recent Activity:</strong> ' + esc(actor.recent) + '</div>' +
+            '<div class="actor-tags"><span class="badge badge-accent badge-sm">' + esc(actor.target.split(',')[0]) + '</span><span class="badge badge-purple badge-sm">' + esc(actor.origin) + '</span></div>' +
+            '</div>';
+    }
+    document.getElementById('threat-actors-container').innerHTML = html;
     
-    const recentActivity = [
+    var recentActivity = [
         {actor:'LockBit',action:'Deployed ransomware against healthcare provider',date:'2026-04-10',severity:'critical'},
         {actor:'Volt Typhoon',action:'Exploited Cisco IOS XE zero-day in SCADA environment',date:'2026-03-18',severity:'critical'},
         {actor:'APT41',action:'Targeting Palo Alto Networks PAN-OS firewalls in OT DMZ',date:'2026-04-22',severity:'critical'},
         {actor:'BlackCat',action:'Exploiting Ivanti Endpoint Manager for OT network access',date:'2026-02-11',severity:'critical'},
         {actor:'APT28',action:'Phishing campaign targeting ICS engineering workstations',date:'2026-01-15',severity:'high'},
         {actor:'Lazarus Group',action:'Deployed AppleJeus variant targeting cryptocurrency exchanges',date:'2025-12-28',severity:'high'}
-    ];
+    ].sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
     
-    document.getElementById('actor-activity-container').innerHTML = recentActivity.sort((a,b) => new Date(b.date) - new Date(a.date)).map(a => `
-        <div class="timeline-item ${a.severity}">
-            <div class="timeline-date">${fmtDate(a.date)}</div>
-            <div class="timeline-content"><strong>${esc(a.actor)}:</strong> ${esc(a.action)}</div>
-        </div>
-    `).join('');
+    var actHtml = '';
+    for (var j = 0; j < recentActivity.length; j++) {
+        var a = recentActivity[j];
+        actHtml += '<div class="timeline-item ' + a.severity + '"><div class="timeline-date">' + fmtDate(a.date) + '</div><div class="timeline-content"><strong>' + esc(a.actor) + ':</strong> ' + esc(a.action) + '</div></div>';
+    }
+    document.getElementById('actor-activity-container').innerHTML = actHtml;
 }
 
-// ── IOC Tracker ──
 function buildIOCList() { renderIOC(IOC_DATABASE); }
 function filterIOC(searchTerm) {
-    const typeFilter = document.getElementById('ioc-type-filter')?.value || '';
-    const search = (searchTerm || document.getElementById('ioc-search')?.value || '').toLowerCase();
-    let filtered = IOC_DATABASE.filter(ioc => {
-        const matchesType = !typeFilter || ioc.type === typeFilter;
-        const matchesSearch = !search || ioc.value.toLowerCase().includes(search) || ioc.context.toLowerCase().includes(search);
+    var typeFilter = document.getElementById('ioc-type-filter') ? document.getElementById('ioc-type-filter').value : '';
+    var search = searchTerm || (document.getElementById('ioc-search') ? document.getElementById('ioc-search').value : '');
+    search = search.toLowerCase();
+    var filtered = IOC_DATABASE.filter(function(ioc) {
+        var matchesType = !typeFilter || ioc.type === typeFilter;
+        var matchesSearch = !search || ioc.value.toLowerCase().includes(search) || ioc.context.toLowerCase().includes(search);
         return matchesType && matchesSearch;
     });
     renderIOC(filtered);
 }
 function renderIOC(items) {
-    const container = document.getElementById('ioc-container');
-    const lbl = document.getElementById('ioc-count-label');
-    if (lbl) lbl.textContent = `${items.length} IOC${items.length !== 1 ? 's' : ''}`;
+    var container = document.getElementById('ioc-container');
+    var lbl = document.getElementById('ioc-count-label');
+    if (lbl) lbl.textContent = items.length + ' IOC' + (items.length !== 1 ? 's' : '');
     if (!items.length) { container.innerHTML = '<div class="empty-state"><p>No IOCs match the current filters.</p></div>'; return; }
-    container.innerHTML = items.map(ioc => `
-        <div class="ioc-item">
-            <span class="ioc-type ${ioc.type}">${ioc.type.toUpperCase()}</span>
-            <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(ioc.value)}</span>
-            <span style="font-size:10px;color:var(--text3);font-family:var(--font-body)">${esc(ioc.context)}</span>
-            <span class="watchlist-tag">${fmtDate(ioc.firstSeen)}</span>
-            <span class="badge ${ioc.confidence === 'critical' ? 'badge-red' : ioc.confidence === 'high' ? 'badge-orange' : 'badge-yellow'} badge-sm">${ioc.confidence}</span>
-        </div>
-    `).join('');
+    var html = '';
+    for (var i = 0; i < items.length; i++) {
+        var ioc = items[i];
+        html += '<div class="ioc-item"><span class="ioc-type ' + ioc.type + '">' + ioc.type.toUpperCase() + '</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(ioc.value) + '</span><span style="font-size:10px;color:var(--text3);font-family:var(--font-body)">' + esc(ioc.context) + '</span><span class="watchlist-tag">' + fmtDate(ioc.firstSeen) + '</span><span class="badge ' + (ioc.confidence === 'critical' ? 'badge-red' : ioc.confidence === 'high' ? 'badge-orange' : 'badge-yellow') + ' badge-sm">' + ioc.confidence + '</span></div>';
+    }
+    container.innerHTML = html;
 }
 
-// ── Timeline ──
 function buildTimeline() {
-    const container = document.getElementById('timeline-container');
-    const events = allVulns.slice(0, 30).map(v => ({ date: v.date, title: v.id, desc: `${esc(v.vendor)} — ${esc(v.product)}`, severity: v.severity }));
-    events.sort((a, b) => new Date(b.date) - new Date(a.date));
-    container.innerHTML = events.map(e => `
-        <div class="timeline-item ${e.severity}">
-            <div class="timeline-date">${fmtDate(e.date)}</div>
-            <div class="timeline-content">
-                <strong style="font-family:var(--font-mono);color:var(--accent)">${esc(e.title)}</strong>
-                <div style="color:var(--text2);margin-top:2px">${e.desc}</div>
-            </div>
-        </div>
-    `).join('');
+    var container = document.getElementById('timeline-container');
+    var events = allVulns.slice(0, 30).map(function(v) { return { date: v.date, title: v.id, desc: esc(v.vendor) + ' — ' + esc(v.product), severity: v.severity }; });
+    events.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+    var html = '';
+    for (var i = 0; i < events.length; i++) {
+        var e = events[i];
+        html += '<div class="timeline-item ' + e.severity + '"><div class="timeline-date">' + fmtDate(e.date) + '</div><div class="timeline-content"><strong style="font-family:var(--font-mono);color:var(--accent)">' + e.title + '</strong><div style="color:var(--text2);margin-top:2px">' + e.desc + '</div></div></div>';
+    }
+    container.innerHTML = html;
 }
 
-// ── Charts with Theme Support ──
 function getThemeColors() {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     return {
         text: isDark ? '#8892a8' : '#64748b',
         grid: isDark ? '#1e2433' : '#e2e8f0',
@@ -1774,7 +1474,7 @@ function getThemeColors() {
 }
 
 function updateCharts() {
-    const tc = getThemeColors();
+    var tc = getThemeColors();
     updateTrendChart(tc);
     updateRiskChart(tc);
     updateSeverityChart(tc);
@@ -1786,23 +1486,21 @@ function updateCharts() {
 }
 
 function updateTrendChart(tc) {
-    const canvas = document.getElementById('trendChart'); if (!canvas) return;
+    var canvas = document.getElementById('trendChart'); if (!canvas) return;
     if (trendChartInstance) trendChartInstance.destroy();
-    
-    const days = 30; const labels = []; const totalData = []; const critData = [];
-    for (let i = days - 1; i >= 0; i--) {
-        const d = new Date(); d.setDate(d.getDate() - i);
-        const dateStr = d.toISOString().split('T')[0];
+    var days = 30; var labels = []; var totalData = []; var critData = [];
+    for (var i = days - 1; i >= 0; i--) {
+        var d = new Date(); d.setDate(d.getDate() - i);
+        var dateStr = d.toISOString().split('T')[0];
         labels.push(fmtDate(dateStr));
-        totalData.push(allVulns.filter(v => v.date && v.date.startsWith(dateStr)).length);
-        critData.push(allVulns.filter(v => v.date && v.date.startsWith(dateStr) && parseFloat(v.score) >= 9).length);
+        totalData.push(allVulns.filter(function(v) { return v.date && v.date.startsWith(dateStr); }).length);
+        critData.push(allVulns.filter(function(v) { return v.date && v.date.startsWith(dateStr) && parseFloat(v.score) >= 9; }).length);
     }
-    
-    const ctx = canvas.getContext('2d');
+    var ctx = canvas.getContext('2d');
     trendChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels,
+            labels: labels,
             datasets: [
                 { label: 'Total', data: totalData, borderColor: tc.accent, backgroundColor: 'rgba(59, 130, 246, 0.15)', fill: true, tension: 0.4, pointRadius: 0, pointHoverRadius: 4 },
                 { label: 'Critical', data: critData, borderColor: tc.red, backgroundColor: 'rgba(239, 68, 68, 0.15)', fill: true, tension: 0.4, pointRadius: 0, pointHoverRadius: 4 }
@@ -1817,15 +1515,13 @@ function updateTrendChart(tc) {
 }
 
 function updateRiskChart(tc) {
-    const canvas = document.getElementById('riskChart'); if (!canvas) return;
+    var canvas = document.getElementById('riskChart'); if (!canvas) return;
     if (riskChartInstance) riskChartInstance.destroy();
-    
-    const critical = allVulns.filter(v => parseFloat(v.score) >= 9).length;
-    const high = allVulns.filter(v => parseFloat(v.score) >= 7 && parseFloat(v.score) < 9).length;
-    const medium = allVulns.filter(v => parseFloat(v.score) >= 4 && parseFloat(v.score) < 7).length;
-    const low = allVulns.filter(v => parseFloat(v.score) < 4).length;
-    
-    const ctx = canvas.getContext('2d');
+    var critical = allVulns.filter(function(v) { return parseFloat(v.score) >= 9; }).length;
+    var high = allVulns.filter(function(v) { return parseFloat(v.score) >= 7 && parseFloat(v.score) < 9; }).length;
+    var medium = allVulns.filter(function(v) { return parseFloat(v.score) >= 4 && parseFloat(v.score) < 7; }).length;
+    var low = allVulns.filter(function(v) { return parseFloat(v.score) < 4; }).length;
+    var ctx = canvas.getContext('2d');
     riskChartInstance = new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -1841,22 +1537,20 @@ function updateRiskChart(tc) {
 }
 
 function updateSeverityChart(tc) {
-    const canvas = document.getElementById('severityChart'); if (!canvas) return;
+    var canvas = document.getElementById('severityChart'); if (!canvas) return;
     if (severityChartInstance) severityChartInstance.destroy();
-    
-    const sevCounts = { 'IT': { critical: 0, high: 0, medium: 0, low: 0 }, 'OT/ICS': { critical: 0, high: 0, medium: 0, low: 0 }, 'Consumer': { critical: 0, high: 0, medium: 0, low: 0 } };
-    allVulns.forEach(v => { const cat = v.cat === 'ot' ? 'OT/ICS' : v.cat === 'consumer' ? 'Consumer' : 'IT'; sevCounts[cat][v.severity]++; });
-    
-    const ctx = canvas.getContext('2d');
+    var sevCounts = { 'IT': { critical: 0, high: 0, medium: 0, low: 0 }, 'OT/ICS': { critical: 0, high: 0, medium: 0, low: 0 }, 'Consumer': { critical: 0, high: 0, medium: 0, low: 0 } };
+    allVulns.forEach(function(v) { var cat = v.cat === 'ot' ? 'OT/ICS' : v.cat === 'consumer' ? 'Consumer' : 'IT'; sevCounts[cat][v.severity]++; });
+    var ctx = canvas.getContext('2d');
     severityChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: Object.keys(sevCounts),
             datasets: [
-                { label: 'Critical', data: Object.values(sevCounts).map(s => s.critical), backgroundColor: tc.red },
-                { label: 'High', data: Object.values(sevCounts).map(s => s.high), backgroundColor: tc.orange },
-                { label: 'Medium', data: Object.values(sevCounts).map(s => s.medium), backgroundColor: tc.yellow },
-                { label: 'Low', data: Object.values(sevCounts).map(s => s.low), backgroundColor: tc.green }
+                { label: 'Critical', data: Object.values(sevCounts).map(function(s) { return s.critical; }), backgroundColor: tc.red },
+                { label: 'High', data: Object.values(sevCounts).map(function(s) { return s.high; }), backgroundColor: tc.orange },
+                { label: 'Medium', data: Object.values(sevCounts).map(function(s) { return s.medium; }), backgroundColor: tc.yellow },
+                { label: 'Low', data: Object.values(sevCounts).map(function(s) { return s.low; }), backgroundColor: tc.green }
             ]
         },
         options: {
@@ -1868,17 +1562,15 @@ function updateSeverityChart(tc) {
 }
 
 function updateVendorChart(tc) {
-    const canvas = document.getElementById('vendorChart'); if (!canvas) return;
+    var canvas = document.getElementById('vendorChart'); if (!canvas) return;
     if (vendorChartInstance) vendorChartInstance.destroy();
-    
-    const vendorCounts = {};
-    allVulns.forEach(v => { vendorCounts[v.vendor] = (vendorCounts[v.vendor] || 0) + 1; });
-    const topVendors = Object.entries(vendorCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
-    
-    const ctx = canvas.getContext('2d');
+    var vendorCounts = {};
+    allVulns.forEach(function(v) { vendorCounts[v.vendor] = (vendorCounts[v.vendor] || 0) + 1; });
+    var topVendors = Object.entries(vendorCounts).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 8);
+    var ctx = canvas.getContext('2d');
     vendorChartInstance = new Chart(ctx, {
         type: 'bar',
-        data: { labels: topVendors.map(v => v[0]), datasets: [{ label: 'Vulnerabilities', data: topVendors.map(v => v[1]), backgroundColor: tc.accent, borderRadius: 4 }] },
+        data: { labels: topVendors.map(function(v) { return v[0]; }), datasets: [{ label: 'Vulnerabilities', data: topVendors.map(function(v) { return v[1]; }), backgroundColor: tc.accent, borderRadius: 4 }] },
         options: {
             responsive: true, maintainAspectRatio: false, indexAxis: 'y',
             plugins: { legend: { display: false } },
@@ -1888,18 +1580,16 @@ function updateVendorChart(tc) {
 }
 
 function updateEPSSScatter(tc) {
-    const canvas = document.getElementById('epssScatterChart'); if (!canvas) return;
+    var canvas = document.getElementById('epssScatterChart'); if (!canvas) return;
     if (epssScatterInstance) epssScatterInstance.destroy();
-    
-    const sample = allVulns.slice(0, 100);
-    const datasets = { it: { data: [], label: 'IT' }, ot: { data: [], label: 'OT/ICS' }, consumer: { data: [], label: 'Consumer' } };
-    sample.forEach(v => { datasets[v.cat].data.push({ x: parseFloat(v.score), y: parseFloat(v.epss) }); });
-    const colors = { it: tc.accent, ot: tc.cyan, consumer: tc.orange };
-    
-    const ctx = canvas.getContext('2d');
+    var sample = allVulns.slice(0, 100);
+    var datasets = { it: { data: [], label: 'IT' }, ot: { data: [], label: 'OT/ICS' }, consumer: { data: [], label: 'Consumer' } };
+    sample.forEach(function(v) { datasets[v.cat].data.push({ x: parseFloat(v.score), y: parseFloat(v.epss) }); });
+    var colors = { it: tc.accent, ot: tc.cyan, consumer: tc.orange };
+    var ctx = canvas.getContext('2d');
     epssScatterInstance = new Chart(ctx, {
         type: 'scatter',
-        data: { datasets: Object.entries(datasets).map(([key, val]) => ({ label: val.label, data: val.data, backgroundColor: colors[key], pointRadius: 4 })) },
+        data: { datasets: Object.entries(datasets).map(function(entry) { var key = entry[0]; var val = entry[1]; return { label: val.label, data: val.data, backgroundColor: colors[key], pointRadius: 4 }; }) },
         options: {
             responsive: true, maintainAspectRatio: false,
             plugins: { legend: { labels: { color: tc.text, font: { size: 11 } } } },
@@ -1909,21 +1599,19 @@ function updateEPSSScatter(tc) {
 }
 
 function updateDisclosureChart(tc) {
-    const canvas = document.getElementById('disclosureChart'); if (!canvas) return;
+    var canvas = document.getElementById('disclosureChart'); if (!canvas) return;
     if (disclosureChartInstance) disclosureChartInstance.destroy();
-    
-    const months = []; const data = [];
-    for (let i = 11; i >= 0; i--) {
-        const d = new Date(); d.setMonth(d.getMonth() - i);
-        const monthStr = d.toISOString().slice(0, 7);
+    var months = []; var data = [];
+    for (var i = 11; i >= 0; i--) {
+        var d = new Date(); d.setMonth(d.getMonth() - i);
+        var monthStr = d.toISOString().slice(0, 7);
         months.push(d.toLocaleDateString('en-GB', { month: 'short', year: '2-digit' }));
-        data.push(allVulns.filter(v => v.date && v.date.startsWith(monthStr)).length);
+        data.push(allVulns.filter(function(v) { return v.date && v.date.startsWith(monthStr); }).length);
     }
-    
-    const ctx = canvas.getContext('2d');
+    var ctx = canvas.getContext('2d');
     disclosureChartInstance = new Chart(ctx, {
         type: 'bar',
-        data: { labels: months, datasets: [{ label: 'Vulnerabilities Disclosed', data, backgroundColor: tc.purple, borderRadius: 4 }] },
+        data: { labels: months, datasets: [{ label: 'Vulnerabilities Disclosed', data: data, backgroundColor: tc.purple, borderRadius: 4 }] },
         options: {
             responsive: true, maintainAspectRatio: false,
             plugins: { legend: { display: false } },
@@ -1933,25 +1621,21 @@ function updateDisclosureChart(tc) {
 }
 
 function updateATTACKCoverage(tc) {
-    const container = document.getElementById('attck-coverage'); if (!container) return;
-    const techniqueCounts = {};
-    allVulns.forEach(v => { if (v.attck) v.attck.forEach(code => { techniqueCounts[code] = (techniqueCounts[code] || 0) + 1; }); });
-    const topTechniques = Object.entries(techniqueCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
-    
-    container.innerHTML = topTechniques.map(([code, count]) => `
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-            <span class="badge badge-purple badge-sm" style="min-width:50px;text-align:center">${esc(code)}</span>
-            <div style="flex:1">
-                <div style="font-size:11px;color:var(--text2);margin-bottom:3px">${esc(MITRE_ATTCK_TECHNIQUES[code] || code)}</div>
-                <div class="risk-meter"><div class="risk-bar"><div class="risk-fill" style="width:${Math.min(100, count * 5)}%;background:var(--purple)"></div></div><span style="font-size:10px;color:var(--text3);font-family:var(--font-mono)">${count}</span></div>
-            </div>
-        </div>
-    `).join('');
+    var container = document.getElementById('attck-coverage'); if (!container) return;
+    var techniqueCounts = {};
+    allVulns.forEach(function(v) { if (v.attck) v.attck.forEach(function(code) { techniqueCounts[code] = (techniqueCounts[code] || 0) + 1; }); });
+    var topTechniques = Object.entries(techniqueCounts).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
+    var html = '';
+    for (var i = 0; i < topTechniques.length; i++) {
+        var code = topTechniques[i][0]; var count = topTechniques[i][1];
+        html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="badge badge-purple badge-sm" style="min-width:50px;text-align:center">' + esc(code) + '</span><div style="flex:1"><div style="font-size:11px;color:var(--text2);margin-bottom:3px">' + esc(MITRE_ATTCK_TECHNIQUES[code] || code) + '</div><div class="risk-meter"><div class="risk-bar"><div class="risk-fill" style="width:' + Math.min(100, count * 5) + '%;background:var(--purple)"></div></div><span style="font-size:10px;color:var(--text3);font-family:var(--font-mono)">' + count + '</span></div></div></div>';
+    }
+    container.innerHTML = html;
 }
 
 function updateComplianceMapping(tc) {
-    const container = document.getElementById('compliance-mapping'); if (!container) return;
-    const frameworks = [
+    var container = document.getElementById('compliance-mapping'); if (!container) return;
+    var frameworks = [
         { name: 'NIST CSF 2.0', coverage: 92, color: tc.cyan },
         { name: 'IEC 62443', coverage: 88, color: tc.green },
         { name: 'NIST SP 800-53', coverage: 95, color: tc.accent },
@@ -1959,144 +1643,119 @@ function updateComplianceMapping(tc) {
         { name: 'ISO 27001:2022', coverage: 84, color: tc.orange },
         { name: 'CMMC 2.0', coverage: 79, color: tc.pink }
     ];
-    
-    container.innerHTML = frameworks.map(f => `
-        <div style="margin-bottom:12px">
-            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:11px;font-weight:600;color:var(--text)">${f.name}</span>
-                <span style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">${f.coverage}%</span>
-            </div>
-            <div class="risk-meter"><div class="risk-bar"><div class="risk-fill" style="width:${f.coverage}%;background:${f.color}"></div></div></div>
-        </div>
-    `).join('');
-}
-
-// ── Overview News ──
-function buildOverviewNews() {
-    const cached = getCache(FEED_CACHE_KEY); const items = cached ? cached.slice(0, 10) : [];
-    const tbody = document.getElementById('overview-news-tbody');
-    if (!items.length) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text3);padding:20px">Sync to load latest intelligence</td></tr>'; return; }
-    tbody.innerHTML = items.map(item => {
-        const cveMatch = item.title?.match(/CVE-\d{4}-\d+/);
-        let relevance = '';
-        if (cveMatch && allVulns.some(v => v.id === cveMatch[0])) { relevance = '<span class="badge badge-red badge-sm">⚠ High</span>'; }
-        else if (['CISA','ICS-CERT'].some(s => (item.source || '').includes(s))) { relevance = '<span class="badge badge-cyan badge-sm">Official</span>'; }
-        else { relevance = '<span class="badge badge-accent badge-sm">Intel</span>'; }
-        return `<tr>
-            <td><span class="badge badge-accent">${esc(item.source || 'Feed')}</span></td>
-            <td><a href="${esc(item.link || '#')}" target="_blank" rel="noopener" style="color:var(--text);font-weight:500;font-size:12.5px">${esc((item.title || '').substring(0, 100))}</a></td>
-            <td style="color:var(--text3);font-size:11.5px;white-space:nowrap">${fmtDate(item.pubDate)}</td>
-            <td>${relevance}</td>
-        </tr>`;
-    }).join('');
-}
-
-// ── Critical Modal (Sorted by Date, Remediation Inline) ──
-function openCriticalModal() {
-    const critIT = allVulns.filter(v => v.cat === 'it' && parseFloat(v.score) >= 9).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10);
-    const critOT = allVulns.filter(v => v.cat === 'ot' && parseFloat(v.score) >= 9).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10);
-    const critCon = allVulns.filter(v => v.cat === 'consumer' && parseFloat(v.score) >= 9).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10);
-    
-    const rows = Math.max(critIT.length, critOT.length, critCon.length, 1);
-    let html = '';
-    
-    for (let i = 0; i < rows; i++) {
-        const it = critIT[i]; const ot = critOT[i]; const con = critCon[i];
-        
-        const col = (item, color) => item ? `
-            <div style="font-family:var(--font-mono);font-size:11px;color:${color}">${esc(item.id)}</div>
-            <div style="font-size:11px;color:var(--text2);margin-top:2px">${esc(item.vendor)}</div>
-            <div style="margin-top:3px">${exploitBadge(item.exploit)} ${remediationBadge(item.remediationStatus)}</div>
-            <div class="remediation-row">
-                <div class="rem-label">Remediation:</div>
-                <div class="rem-action">${esc(item.action)}</div>
-            </div>
-        ` : '<span style="color:var(--text3)">—</span>';
-        
-        html += `<tr>
-            <td style="vertical-align:top;padding:12px 14px">${col(it, 'var(--accent)')}</td>
-            <td style="vertical-align:top;padding:12px 14px">${col(ot, 'var(--cyan)')}</td>
-            <td style="vertical-align:top;padding:12px 14px">${col(con, 'var(--orange)')}</td>
-        </tr>`;
+    var html = '';
+    for (var i = 0; i < frameworks.length; i++) {
+        var f = frameworks[i];
+        html += '<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;font-weight:600;color:var(--text)">' + f.name + '</span><span style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">' + f.coverage + '%</span></div><div class="risk-meter"><div class="risk-bar"><div class="risk-fill" style="width:' + f.coverage + '%;background:' + f.color + '"></div></div></div></div>';
     }
-    
+    container.innerHTML = html;
+}
+
+function buildOverviewNews() {
+    var cached = getCache(FEED_CACHE_KEY); var items = cached ? cached.slice(0, 10) : [];
+    var tbody = document.getElementById('overview-news-tbody');
+    if (!items.length) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text3);padding:20px">Sync to load latest intelligence</td></tr>'; return; }
+    var html = '';
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var cveMatch = item.title ? item.title.match(/CVE-\d{4}-\d+/) : null;
+        var relevance = '';
+        if (cveMatch && allVulns.some(function(v) { return v.id === cveMatch[0]; })) { relevance = '<span class="badge badge-red badge-sm">⚠ High</span>'; }
+        else if (['CISA','ICS-CERT'].some(function(s) { return (item.source || '').includes(s); })) { relevance = '<span class="badge badge-cyan badge-sm">Official</span>'; }
+        else { relevance = '<span class="badge badge-accent badge-sm">Intel</span>'; }
+        html += '<tr><td><span class="badge badge-accent">' + esc(item.source || 'Feed') + '</span></td><td><a href="' + esc(item.link || '#') + '" target="_blank" rel="noopener" style="color:var(--text);font-weight:500;font-size:12.5px">' + esc((item.title || '').substring(0, 100)) + '</a></td><td style="color:var(--text3);font-size:11.5px;white-space:nowrap">' + fmtDate(item.pubDate) + '</td><td>' + relevance + '</td></tr>';
+    }
+    tbody.innerHTML = html;
+}
+
+function openCriticalModal() {
+    var critIT = allVulns.filter(function(v) { return v.cat === 'it' && parseFloat(v.score) >= 9; }).sort(function(a, b) { return new Date(b.date) - new Date(a.date); }).slice(0, 10);
+    var critOT = allVulns.filter(function(v) { return v.cat === 'ot' && parseFloat(v.score) >= 9; }).sort(function(a, b) { return new Date(b.date) - new Date(a.date); }).slice(0, 10);
+    var critCon = allVulns.filter(function(v) { return v.cat === 'consumer' && parseFloat(v.score) >= 9; }).sort(function(a, b) { return new Date(b.date) - new Date(a.date); }).slice(0, 10);
+    var rows = Math.max(critIT.length, critOT.length, critCon.length, 1);
+    var html = '';
+    for (var i = 0; i < rows; i++) {
+        var it = critIT[i]; var ot = critOT[i]; var con = critCon[i];
+        var colFn = function(item, color) {
+            if (!item) return '<span style="color:var(--text3)">—</span>';
+            return '<div style="font-family:var(--font-mono);font-size:11px;color:' + color + '">' + esc(item.id) + '</div>' +
+                '<div style="font-size:11px;color:var(--text2);margin-top:2px">' + esc(item.vendor) + '</div>' +
+                '<div style="margin-top:3px">' + exploitBadge(item.exploit) + ' ' + remediationBadge(item.remediationStatus) + '</div>' +
+                '<div class="remediation-row"><div class="rem-label">Remediation:</div><div class="rem-action">' + esc(item.action) + '</div></div>';
+        };
+        html += '<tr><td style="vertical-align:top;padding:12px 14px">' + colFn(it, 'var(--accent)') + '</td><td style="vertical-align:top;padding:12px 14px">' + colFn(ot, 'var(--cyan)') + '</td><td style="vertical-align:top;padding:12px 14px">' + colFn(con, 'var(--orange)') + '</td></tr>';
+    }
     document.getElementById('critical-tbody').innerHTML = html;
     document.getElementById('criticalOverlay').classList.add('open');
 }
 
 function closeCritical() { document.getElementById('criticalOverlay').classList.remove('open'); }
 
-// ── Detail Modal ──
 function openDetail(cveId) {
     currentDetailCVE = cveId;
-    const v = allVulns.find(x => x.id === cveId); if (!v) return;
-    
+    var v = allVulns.find(function(x) { return x.id === cveId; }); if (!v) return;
     document.getElementById('detail-title').textContent = v.id;
-    document.getElementById('detail-subtitle').textContent = `${esc(v.vendor)} — ${esc(v.product)}`;
+    document.getElementById('detail-subtitle').textContent = esc(v.vendor) + ' — ' + esc(v.product);
     document.getElementById('detail-bookmark').classList.toggle('active', bookmarks.has(v.id));
     
-    const attckHtml = v.attck ? v.attck.map(a => `${attckBadge(a)} <span style="font-size:10px;color:var(--text3)">${esc(MITRE_ATTCK_TECHNIQUES[a] || '')}</span><br>`).join('') : '<span style="color:var(--text3)">—</span>';
-    const riskPct = Math.min(100, parseFloat(v.riskScore) * 10);
-    const riskColor = parseFloat(v.riskScore) >= 7 ? 'var(--red)' : parseFloat(v.riskScore) >= 4 ? 'var(--orange)' : 'var(--green)';
+    var attckHtml = v.attck ? v.attck.map(function(a) { return attckBadge(a) + ' <span style="font-size:10px;color:var(--text3)">' + esc(MITRE_ATTCK_TECHNIQUES[a] || '') + '</span><br>'; }).join('') : '<span style="color:var(--text3)">—</span>';
+    var riskPct = Math.min(100, parseFloat(v.riskScore) * 10);
+    var riskColor = parseFloat(v.riskScore) >= 7 ? 'var(--red)' : parseFloat(v.riskScore) >= 4 ? 'var(--orange)' : 'var(--green)';
     
-    document.getElementById('detail-body').innerHTML = `
-        <div class="detail-grid">
-            <div class="detail-section"><div class="detail-label">Vendor</div><div class="detail-value"><strong>${esc(v.vendor)}</strong></div></div>
-            <div class="detail-section"><div class="detail-label">Product</div><div class="detail-value">${esc(v.product)}</div></div>
-            <div class="detail-section"><div class="detail-label">Category</div><div class="detail-value"><span class="badge ${v.cat === 'ot' ? 'badge-cyan' : v.cat === 'consumer' ? 'badge-orange' : 'badge-accent'}">${v.cat.toUpperCase()}</span></div></div>
-            <div class="detail-section"><div class="detail-label">Date Added</div><div class="detail-value">${fmtDate(v.date)}</div></div>
-            <div class="detail-section"><div class="detail-label">CVSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:${scoreColor(v.score)}">${v.score} / 10 ${severityBadge(v.score)}</div></div>
-            <div class="detail-section"><div class="detail-label">EPSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:${epssColor(v.epss)}">${parseFloat(v.epss).toFixed(2)} <span style="font-size:11px;color:var(--text3)">(${(parseFloat(v.epss) * 100).toFixed(1)}% exploitation probability)</span></div></div>
-            <div class="detail-section"><div class="detail-label">Exploit Status</div><div class="detail-value">${exploitBadge(v.exploit)}</div></div>
-            <div class="detail-section"><div class="detail-label">Remediation Status</div><div class="detail-value">${remediationBadge(v.remediationStatus)}</div></div>
-            <div class="detail-section"><div class="detail-label">CISA KEV</div><div class="detail-value">${v.inKEV ? '<span class="badge badge-red badge-sm">⚠ In KEV</span>' : '<span class="badge badge-green badge-sm">Not listed</span>'}</div></div>
-            <div class="detail-section">
-                <div class="detail-label">Risk Score</div>
-                <div class="risk-meter" style="margin-top:4px"><div class="risk-bar" style="height:10px"><div class="risk-fill" style="width:${riskPct}%;background:${riskColor}"></div></div><span style="font-family:var(--font-mono);font-weight:700;color:${riskColor}">${v.riskScore}</span></div>
-            </div>
-            <div class="detail-section detail-full"><div class="detail-label">MITRE ATT&CK Techniques</div><div class="detail-value" style="line-height:1.8">${attckHtml}</div></div>
-            ${v.actor ? `<div class="detail-section"><div class="detail-label">Associated Threat Actor</div><div class="detail-value" style="color:var(--pink);font-weight:600">${esc(v.actor)}</div></div>` : ''}
-            <div class="detail-section detail-full"><div class="detail-label">Description</div><div class="detail-value">${esc(v.desc)}</div></div>
-            <div class="detail-section detail-full">
-                <div class="detail-label">Recommended Action</div>
-                <div class="detail-value" style="color:var(--green);background:var(--green-dim);padding:12px;border-radius:var(--radius-md)">${esc(v.action)}</div>
-            </div>
-        </div>
-    `;
+    document.getElementById('detail-body').innerHTML =
+        '<div class="detail-grid">' +
+        '<div class="detail-section"><div class="detail-label">Vendor</div><div class="detail-value"><strong>' + esc(v.vendor) + '</strong></div></div>' +
+        '<div class="detail-section"><div class="detail-label">Product</div><div class="detail-value">' + esc(v.product) + '</div></div>' +
+        '<div class="detail-section"><div class="detail-label">Category</div><div class="detail-value"><span class="badge ' + (v.cat === 'ot' ? 'badge-cyan' : v.cat === 'consumer' ? 'badge-orange' : 'badge-accent') + '">' + v.cat.toUpperCase() + '</span></div></div>' +
+        '<div class="detail-section"><div class="detail-label">Date Added</div><div class="detail-value">' + fmtDate(v.date) + '</div></div>' +
+        '<div class="detail-section"><div class="detail-label">CVSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:' + scoreColor(v.score) + '">' + v.score + ' / 10 ' + severityBadge(v.score) + '</div></div>' +
+        '<div class="detail-section"><div class="detail-label">EPSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:' + epssColor(v.epss) + '">' + parseFloat(v.epss).toFixed(2) + ' <span style="font-size:11px;color:var(--text3)">(' + (parseFloat(v.epss) * 100).toFixed(1) + '% exploitation probability)</span></div></div>' +
+        '<div class="detail-section"><div class="detail-label">Exploit Status</div><div class="detail-value">' + exploitBadge(v.exploit) + '</div></div>' +
+        '<div class="detail-section"><div class="detail-label">Remediation Status</div><div class="detail-value">' + remediationBadge(v.remediationStatus) + '</div></div>' +
+        '<div class="detail-section"><div class="detail-label">CISA KEV</div><div class="detail-value">' + (v.inKEV ? '<span class="badge badge-red badge-sm">⚠ In KEV</span>' : '<span class="badge badge-green badge-sm">Not listed</span>') + '</div></div>' +
+        '<div class="detail-section"><div class="detail-label">Risk Score</div><div class="risk-meter" style="margin-top:4px"><div class="risk-bar" style="height:10px"><div class="risk-fill" style="width:' + riskPct + '%;background:' + riskColor + '"></div></div><span style="font-family:var(--font-mono);font-weight:700;color:' + riskColor + '">' + v.riskScore + '</span></div></div>' +
+        '<div class="detail-section detail-full"><div class="detail-label">MITRE ATT&CK Techniques</div><div class="detail-value" style="line-height:1.8">' + attckHtml + '</div></div>' +
+        (v.actor ? '<div class="detail-section"><div class="detail-label">Associated Threat Actor</div><div class="detail-value" style="color:var(--pink);font-weight:600">' + esc(v.actor) + '</div></div>' : '') +
+        '<div class="detail-section detail-full"><div class="detail-label">Description</div><div class="detail-value">' + esc(v.desc) + '</div></div>' +
+        '<div class="detail-section detail-full"><div class="detail-label">Recommended Action</div><div class="detail-value" style="color:var(--green);background:var(--green-dim);padding:12px;border-radius:var(--radius-md)">' + esc(v.action) + '</div></div>' +
+        '</div>';
     
-    document.getElementById('detail-nvd').href = `https://nvd.nist.gov/vuln/detail/${v.id}`;
-    document.getElementById('detail-cisa').href = `https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=${v.id}`;
-    document.getElementById('detail-mitre').href = `https://cve.mitre.org/cgi-bin/cvename.cgi?name=${v.id}`;
+    document.getElementById('detail-nvd').href = 'https://nvd.nist.gov/vuln/detail/' + v.id;
+    document.getElementById('detail-cisa').href = 'https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=' + v.id;
+    document.getElementById('detail-mitre').href = 'https://cve.mitre.org/cgi-bin/cvename.cgi?name=' + v.id;
     document.getElementById('detailOverlay').classList.add('open');
 }
 
 function closeDetail() { document.getElementById('detailOverlay').classList.remove('open'); currentDetailCVE = null; }
 function toggleDetailBookmark() { if (currentDetailCVE) { toggleBookmark(currentDetailCVE); document.getElementById('detail-bookmark').classList.toggle('active', bookmarks.has(currentDetailCVE)); } }
 
-// ── Vendor Search ──
-let searchDebounce;
+var searchDebounce;
 function handleVendorSearch(q) {
     clearTimeout(searchDebounce);
-    searchDebounce = setTimeout(() => {
-        const query = q.trim().toLowerCase();
+    searchDebounce = setTimeout(function() {
+        var query = q.trim().toLowerCase();
         if (!query) { clearSearch(); return; }
-        const results = allVulns.filter(v => v.vendor.toLowerCase().includes(query) || v.id.toLowerCase().includes(query) || v.product.toLowerCase().includes(query) || v.desc.toLowerCase().includes(query) || (v.attck && v.attck.some(a => a.toLowerCase().includes(query))));
+        var results = allVulns.filter(function(v) { return v.vendor.toLowerCase().includes(query) || v.id.toLowerCase().includes(query) || v.product.toLowerCase().includes(query) || v.desc.toLowerCase().includes(query) || (v.attck && v.attck.some(function(a) { return a.toLowerCase().includes(query); })); });
         
-        document.getElementById('search-tbody').innerHTML = results.slice(0, 60).map(v => `
-            <tr>
-                <td style="font-family:var(--font-mono);font-size:11.5px;font-weight:600"><a href="#" onclick="event.preventDefault();openDetail('${esc(v.id)}')" style="color:var(--accent)">${esc(v.id)}</a></td>
-                <td><strong>${esc(v.vendor)}</strong></td>
-                <td style="color:var(--text2)">${esc(v.product)}</td>
-                <td><span class="badge ${v.cat === 'ot' ? 'badge-cyan' : v.cat === 'consumer' ? 'badge-orange' : 'badge-accent'}">${v.cat.toUpperCase()}</span></td>
-                <td style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(v.score)}">${v.score}</td>
-                <td style="font-family:var(--font-mono);color:${epssColor(v.epss)}">${parseFloat(v.epss).toFixed(2)}</td>
-                <td>${remediationBadge(v.remediationStatus)}</td>
-                <td style="max-width:120px;overflow:hidden">${v.attck ? v.attck.slice(0, 2).map(a => attckBadge(a)).join(' ') : '—'}</td>
-                <td class="tooltip-cell" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)">${esc(v.desc.substring(0, 60))}…<div class="tip">${esc(v.desc)}<br><br><strong style="color:var(--green)">Remediation:</strong> ${esc(v.action)}</div></td>
-            </tr>`).join('');
-        document.getElementById('searchBannerText').textContent = `"${q}" — ${results.length} result${results.length !== 1 ? 's' : ''} across all categories`;
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        var html = '';
+        for (var i = 0; i < Math.min(results.length, 60); i++) {
+            var v = results[i];
+            html += '<tr>' +
+                '<td style="font-family:var(--font-mono);font-size:11.5px;font-weight:600"><a href="#" onclick="event.preventDefault();openDetail(\'' + esc(v.id) + '\')" style="color:var(--accent)">' + esc(v.id) + '</a></td>' +
+                '<td><strong>' + esc(v.vendor) + '</strong></td>' +
+                '<td style="color:var(--text2)">' + esc(v.product) + '</td>' +
+                '<td><span class="badge ' + (v.cat === 'ot' ? 'badge-cyan' : v.cat === 'consumer' ? 'badge-orange' : 'badge-accent') + '">' + v.cat.toUpperCase() + '</span></td>' +
+                '<td style="font-family:var(--font-mono);font-weight:700;color:' + scoreColor(v.score) + '">' + v.score + '</td>' +
+                '<td style="font-family:var(--font-mono);color:' + epssColor(v.epss) + '">' + parseFloat(v.epss).toFixed(2) + '</td>' +
+                '<td>' + remediationBadge(v.remediationStatus) + '</td>' +
+                '<td style="max-width:120px;overflow:hidden">' + (v.attck ? v.attck.slice(0, 2).map(function(a) { return attckBadge(a); }).join(' ') : '—') + '</td>' +
+                '<td class="tooltip-cell" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)">' + esc(v.desc.substring(0, 60)) + '…<div class="tip">' + esc(v.desc) + '<br><br><strong style="color:var(--green)">Remediation:</strong> ' + esc(v.action) + '</div></td>' +
+                '</tr>';
+        }
+        document.getElementById('search-tbody').innerHTML = html;
+        document.getElementById('searchBannerText').textContent = '"' + q + '" — ' + results.length + ' result' + (results.length !== 1 ? 's' : '') + ' across all categories';
+        document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+        document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
         document.getElementById('page-search').classList.add('active');
         document.getElementById('pageTitle').textContent = 'Search Results';
         closeMobileMenu();
@@ -2105,109 +1764,101 @@ function handleVendorSearch(q) {
 
 function clearSearch() { document.getElementById('vendorSearch').value = ''; showPage('overview', document.querySelector('[data-page="overview"]')); }
 
-// ── Feed Pagination ──
 function renderFeedPage() {
-    const container = document.getElementById('feed-grid');
+    var container = document.getElementById('feed-grid');
     if (!feedItems.length) {
         container.innerHTML = '<div class="feed-error"><p>No feed articles loaded. This may be due to rate limiting. Try syncing again later.</p></div>';
         document.getElementById('feed-pagination').innerHTML = '';
         return;
     }
-    const start = (feedPage - 1) * FEED_PER_PAGE;
-    const slice = feedItems.slice(start, start + FEED_PER_PAGE);
-    
-    container.innerHTML = slice.map(item => `
-        <div class="feed-card">
-            <div class="feed-source">${esc(item.source)}</div>
-            <div class="feed-title">${esc(item.title)}</div>
-            <div class="feed-date">${item.pubDate ? fmtDate(item.pubDate) : '—'}</div>
-            <a href="${esc(item.link)}" target="_blank" rel="noopener" class="feed-link">
-                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
-                View Article →
-            </a>
-        </div>
-    `).join('');
+    var start = (feedPage - 1) * FEED_PER_PAGE;
+    var slice = feedItems.slice(start, start + FEED_PER_PAGE);
+    var html = '';
+    for (var i = 0; i < slice.length; i++) {
+        var item = slice[i];
+        html += '<div class="feed-card"><div class="feed-source">' + esc(item.source) + '</div><div class="feed-title">' + esc(item.title) + '</div><div class="feed-date">' + (item.pubDate ? fmtDate(item.pubDate) : '—') + '</div><a href="' + esc(item.link) + '" target="_blank" rel="noopener" class="feed-link"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>View Article →</a></div>';
+    }
+    container.innerHTML = html;
     renderFeedPagination();
 }
 
 function renderFeedPagination() {
-    const tot = Math.ceil(feedItems.length / FEED_PER_PAGE);
-    const el = document.getElementById('feed-pagination');
+    var tot = Math.ceil(feedItems.length / FEED_PER_PAGE);
+    var el = document.getElementById('feed-pagination');
     if (tot <= 1) { el.innerHTML = ''; return; }
-    let h = `<button class="page-btn" onclick="goFeedPage(${feedPage - 1})" ${feedPage === 1 ? 'disabled' : ''}>‹ Prev</button>`;
-    for (let i = 1; i <= tot; i++) {
-        if (i === 1 || i === tot || (i >= feedPage - 2 && i <= feedPage + 2)) { h += `<button class="page-btn ${i === feedPage ? 'active' : ''}" onclick="goFeedPage(${i})">${i}</button>`; }
+    var h = '<button class="page-btn" onclick="goFeedPage(' + (feedPage - 1) + ')"' + (feedPage === 1 ? ' disabled' : '') + '>‹ Prev</button>';
+    for (var i = 1; i <= tot; i++) {
+        if (i === 1 || i === tot || (i >= feedPage - 2 && i <= feedPage + 2)) { h += '<button class="page-btn ' + (i === feedPage ? 'active' : '') + '" onclick="goFeedPage(' + i + ')">' + i + '</button>'; }
         else if (i === feedPage - 3 || i === feedPage + 3) { h += '<span style="color:var(--text3);padding:0 4px">…</span>'; }
     }
-    h += `<button class="page-btn" onclick="goFeedPage(${feedPage + 1})" ${feedPage === tot ? 'disabled' : ''}>Next ›</button><span class="page-info">${feedPage}/${tot} · ${feedItems.length} articles</span>`;
+    h += '<button class="page-btn" onclick="goFeedPage(' + (feedPage + 1) + ')"' + (feedPage === tot ? ' disabled' : '') + '>Next ›</button><span class="page-info">' + feedPage + '/' + tot + ' · ' + feedItems.length + ' articles</span>';
     el.innerHTML = h;
 }
 
-function goFeedPage(p) { const tot = Math.ceil(feedItems.length / FEED_PER_PAGE); if (p < 1 || p > tot) return; feedPage = p; renderFeedPage(); }
+function goFeedPage(p) { var tot = Math.ceil(feedItems.length / FEED_PER_PAGE); if (p < 1 || p > tot) return; feedPage = p; renderFeedPage(); }
 
-// ── Export ──
 function openExport() { document.getElementById('exportOverlay').classList.add('open'); }
 function closeExport() { document.getElementById('exportOverlay').classList.remove('open'); }
 function doExport() {
-    const tab = document.getElementById('exp-tab').value;
-    const range = document.getElementById('exp-range').value;
-    const fmt = document.getElementById('exp-format').value;
-    const includeEPSS = document.getElementById('exp-epss').checked;
-    const includeATTCK = document.getElementById('exp-attck').checked;
-    const includeExploit = document.getElementById('exp-exploit').checked;
+    var tab = document.getElementById('exp-tab').value;
+    var range = document.getElementById('exp-range').value;
+    var fmt = document.getElementById('exp-format').value;
+    var includeEPSS = document.getElementById('exp-epss').checked;
+    var includeATTCK = document.getElementById('exp-attck').checked;
+    var includeExploit = document.getElementById('exp-exploit').checked;
     
-    let data = tab === 'all' ? allVulns : tableState[tab]?.data || [];
-    const cutoffs = { today: 1, week: 7, month: 30, quarter: 90, year: 365, all: 999999 };
-    const days = cutoffs[range] || 999999;
-    if (days < 999999) { const cutoff = new Date(Date.now() - days * 86400000); data = data.filter(v => !v.date || new Date(v.date) >= cutoff); }
+    var data = tab === 'all' ? allVulns : (tableState[tab] ? tableState[tab].data : []);
+    var cutoffs = { today: 1, week: 7, month: 30, quarter: 90, year: 365, all: 999999 };
+    var days = cutoffs[range] || 999999;
+    if (days < 999999) { var cutoff = new Date(Date.now() - days * 86400000); data = data.filter(function(v) { return !v.date || new Date(v.date) >= cutoff; }); }
     if (!data.length) { showToast('No data matches filters.', 'warning'); return; }
     
-    const fn = `zeroguard_${tab}_${range}_${new Date().toISOString().slice(0, 10)}`;
+    var fn = 'zeroguard_' + tab + '_' + range + '_' + new Date().toISOString().slice(0, 10);
     
     if (fmt === 'csv') {
-        let hdr = ['CVE_ID', 'Vendor', 'Product', 'Score', 'Severity', 'Category', 'Date', 'Description', 'Remediation Status'];
+        var hdr = ['CVE_ID', 'Vendor', 'Product', 'Score', 'Severity', 'Category', 'Date', 'Description', 'Remediation Status'];
         if (includeEPSS) hdr.push('EPSS');
         if (includeExploit) hdr.push('Exploit_Status');
         if (includeATTCK) hdr.push('MITRE_ATTCK');
-        const rows = data.map(v => {
-            let row = [v.id, v.vendor, v.product, v.score, v.severity, v.cat, v.date, `"${(v.desc || '').replace(/"/g, '""')}"`, v.remediationStatus];
+        var rows = data.map(function(v) {
+            var row = [v.id, v.vendor, v.product, v.score, v.severity, v.cat, v.date, '"' + (v.desc || '').replace(/"/g, '""') + '"', v.remediationStatus];
             if (includeEPSS) row.push(v.epss);
             if (includeExploit) row.push(v.exploit);
             if (includeATTCK) row.push((v.attck || []).join('|'));
             return row.join(',');
         });
-        download(`${fn}.csv`, [hdr.join(','), ...rows].join('\n'), 'text/csv');
+        download(fn + '.csv', [hdr.join(','), ...rows].join('\n'), 'text/csv');
     } else if (fmt === 'pdf') {
-        let text = `ZEROGUARD INTELLIGENCE REPORT\n${'='.repeat(50)}\nGenerated: ${new Date().toISOString()}\nPeriod: ${range}\n\n`;
-        text += `SUMMARY\n${'-'.repeat(30)}\nTotal Vulnerabilities: ${data.length}\nCritical (9-10): ${data.filter(v => parseFloat(v.score) >= 9).length}\nActively Exploited: ${data.filter(v => v.exploit === 'active').length}\nRemediation Status: ${data.filter(v => v.remediationStatus === 'patched').length} patched / ${data.filter(v => v.remediationStatus === 'unpatched').length} unpatched\n\n`;
-        text += `DETAILED LIST\n${'-'.repeat(30)}\n\n`;
-        data.forEach(v => {
-            text += `${v.id} | CVSS: ${v.score} | ${v.vendor} | ${v.product} | Remediation: ${v.remediationStatus}\n`;
-            text += `${v.desc}\nRemediation: ${v.action}\n\n`;
+        var text = 'ZEROGUARD INTELLIGENCE REPORT\n' + '='.repeat(50) + '\nGenerated: ' + new Date().toISOString() + '\nPeriod: ' + range + '\n\n';
+        text += 'SUMMARY\n' + '-'.repeat(30) + '\nTotal Vulnerabilities: ' + data.length + '\nCritical (9-10): ' + data.filter(function(v) { return parseFloat(v.score) >= 9; }).length + '\nActively Exploited: ' + data.filter(function(v) { return v.exploit === 'active'; }).length + '\nRemediation Status: ' + data.filter(function(v) { return v.remediationStatus === 'patched'; }).length + ' patched / ' + data.filter(function(v) { return v.remediationStatus === 'unpatched'; }).length + ' unpatched\n\n';
+        text += 'DETAILED LIST\n' + '-'.repeat(30) + '\n\n';
+        data.forEach(function(v) {
+            text += v.id + ' | CVSS: ' + v.score + ' | ' + v.vendor + ' | ' + v.product + ' | Remediation: ' + v.remediationStatus + '\n';
+            text += v.desc + '\nRemediation: ' + v.action + '\n\n';
         });
-        download(`${fn}.txt`, text, 'text/plain');
+        download(fn + '.txt', text, 'text/plain');
     } else {
-        download(`${fn}.json`, JSON.stringify(data.map(v => {
-            const entry = { id: v.id, vendor: v.vendor, product: v.product, score: v.score, severity: v.severity, category: v.cat, date: v.date, description: v.desc, remediationStatus: v.remediationStatus };
+        var jsonData = data.map(function(v) {
+            var entry = { id: v.id, vendor: v.vendor, product: v.product, score: v.score, severity: v.severity, category: v.cat, date: v.date, description: v.desc, remediationStatus: v.remediationStatus };
             if (includeEPSS) entry.epss = v.epss;
             if (includeExploit) entry.exploitStatus = v.exploit;
             if (includeATTCK) entry.mitreATTCK = v.attck;
             return entry;
-        }), null, 2), 'application/json');
+        });
+        download(fn + '.json', JSON.stringify(jsonData, null, 2), 'application/json');
     }
     closeExport();
-    showToast(`✅ Exported ${data.length} records`, 'info');
+    showToast('✅ Exported ' + data.length + ' records', 'info');
 }
 
-function download(fn, content, mime) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([content], { type: mime })); a.download = fn; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 5000); }
+function download(fn, content, mime) { var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([content], { type: mime })); a.download = fn; a.click(); setTimeout(function() { URL.revokeObjectURL(a.href); }, 5000); }
 
-// ── Auto Refresh ──
 function toggleAutoRefresh() {
     isAutoRefresh = !isAutoRefresh;
-    const btn = document.getElementById('autoRefreshBtn');
+    var btn = document.getElementById('autoRefreshBtn');
     if (isAutoRefresh) {
         btn.classList.add('btn-primary'); btn.classList.remove('btn-ghost');
-        autoRefreshInterval = setInterval(() => { doSync(); }, 1800000);
+        autoRefreshInterval = setInterval(function() { doSync(); }, 1800000);
         showToast('🔄 Auto-refresh enabled (every 30 min)', 'info');
     } else {
         btn.classList.remove('btn-primary'); btn.classList.add('btn-ghost');
@@ -2216,8 +1867,7 @@ function toggleAutoRefresh() {
     }
 }
 
-// ── Navigation ──
-const PAGE_SUBS = {
+var PAGE_SUBS = {
     overview: 'CISA KEV · NVD · CISA ICS-CERT · ZDI · EPSS · MITRE ATT&CK',
     zeroday: 'Active zero-day vulnerabilities under active exploitation',
     it: 'Enterprise & infrastructure vulnerabilities',
@@ -2233,42 +1883,38 @@ const PAGE_SUBS = {
 };
 
 function showPage(id, btn) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    const pageElement = document.getElementById('page-' + id);
+    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+    var pageElement = document.getElementById('page-' + id);
     if (pageElement) pageElement.classList.add('active');
     if (btn) btn.classList.add('active');
-    else { const dataPageElement = document.querySelector(`[data-page="${id}"]`); if (dataPageElement) dataPageElement.classList.add('active'); }
+    else { var dataPageElement = document.querySelector('[data-page="' + id + '"]'); if (dataPageElement) dataPageElement.classList.add('active'); }
     document.getElementById('pageTitle').textContent = id.charAt(0).toUpperCase() + id.slice(1).replace(/([A-Z])/g, ' $1');
     document.getElementById('pageSub').textContent = PAGE_SUBS[id] || '';
     if (id === 'feed') loadFeeds();
-    if (id === 'analytics') setTimeout(() => updateCharts(), 100);
+    if (id === 'analytics') setTimeout(function() { updateCharts(); }, 100);
     if (id === 'bookmarks') buildBookmarksPage();
     closeMobileMenu();
 }
 
 function toggleTheme() {
-    const html = document.documentElement;
-    const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    var html = document.documentElement;
+    var newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     html.setAttribute('data-theme', newTheme);
-    // Refresh charts with new theme colors
-    setTimeout(() => updateCharts(), 50);
+    setTimeout(function() { updateCharts(); }, 50);
 }
 
 function toggleMobileMenu() { document.getElementById('sidebar').classList.toggle('mobile-open'); document.getElementById('mobileOverlay').classList.toggle('open'); }
 function closeMobileMenu() { document.getElementById('sidebar').classList.remove('mobile-open'); document.getElementById('mobileOverlay').classList.remove('open'); }
 
-// ── Initialization ──
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     if (window.matchMedia('(prefers-color-scheme:light)').matches) { document.documentElement.setAttribute('data-theme', 'light'); }
     loadBookmarks();
     document.getElementById('badge-bookmarks').textContent = bookmarks.size;
-    
-    document.addEventListener('keydown', e => {
+    document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') { closeCritical(); closeExport(); closeDetail(); closeMobileMenu(); }
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); document.getElementById('vendorSearch').focus(); }
     });
-    
     doSync();
 });
 </script>
