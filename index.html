@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' https:; connect-src 'self' https://www.cisa.gov https://api.allorigins.win https://api.codetabs.com https://api.rss2json.com https://corsproxy.io; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
-<title>ZeroGuard Pro v5.2 — Audited & Optimized Threat Intelligence</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' https:; connect-src 'self' https://www.cisa.gov https://api.allorigins.win https://api.codetabs.com https://api.rss2json.com https://corsproxy.io https://thingproxy.freeboard.io; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+<title>ZeroGuard Pro v5.3 — Audited & Optimized Threat Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -231,9 +231,10 @@ a { color: inherit; text-decoration: none; }
 </div>
 <div class="topbar-right">
 <button class="btn btn-ghost btn-sm" onclick="toggleAutoRefresh()" id="autoRefreshBtn" title="Toggle auto-refresh"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>Auto</button>
+<button class="btn btn-ghost btn-sm" onclick="clearAllCache()" title="Clear Local Cache & Force Re-sync"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>Clear Cache</button>
 <button class="btn btn-ghost btn-sm" onclick="openExport()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button>
 <button class="btn btn-ghost btn-sm" onclick="toggleTheme()" aria-label="Toggle theme"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
-<button class="btn btn-primary" id="syncBtn" onclick="doSync()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Sync Now</button>
+<button class="btn btn-primary" id="syncBtn" onclick="doSync(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Sync Now</button>
 </div>
 </header>
 <main class="content" id="contentArea">
@@ -290,21 +291,12 @@ a { color: inherit; text-decoration: none; }
 
 <script>
 /* ═══════════════════════════════════════════════════════
-ZEROGUARD PRO v5.2 — FIXED SYNC & CORS
-- Multi-Proxy KEV Fetcher (CORS resilient)
-- Optimized IndexedDB caching & graceful fallback
-- Correct tableState & Chart.js data binding
-- Date normalization & logical timeline sorting
-- FIXED: Replaced invalid literal newlines in strings with template literals
+ZEROGUARD PRO v5.3 — FIXED SYNC & CACHE BYPASS
+- Cache-busting timestamps on all API calls
+- Force refresh on manual sync
+- Enhanced error logging for troubleshooting
+- "Clear Cache" button for nuclear reset
 ═══════════════════════════════════════════════════════ */
-
-// Global Error Handler for GitHub Pages debugging
-window.onerror = function(message, source, lineno, colno, error) {
-    console.error('Global Error:', message, source, lineno, error);
-    showToast('⚠ An unexpected error occurred. Check console for details.', 'critical');
-    return false;
-};
-
 const OT_VENDORS_STRICT = ['siemens','schneider electric','schneider','rockwell automation','rockwell','honeywell process','honeywell building','honeywell ics','abb','yokogawa','emerson electric','emerson automation','emerson process','mitsubishi electric','omron','beckhoff','bosch rexroth','eaton','ge digital','ge vernova','ge grid','general electric digital','advantech','moxa','wago','phoenix contact','pilz','festo','turck','murrelektronik','red lion','prosoft technology','kepware','inductive automation','aveva','aspentech','osisoft','ptc thingworx','codesys','3s-smart software','3s smart','straton','kingview','weinview','delta electronics','delta plc','idec','automation direct','click plc','click automation','koyo','facts engineering','roper technologies','johnson controls','metasys','automated logic','distech controls','trend control','delta controls','carel','carrier controls','trane technologies','daikin applied','siemens desigo','sauter','bacnet devices','niagara tridium','tridium','fieldserver','sierra monitor','abb power','ge grid solutions','schweitzer engineering','sel','basler electric','cooper power','s&c electric','abb ability','siemens energy','areva','alstom grid','landis+gyr','itron','elster','eaton power','aclara','enermetric','power measurement','acuvim','accuenergy','digi international','emerson remote','fisher controls','tri-sen','totalflow','flow computer','micro motion','rosemount','endress+hauser','vega','ifm electronic','sick ag','pepperl+fuchs','keyence','cognex','national instruments','ni systems','triconex','hima','pilz safety','sick safety','siemens safety','honeywell safety','yokogawa prosafe','esterline','moog','hirschmann','belden','netop','proface','beijer electronics','moxa networking','red lion controls','tosibox','secomea','ewon','anybus','hilscher','ixxat','softing industrial','systec','helmholz','mb connect line','mbconnectline','ibase','cincoze','axiomtek','kontron','nozomi networks','nozomi','claroty','dragos','ot-base','cylera','armis ot','fortinet ot','tenable ot','tenable ot security','medigate','forescout ot','radiflow','waterfall security','cyberx','asguard networks','otorio','indegy','tempered networks','pwc ics','ics2 security','claroty xdome','claroty edge','dragos worldview','nozomi guardian','nozomi vantage','nozomi arc','claroty continuous threat','fortinet','fortigate industrial','fortisiem ot','fortisoar ot','fortigate rugged','fortinet rugged','fortiswitch','fortied','fortiap industrial','fortiadc ot','palo alto networks','palo alto','pan-os ot','palo alto iot','palo alto industrial','cortex xdr ot','prisma ot','palo alto ngfw industrial','pa-220r','pa-440','palo alto rugged','cisco ie','cisco industrial ethernet','cisco catalyst ie','cisco ir1101','cisco ir8340','cisco cgr','cisco cgos','hirschmann mach','hirschmann rail','belden garrettcom','garrettcom','stratix 5000','stratix 5900','stratix 8000','allen-bradley stratix','siemens scalance','scalance x','scalance xr','scalance w','moxa pt','moxa eds','moxa awk','moxa nport','ruggedcom','siemens ruggedcom','ruggedcom ros','ruggedcom rox','westermo','westermo lynx','westermo mrd','westermo redfox','korenix','korenix jetnet','phoenix contact fl switch','fl mguard','hager eylon','advantech eks','advantech eki','comtrol rts','red lion nt','red lion dnt','red lion rl','sixnet','sixnet sl','antaira','antaira lns','antaira lmx','perle','perle iolan','raisecom','raisecom iscom','d-link industrial','netgear m4300','oring','oring igs','oring ies','lantech','lantech ics','tofino security','tofino xenon','belden tofino','tofino firewalk','genua','genua genuscreen','genua genuwall','genua tele-border','rohde schwarz','r&s cybersecurity','r&s pace','r&s kenner','secunet','secunet sina','secunet wall','secunet heartbeat','uniscon','paloalto pa-220r','fortinet fgr-30e','fgr-30e','cradlepoint ibr','cradlepoint e3000','multitech','multitech conduit','peplink','peplink mediafast','sierra wireless','sierra wireless rv','claroty ids','dragos ids','nozomi ids','medigate ids','darktrace ot','vectra ot','cylance ot','cyberbit','guard/ot','ot ids','ics ids','stamus networks ot','cimplicity','ge cimplicity','ge ifix','ge proficy','aspentech ip21','osisoft pi','aveva pi','aveva historian','bosch building technologies','bosch security systems','honeywell pro-watch','honeywell winpak','lenel s2','lenel onguard','genetec security','genetec synergis','milestone xprotect','axis communications','axis industrial','hanwha techwin','flir systems','flir thermal','dahua industrial','hikvision ds-2','pelco','pelco videoxpert','avigilon','avigilon oc','feenics','isonas','allegion','dormakaba','nedap','wind river','wind river vxworks','vxworks','windriver','qnx','blackberry qnx','qnx neutrino','qnx hypervisor','green hills software','integrity rtos','green hills integrity','rti dds','real-time innovations','eclipse kura','eclipse iomt','azure iot edge industrial','aws iot greengrass ot','national instruments','ni compactrio','ni fieldpoint','opto 22','opto 22 groov','opto 22 snap','pac control','lenze','lenze i500','lenze i650','lenze smartmotor','sew-eurodrive','sew eurodrive','movitrac','movidrive','danfoss vlt','danfoss drives','abb acs','abb acs880','schneider altivar','altivar 32','altivar 61','altivar 71','yaskawa ga700','yaskawa a1000','yaskawa p1000','power xpert gateway','eaton powerxpert','eaton ems','schweitzer sel','sel-3530','sel-3555','sel-5056','ixon cloud','ixon security','ewon cosy','ewon flexy','secomea sitemanager','tosibox node','anybus x-gateway'];
 const OT_PRODUCT_KEYWORDS = ['modbus','profinet','profibus','ethercat','devicenet','controlnet','foundation fieldbus','hart protocol','dnp3','iec 61850','iec 60870','opc ua','opc da','bacnet','lonworks','cc-link','sercos','powerlink','canopen','as-interface','io-link','wirelesshart','isa100','s7comm','step7','tia portal','simatic','mms protocol','iec 61131','plc','programmable logic controller','dcs','distributed control system','scada','hmi','human machine interface','rtu','remote terminal unit','ied','intelligent electronic device','historian','process historian','engineering workstation','safety instrumented','sis','safety plc','safety relay','field device','actuator controller','variable frequency drive','vfd','servo drive','motion controller','industrial robot','cnc machine','cnc controller','industrial switch','managed industrial','unmanaged industrial','substation','power grid','electrical grid','smart grid','ami','advanced metering','energy management system','ems scada','building automation','building management','bms control','hvac control','fire control panel','water treatment','wastewater scada','pipeline scada','oil gas control','refinery control','chemical plant dcs','manufacturing execution','mes system','opc server','historian server','process control network','purdue model','dmz ot','it/ot','modicon','tsx quantum','premium plc','controllogix','compactlogix','micro800','guardlogix','powerflex','centum','prosafe-rs','deltav','ovation dcs','experion','pcs 7','s7-300','s7-400','s7-1200','s7-1500','et 200','logo plc','melsec','melsoft','got2000','q series plc','sysmac','cx-programmer','twincat','beckhoff cx','iologik','nport awk','fl switch','rad-900','yaskawa','fanuc','kuka','abb robotics','staubli','omron nx','delta DVP','delta AS','delta AH','click koyo'];
 const CONSUMER_VENDORS = ['apple','ios','ipados','macos','tvos','watchos','visionos','safari iphone','google','android','pixel phone','google chrome','chromebook','samsung galaxy','samsung mobile','one ui','xiaomi','redmi','poco','oppo','vivo','oneplus','realme','huawei consumer','honor','mozilla','firefox browser','thunderbird','tp-link','tplink','netgear','d-link','dlink','asus router','eero','ring doorbell','amazon echo','amazon fire','kindle','sonos','philips hue','fitbit','garmin wearable','bose','microsoft xbox','xbox live','windows home edition'];
@@ -591,14 +583,19 @@ async function fetchRSSWithFallback(url) {
     } 
 }
 
-async function loadFeeds() { 
-    var cached = getCache(FEED_CACHE_KEY); 
-    if (cached && cached.length > 0) { 
-        feedItems = cached; 
-        renderFeedPage(); 
-        buildOverviewNews(); 
-        return; 
-    } 
+async function loadFeeds(forceRefresh = false) { 
+    if (!forceRefresh) {
+        var cached = getCache(FEED_CACHE_KEY); 
+        if (cached && cached.length > 0) { 
+            feedItems = cached; 
+            renderFeedPage(); 
+            buildOverviewNews(); 
+            return; 
+        } 
+    } else {
+        console.log('Force refreshing feeds...');
+    }
+    
     var feedGrid = document.getElementById('feed-grid'); 
     feedGrid.innerHTML = Array(6).fill('<div class="feed-card"><div class="skeleton" style="width:60%;height:10px;margin-bottom:8px"></div><div class="skeleton" style="height:14px;margin-bottom:4px"></div></div>').join(''); 
     document.getElementById('feed-meta').textContent = 'Fetching intelligence feeds…'; 
@@ -626,21 +623,25 @@ async function loadFeeds() {
     }); 
     if (items.length === 0) { 
         showToast('RSS networks busy, loading cached intelligence fallback', 'warning'); 
-        items = STATIC_NEWS_FALLBACK; 
+        var cachedFallback = getCache(FEED_CACHE_KEY);
+        items = cachedFallback && cachedFallback.length > 0 ? cachedFallback : STATIC_NEWS_FALLBACK; 
     } 
     feedItems = items; 
     setCache(FEED_CACHE_KEY, items); 
     feedPage = 1; 
     renderFeedPage(); 
     buildOverviewNews(); 
-    document.getElementById('feed-meta').textContent = `${items.length} articles · ${successCount}/${RSS_FEEDS.length} sources fetched · cached`; 
+    document.getElementById('feed-meta').textContent = `${items.length} articles · ${successCount}/${RSS_FEEDS.length} sources fetched · updated`; 
 }
 
-async function doSync() { 
+async function doSync(force = true) { 
     var btn = document.getElementById('syncBtn'); 
     btn.classList.add('syncing'); 
     btn.disabled = true; 
-    showToast('🔄 Syncing CISA KEV + ICS-CERT feeds…', 'info'); 
+    showToast('🔄 Force syncing CISA KEV + ICS-CERT feeds…', 'info'); 
+    
+    // Cache-busting timestamp to prevent proxy/browser caching of old responses
+    var kevUrl = CISA_KEV + '?_=' + Date.now();
     
     var proxies = [ 
         url => `https://corsproxy.io/?${encodeURIComponent(url)}`, 
@@ -650,22 +651,29 @@ async function doSync() {
     
     var success = false; 
     var data = null; 
+    var lastError = 'Unknown error';
     
     for (var p = 0; p < proxies.length; p++) { 
         try { 
             var controller = new AbortController(); 
             var timeoutId = setTimeout(() => controller.abort(), 15000); 
-            var res = await fetch(proxies[p](CISA_KEV), { signal: controller.signal }); 
+            var proxyUrl = proxies[p](kevUrl);
+            console.log('Attempting KEV sync via proxy', p+1, ':', proxyUrl);
+            var res = await fetch(proxyUrl, { signal: controller.signal }); 
             clearTimeout(timeoutId); 
             if (!res.ok) throw new Error('HTTP ' + res.status); 
             var json = await res.json(); 
-            if (json.vulnerabilities) { 
+            if (json.vulnerabilities && Array.isArray(json.vulnerabilities)) { 
                 data = json.vulnerabilities; 
                 success = true; 
+                console.log('✅ KEV Sync successful via proxy', p+1, '- Found', data.length, 'vulnerabilities');
                 break; 
-            } 
+            } else {
+                throw new Error('Invalid JSON structure: missing vulnerabilities array');
+            }
         } catch (e) { 
-            console.warn(`KEV Proxy ${p+1} failed:`, e.message); 
+            lastError = e.message;
+            console.warn(`❌ KEV Proxy ${p+1} failed:`, e.message); 
         } 
     } 
     
@@ -674,23 +682,25 @@ async function doSync() {
         var ts = new Date().toLocaleTimeString(); 
         document.getElementById('syncStatus').textContent = 'Synced ' + ts; 
         document.getElementById('pageSub').textContent = allVulns.length + ' entries · Last sync ' + ts; 
-        showToast('✅ Synced ' + allVulns.length + ' vulnerabilities', 'info'); 
+        showToast('✅ Successfully synced ' + allVulns.length + ' vulnerabilities', 'info'); 
         updateLiveIndicator(true); 
+        
+        // Force refresh feeds on manual sync to ensure latest news
+        loadFeeds(true).catch(e => console.warn('Feed sync error:', e)); 
     } else { 
-        console.warn('All KEV proxies failed, checking IndexedDB...'); 
+        console.error('All KEV proxies failed. Last error:', lastError);
         var cached = await loadFromDB(); 
         if (cached.length > 0) { 
             allVulns = cached; 
             rebuildTables(); 
-            showToast('⚠ Using cached data — ' + allVulns.length + ' entries', 'warning'); 
+            showToast('⚠ Live sync failed (' + lastError + '). Using cached data (' + allVulns.length + ' entries).', 'warning'); 
         } else { 
-            showToast('⚠ Sync failed — check network connection', 'critical'); 
+            showToast('⚠ Sync failed (' + lastError + ') and no cache available. Check network/console.', 'critical'); 
             updateLiveIndicator(false); 
         } 
     } 
     btn.classList.remove('syncing'); 
     btn.disabled = false; 
-    loadFeeds().catch(e => console.warn('Feed sync error:', e)); 
 }
 
 async function processVulns(vulns) { 
@@ -1818,7 +1828,7 @@ function toggleAutoRefresh() {
     if (isAutoRefresh) { 
         btn.classList.add('btn-primary'); 
         btn.classList.remove('btn-ghost'); 
-        autoRefreshInterval = setInterval(function() { doSync(); }, 1800000); 
+        autoRefreshInterval = setInterval(function() { doSync(true); }, 1800000); 
         showToast('🔄 Auto-refresh enabled (every 30 min)', 'info'); 
     } else { 
         btn.classList.remove('btn-primary'); 
@@ -1826,6 +1836,21 @@ function toggleAutoRefresh() {
         clearInterval(autoRefreshInterval); 
         showToast('⏸ Auto-refresh disabled', 'info'); 
     } 
+}
+
+function clearAllCache() {
+    if(confirm('Clear vulnerability and feed cache? (Bookmarks will be preserved). This will force a full re-sync.')) {
+        localStorage.removeItem(FEED_CACHE_KEY);
+        openDB().then(db => {
+            if(db) {
+                const tx = db.transaction('vulns', 'readwrite');
+                tx.objectStore('vulns').clear();
+            }
+        }).then(() => {
+            showToast('✅ Cache cleared. Re-syncing...', 'info');
+            doSync(true);
+        });
+    }
 }
 
 var PAGE_SUBS = { 
@@ -1896,7 +1921,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('vendorSearch').focus(); 
         } 
     }); 
-    doSync(); 
+    doSync(true); 
 });
 </script>
 </body>
