@@ -31,8 +31,6 @@ CONSUMER = ("android", "apple", "iphone", "ipad", "samsung mobile", "chromium",
             "chrome", "mozilla firefox", "safari", "pixel", "ios", "macos",
             "windows 11", "windows 10", "home router", "tp-link", "netgear")
 RSS = {
-    "CISA advisories": "https://www.cisa.gov/cybersecurity-advisories/all.xml",
-    "CISA ICS": "https://www.cisa.gov/cybersecurity-advisories/ics-advisories.xml",
     "BleepingComputer": "https://www.bleepingcomputer.com/feed/",
     "The Hacker News": "https://feeds.feedburner.com/TheHackersNews",
     "SANS ISC": "https://isc.sans.edu/rssfeed.xml",
@@ -252,7 +250,7 @@ def rss():
             STATS["rss_" + name] = {"ok": False, "error": str(err)[:150], "url": url}
     articles.sort(key=lambda r:r["date"], reverse=True)
     advisories.sort(key=lambda r:r["date"], reverse=True)
-    STATS["rss"] = {"ok": ok > 0, "sources": ok, "totalSources": len(RSS)}
+    STATS["rss"] = {"ok": ok > 0, "sources": ok, "totalSources": len(RSS), "scope": "Independent security publisher RSS; official CISA uses CSAF"}
     return articles[:200], advisories[:100]
 
 def urlhaus():
