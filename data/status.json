@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-10-21T10:35:29Z",
+  "records": 1855,
+  "sources": {
+    "kev": {
+      "ok": true,
+      "count": 1754,
+      "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
+    },
+    "nvd": {
+      "ok": false,
+      "error": "The read operation timed out"
+    },
+    "epss": {
+      "ok": true,
+      "count": 1855,
+      "url": "https://www.first.org/epss/"
+    },
+    "rss_CISA advisories": {
+      "ok": false,
+      "error": "HTTP Error 403: Forbidden",
+      "url": "https://www.cisa.gov/cybersecurity-advisories/all.xml"
+    },
+    "rss_CISA ICS": {
+      "ok": false,
+      "error": "HTTP Error 403: Forbidden",
+      "url": "https://www.cisa.gov/cybersecurity-advisories/ics-advisories.xml"
+    },
+    "rss_BleepingComputer": {
+      "ok": true,
+      "count": 15,
+      "url": "https://www.bleepingcomputer.com/feed/"
+    },
+    "rss_The Hacker News": {
+      "ok": true,
+      "count": 50,
+      "url": "https://feeds.feedburner.com/TheHackersNews"
+    },
+    "rss_SANS ISC": {
+      "ok": true,
+      "count": 10,
+      "url": "https://isc.sans.edu/rssfeed.xml"
+    },
+    "rss": {
+      "ok": true,
+      "sources": 3,
+      "totalSources": 5
+    },
+    "urlhaus": {
+      "ok": false,
+      "error": "source too large"
+    }
+  }
+}
