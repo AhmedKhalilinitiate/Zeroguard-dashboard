@@ -291,7 +291,7 @@ a { color: inherit; text-decoration: none; }
 
 <script>
 /* ═══════════════════════════════════════════════════════
-ZEROGUARD PRO v5.3 — FIXED SYNC & CACHE BYPASS
+ZEROGUARD PRO v5.4 — VERIFIED CISA KEV MODE
 - Cache-busting timestamps on all API calls
 - Force refresh on manual sync
 - Enhanced error logging for troubleshooting
@@ -303,18 +303,18 @@ const CONSUMER_VENDORS = ['apple','ios','ipados','macos','tvos','watchos','visio
 const CONSUMER_PRODUCT_KEYWORDS = ['iphone','ipad','macbook','apple watch','airpods','apple tv','android phone','android tablet','pixel phone','google home','galaxy s','galaxy a','galaxy tab','galaxy watch','home router','wifi router','wireless router','mesh wifi','smart speaker','smart home device','smart thermostat','wearable device','fitness tracker','smart watch'];
 const MITRE_ATTCK_TECHNIQUES = { 'T1190': 'Exploit Public-Facing Application', 'T1133': 'External Remote Services', 'T1078': 'Valid Accounts', 'T1059': 'Command and Scripting Interpreter', 'T1048': 'Exfiltration Over Alternative Protocol', 'T1027': 'Obfuscated Files or Information', 'T1021': 'Remote Services', 'T1566': 'Phishing', 'T1486': 'Data Encrypted for Impact', 'T1490': 'Inhibit System Recovery', 'T1053': 'Scheduled Task/Job', 'T1543': 'Create or Modify System Process', 'T1562': 'Impair Defenses', 'T1071': 'Application Layer Protocol', 'T1090': 'Proxy', 'T1074': 'Data Staged', 'T1005': 'Data from Local System', 'T1039': 'Data from Network Shared Drive', 'T1560': 'Archive Collected Data', 'T1574': 'Hijack Execution Flow', 'T1573': 'Encrypted Channel', 'T1041': 'Exfiltration Over C2 Channel', 'T1001': 'Data Obfuscation', 'T1572': 'Protocol Tunneling', 'T1589': 'Gather Victim Identity Information', 'T1590': 'Gather Victim Network Information', 'T1592': 'Gather Victim Host Information', 'T1595': 'Active Scanning', 'T1016': 'System Network Configuration Discovery', 'T1046': 'Network Service Scanning', 'T1049': 'System Network Connections Discovery', 'T1135': 'Network Share Discovery', 'T1033': 'System Owner/User Discovery', 'T1083': 'File and Directory Discovery', 'T1057': 'Process Discovery', 'T1082': 'System Information Discovery', 'T1012': 'Query Registry', 'T1615': 'Group Policy Discovery', 'T1622': 'Debugger Evasion', 'T1036': 'Masquerading', 'T1030': 'Data Transfer Size Limits', 'T1565': 'Data Manipulation', 'T1485': 'Data Destruction', 'T1489': 'Service Stop', 'T1499': 'Endpoint Denial of Service', 'T1561': 'Disk Wipe', 'T1529': 'System Shutdown/Reboot', 'T1548': 'Abuse Elevation Control Mechanism', 'T1140': 'Deobfuscate/Decode Files', 'T1070': 'Indicator Removal' };
 const THREAT_ACTORS = [ {id:'APT29',name:'Cozy Bear / YTTRIUM',origin:'Russia',target:'Gov, Think Tanks, Healthcare',tools:'WellMess, WellMail, Sunburst',recent:'SolarWinds, Microsoft Exchange',severity:'critical'}, {id:'APT41',name:'Winnti / Barium',origin:'China',target:'Healthcare, Telecom, Gaming',tools:'ShadowPad, PlugX, HIGHNOON',recent:'Zero-day exploits in Fortinet, Zyxel',severity:'critical'}, {id:'APT28',name:'Fancy Bear / Sofacy',origin:'Russia',target:'Military, Gov, Sports',tools:'X-Agent, CHOPSTICK, Zebrocy',recent:'Ivanti VPN exploits, Cisco routers',severity:'critical'}, {id:'Lazarus',name:'Lazarus Group / APT38',origin:'North Korea',target:'Finance, Crypto, Defense',tools:'AppleJeus, HOPLIGHT, Manuscrypt',recent:'3CX supply chain, crypto exchanges',severity:'critical'}, {id:'APT10',name:'Stone Panda / CVNX',origin:'China',target:'Tech, Healthcare, Gov',tools:'ChChes, QuasarRAT, PlugX',recent:'Microsoft cloud, managed service providers',severity:'high'}, {id:'Turla',name:'Turla Group / Snake',origin:'Russia',target:'Gov, Military, Embassies',tools:'Uroburos, Carbon, Kazuar',recent:'Satellite communications, OT networks',severity:'high'}, {id:'LockBit',name:'LockBit Ransomware',origin:'Unknown',target:'Manufacturing, Healthcare, Gov',tools:'LockBit 3.0 Builder, RaaS',recent:'Critical infrastructure, supply chain',severity:'critical'}, {id:'BlackCat',name:'BlackCat / ALPHV',origin:'Russia-linked',target:'Energy, Education, Finance',tools:'Rust-based ransomware, ESXi targeting',recent:'Critical OT/ICS environments',severity:'critical'}, {id:'Volt Typhoon',name:'Volt Typhoon',origin:'China',target:'Critical Infrastructure, OT',tools:'Living off the land, legitimate tools',recent:'US critical infrastructure, water systems',severity:'critical'} ];
-const IOC_DATABASE = [ {type:'ip',value:'45.153.160.135',context:'APT29 C2 infrastructure (ShadowPad)',firstSeen:'2024-12-15',confidence:'high'}, {type:'hash',value:'a3b8c9d1e2f3456789abcdef0123456789abcdef0123456789abcdef01234567',context:'ShadowPad dropper variant (SHA256)',firstSeen:'2024-11-10',confidence:'high'}, {type:'domain',value:'update-service-microsoft.com',context:'APT29 phishing domain targeting enterprises',firstSeen:'2024-12-05',confidence:'high'}, {type:'url',value:'https://update-service-microsoft.com/portal/login',context:'APT29 phishing login page',firstSeen:'2025-01-02',confidence:'high'}, {type:'hash',value:'f8e7d6c5b4a3928170615243abcdef0123456789abcdef0123456789abcdef01',context:'WellMess C2 client payload (SHA256)',firstSeen:'2024-10-20',confidence:'critical'}, {type:'ip',value:'194.26.192.77',context:'APT41 scanning infrastructure targeting telecom',firstSeen:'2025-03-05',confidence:'high'}, {type:'hash',value:'f1e2d3c4b5a69876543210fedcba9876543210fedcba9876543210fedcba98',context:'PlugX RAT loader (SHA256)',firstSeen:'2025-02-14',confidence:'critical'}, {type:'domain',value:'cdn-cloudflare-cdn.net',context:'APT41 malware distribution CDN abuse',firstSeen:'2025-02-10',confidence:'medium'}, {type:'ip',value:'185.174.101.24',context:'APT41 webshell communication endpoint',firstSeen:'2025-01-28',confidence:'high'}, {type:'ip',value:'91.215.85.134',context:'APT28 phishing infrastructure (X-Agent)',firstSeen:'2025-01-20',confidence:'high'}, {type:'domain',value:'secure-login-portal.org',context:'Credential harvesting for VPN access (Zebrocy)',firstSeen:'2025-03-08',confidence:'high'}, {type:'ip',value:'103.245.237.100',context:'Lazarus staging server (AppleJeus)',firstSeen:'2025-02-18',confidence:'critical'}, {type:'hash',value:'2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c',context:'AppleJeus trade application trojan (SHA256)',firstSeen:'2024-12-28',confidence:'critical'}, {type:'domain',value:'trading-platform-secure.net',context:'Fake crypto exchange targeting finance sector',firstSeen:'2025-01-15',confidence:'high'}, {type:'hash',value:'3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d',context:'Manuscrypt ransomware payload (SHA256)',firstSeen:'2025-02-22',confidence:'critical'}, {type:'ip',value:'185.220.101.42',context:'LockBit affiliate scanning node (Tor exit)',firstSeen:'2025-01-01',confidence:'medium'}, {type:'hash',value:'4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e',context:'LockBit 3.0 encryptor binary (SHA256)',firstSeen:'2025-02-14',confidence:'critical'}, {type:'domain',value:'lockbitapt4567.onion',context:'LockBit data leak site (Tor)',firstSeen:'2024-11-20',confidence:'high'}, {type:'ip',value:'103.110.45.92',context:'BlackCat ransomware C2 infrastructure',firstSeen:'2025-02-11',confidence:'critical'}, {type:'hash',value:'6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a',context:'ALPHV/Rust-based ransomware (SHA256)',firstSeen:'2025-01-22',confidence:'critical'}, {type:'domain',value:'alphvblog2468.com',context:'BlackCat data leak blog',firstSeen:'2025-03-10',confidence:'high'}, {type:'ip',value:'211.102.89.15',context:'Volt Typhoon SOHO router exploitation',firstSeen:'2025-03-18',confidence:'critical'}, {type:'domain',value:'industrial-control-update.com',context:'Targeting OT/ICS personnel (phishing)',firstSeen:'2025-02-25',confidence:'critical'}, {type:'hash',value:'8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c',context:'Volt Typhoon webshell (SHA256)',firstSeen:'2025-03-18',confidence:'critical'}, {type:'ip',value:'176.119.29.45',context:'Clop MOVEit exploit delivery',firstSeen:'2025-01-10',confidence:'high'}, {type:'hash',value:'9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d',context:'Clop ransomware payload (SHA256)',firstSeen:'2024-11-15',confidence:'critical'}, {type:'ip',value:'23.106.123.11',context:'Cobalt Strike beacon C2',firstSeen:'2025-04-01',confidence:'high'}, {type:'hash',value:'0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e',context:'Mimikatz modified binary (SHA256)',firstSeen:'2025-03-20',confidence:'critical'}, {type:'hash',value:'1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f',context:'RClone modified for exfiltration (SHA256)',firstSeen:'2025-01-25',confidence:'high'}, {type:'hash',value:'3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b',context:'Sliver C2 implant (SHA256)',firstSeen:'2025-03-05',confidence:'critical'}, {type:'domain',value:'malware-c2-relay.net',context:'Generic C2 relay domain',firstSeen:'2025-02-15',confidence:'medium'}, {type:'url',value:'https://paste.ee/raw/AbCdEf',context:'Threat actor paste bin for staging payloads',firstSeen:'2025-04-08',confidence:'medium'}, {type:'url',value:'https://cdn-asset-delivery.com/update.js',context:'Malicious JS loader',firstSeen:'2025-03-18',confidence:'medium'}, {type:'domain',value:'github-release-clone.net',context:'Fake GitHub release for trojanized software',firstSeen:'2025-02-28',confidence:'high'}, {type:'ip',value:'45.77.65.211',context:'Scanbot infrastructure',firstSeen:'2025-04-05',confidence:'low'}, {type:'ip',value:'185.172.128.45',context:'Brute force attack source',firstSeen:'2025-03-22',confidence:'low'}, {type:'hash',value:'b1a2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2',context:'Chisel Reverse Proxy Binary (SHA256)',firstSeen:'2025-02-15',confidence:'high'}, {type:'ip',value:'192.168.44.10',context:'Internal compromised host pivoting to C2',firstSeen:'2025-04-02',confidence:'medium'}, {type:'hash',value:'c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6',context:'NjRAT malware variant (MD5)',firstSeen:'2025-01-05',confidence:'critical'}, {type:'domain',value:'login-verify-account.net',context:'Spear-phishing targeting executive leadership',firstSeen:'2025-03-12',confidence:'high'}, {type:'url',value:'https://docs-share-cloud.com/inv/9928a',context:'Malicious document drop for initial access',firstSeen:'2025-02-18',confidence:'high'}, {type:'hash',value:'d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5',context:'QuasarRAT configuration builder (SHA256)',firstSeen:'2024-12-01',confidence:'critical'}, {type:'ip',value:'103.76.228.90',context:'Lazarus cryptocurrency theft infrastructure',firstSeen:'2025-01-30',confidence:'high'}, {type:'domain',value:'secure-banking-portal.org',context:'Financial sector credential harvesting',firstSeen:'2025-04-03',confidence:'critical'}, {type:'hash',value:'e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4',context:'DarkGate loader DLL (SHA256)',firstSeen:'2025-03-01',confidence:'critical'}, {type:'url',value:'https://transfer-files-sec.net/download/29a',context:'Ransomware deployment staging link',firstSeen:'2025-02-10',confidence:'high'}, {type:'ip',value:'5.188.206.55',context:'Cobalt Strike team server (Russia)',firstSeen:'2025-03-25',confidence:'critical'}, {type:'hash',value:'f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3',context:'CaddyWiper ransomware component',firstSeen:'2024-11-05',confidence:'critical'}, {type:'domain',value:'ot-network-monitoring.xyz',context:'OT environment reconnaissance phishing',firstSeen:'2025-01-22',confidence:'critical'}, {type:'url',value:'https://update-ics-software.com/patch_v2.exe',context:'Trojanized ICS software update',firstSeen:'2025-02-28',confidence:'critical'} ];
-const ZERO_DAY_WATCH = [ {id:'CVE-2025-1145',vendor:'Microsoft',product:'Windows Kernel',desc:'Zero-day privilege escalation via win32k.sys actively exploited in APT campaigns targeting government networks',status:'active',dateDiscovered:'2025-04-10',exploitStatus:'active',actor:'APT29, APT41',mitigation:'Apply out-of-band patch; enable Attack Surface Reduction rules',score:'8.8'}, {id:'CVE-2025-0923',vendor:'Palo Alto Networks',product:'PAN-OS GlobalProtect',desc:'Authentication bypass in PAN-OS GlobalProtect portal used for initial access in OT environments',status:'active',dateDiscovered:'2025-03-15',exploitStatus:'active',actor:'Volt Typhoon',mitigation:'Apply PAN-OS 11.2.5-h1 or later; disable GlobalProtect portal if unused',score:'10.0'}, {id:'CVE-2025-0734',vendor:'Cisco',product:'IOS XE Web UI',desc:'Command injection in Cisco IOS XE web UI affecting industrial routers deployed in critical infrastructure',status:'active',dateDiscovered:'2025-02-20',exploitStatus:'active',actor:'APT41',mitigation:'Disable HTTP/HTTPS server on IOS XE; apply patch when available',score:'10.0'}, {id:'CVE-2025-0489',vendor:'Ivanti',product:'Ivanti Endpoint Manager',desc:'Pre-auth RCE in Ivanti Endpoint Manager allowing unauthenticated remote code execution',status:'active',dateDiscovered:'2025-01-15',exploitStatus:'active',actor:'BlackCat, LockBit',mitigation:'Apply February patch; audit EPM server for IOCs',score:'9.8'}, {id:'CVE-2025-0234',vendor:'Confluence',product:'Atlassian Confluence Server',desc:'Remote code execution via OGNL injection in Confluence Data Center used for supply chain attacks',status:'active',dateDiscovered:'2025-01-05',exploitStatus:'active',actor:'APT41',mitigation:'Update to Confluence 8.9.4 or later; restrict access',score:'9.8'}, {id:'CVE-2024-59876',vendor:'Siemens',product:'SIMATIC WinCC',desc:'Unauthenticated remote code execution in WinCC web interface targeting industrial HMIs',status:'active',dateDiscovered:'2024-12-04',exploitStatus:'active',actor:'APT41, Volt Typhoon',mitigation:'Apply Siemens SSA-2024-1204 patch; segment WinCC servers',score:'9.8'}, {id:'CVE-2024-56732',vendor:'Rockwell Automation',product:'FactoryTalk View',desc:'Authentication bypass in FactoryTalk View SE allowing unauthorized HMI access and process manipulation',status:'active',dateDiscovered:'2024-11-18',exploitStatus:'active',actor:'BlackCat',mitigation:'Apply Rockwell Security Advisory SD2145; enable MFA',score:'9.4'}, {id:'CVE-2024-51203',vendor:'Schneider Electric',product:'EcoStruxure Control Expert',desc:'Remote code execution via malicious project file in EcoStruxure Control Expert engineering workstation',status:'patched',dateDiscovered:'2024-10-08',exploitStatus:'poc',actor:'Unknown',mitigation:'Update to EcoStruxure Control Expert v15.1 or later',score:'8.6'}, {id:'CVE-2024-48901',vendor:'Fortinet',product:'FortiOS SSL-VPN',desc:'Authentication bypass in FortiOS SSL-VPN used for remote OT/ICS maintenance access',status:'patched',dateDiscovered:'2024-09-22',exploitStatus:'active',actor:'APT28',mitigation:'Apply FortiOS 7.4.6 or 7.2.9; rotate all VPN credentials',score:'9.8'}, {id:'CVE-2024-42156',vendor:'Apache',product:'Apache OFBiz',desc:'Remote code execution via deserialization in Apache OFBiz used in supply chain management systems',status:'patched',dateDiscovered:'2024-08-14',exploitStatus:'active',actor:'APT41',mitigation:'Update Apache OFBiz to 18.12.10 or later',score:'9.8'} ];
-const OT_SUPPLEMENTAL = [ {id:'CVE-2025-0455',vendor:'Honeywell',product:'Experion PKS R540',desc:'Buffer overflow in Honeywell Experion PKS C300 controller allowing unauthenticated RCE via crafted CDA packets',action:'Apply Honeywell advisory MU-2025-0002; update C300 firmware to R540.2 or later.',score:'9.8',date:'2025-03-10',epss:'0.87',exploit:'active',attck:['T1190','T1059'],actor:'Volt Typhoon'}, {id:'CVE-2025-0312',vendor:'Siemens',product:'SINEMA Remote Connect',desc:'SQL injection in SINEMA Remote Connect server allowing authentication bypass and configuration extraction',action:'Update to SINEMA RC 3.2 or later; apply SSA-2025-0312.',score:'8.4',date:'2025-02-28',epss:'0.65',exploit:'poc',attck:['T1190','T1078'],actor:'APT41'}, {id:'CVE-2025-0198',vendor:'ABB',product:'Ability System 800xA',desc:'Remote code execution via insecure deserialization in ABB Ability System 800xA engineering workstation',action:'Apply ABB advisory 2025-001; update 800xA to version 6.1.3.',score:'9.8',date:'2025-01-18',epss:'0.79',exploit:'active',attck:['T1190','T1059'],actor:'LockBit'}, {id:'CVE-2025-0089',vendor:'Mitsubishi Electric',product:'MELSEC iQ-F Series PLC',desc:'Denial of service and potential code execution via crafted MC Protocol packets on MELSEC iQ-F PLCs',action:'Update firmware to 1.160 or later; apply Mitsubishi advisory 2025-002.',score:'8.6',date:'2024-12-22',epss:'0.58',exploit:'poc',attck:['T1499','T1190'],actor:'APT41'}, {id:'CVE-2024-67890',vendor:'Yokogawa',product:'CENTUM CS 3000',desc:'Authentication bypass in Yokogawa CENTUM CS 3000 FCS allowing unauthorized control system modifications',action:'Apply Yokogawa YSAR-24-0003 security patch.',score:'9.4',date:'2024-12-10',epss:'0.72',exploit:'active',attck:['T1190','T1078'],actor:'Volt Typhoon'}, {id:'CVE-2024-56732',vendor:'Rockwell Automation',product:'FactoryTalk View SE',desc:'Authentication bypass in FactoryTalk View SE allowing unauthorized HMI access',action:'Apply Rockwell Security Advisory SD2145.',score:'9.4',date:'2024-11-18',epss:'0.84',exploit:'active',attck:['T1190','T1078'],actor:'BlackCat'}, {id:'CVE-2024-59876',vendor:'Siemens',product:'SIMATIC WinCC',desc:'Unauthenticated RCE in WinCC web interface targeting industrial HMIs',action:'Apply Siemens SSA-2024-1204 patch.',score:'9.8',date:'2024-12-04',epss:'0.91',exploit:'active',attck:['T1190','T1059'],actor:'APT41'}, {id:'CVE-2024-48901',vendor:'Fortinet',product:'FortiOS SSL-VPN',desc:'Authentication bypass in FortiOS SSL-VPN used for remote OT/ICS maintenance access',action:'Apply FortiOS 7.4.6 or 7.2.9.',score:'9.8',date:'2024-09-22',epss:'0.89',exploit:'active',attck:['T1190','T1133'],actor:'APT28'}, {id:'CVE-2024-42156',vendor:'Apache',product:'Apache OFBiz',desc:'Remote code execution via deserialization in Apache OFBiz used in supply chain management',action:'Update Apache OFBiz to 18.12.10 or later.',score:'9.8',date:'2024-08-14',epss:'0.82',exploit:'active',attck:['T1190','T1059'],actor:'APT41'}, {id:'CVE-2024-38421',vendor:'Emerson',product:'DeltaV DCS',desc:'Command injection in Emerson DeltaV DCS engineering station allowing process manipulation',action:'Apply Emerson advisory 2024-008.',score:'9.8',date:'2024-07-22',epss:'0.76',exploit:'poc',attck:['T1190','T1059'],actor:'Unknown'}, {id:'CVE-2024-32109',vendor:'Wago',product:'PFC200 G2 Controller',desc:'Heap overflow in WAGO PFC200 G2 Codesys runtime allowing remote code execution',action:'Apply WAGO-SA-2024-003.',score:'9.8',date:'2024-06-14',epss:'0.68',exploit:'poc',attck:['T1190'],actor:'Unknown'}, {id:'CVE-2024-28765',vendor:'Phoenix Contact',product:'FL Switch 2300 Series',desc:'Authentication bypass in Phoenix Contact FL Switch 2300 managed switches',action:'Update firmware to 3.1.0 or later.',score:'9.8',date:'2024-05-08',epss:'0.71',exploit:'poc',attck:['T1190','T1133'],actor:'Unknown'}, {id:'CVE-2024-21890',vendor:'Moxa',product:'EDR-G903 Series Router',desc:'OS command injection in Moxa EDR-G903 industrial router web interface',action:'Update to firmware v3.5 or later.',score:'8.8',date:'2024-04-15',epss:'0.62',exploit:'poc',attck:['T1190'],actor:'Volt Typhoon'}, {id:'CVE-2024-18234',vendor:'Beckhoff',product:'TwinCAT 3 XAE',desc:'Privilege escalation in Beckhoff TwinCAT 3 XAE engineering environment',action:'Apply Beckhoff advisory 2024-004.',score:'7.8',date:'2024-03-20',epss:'0.45',exploit:'none',attck:['T1548'],actor:'Unknown'}, {id:'CVE-2024-14567',vendor:'Schweitzer',product:'SEL-751A Feeder Protection Relay',desc:'Authentication bypass in SEL-751A relay web interface allowing protection setting manipulation',action:'Update to firmware R203 or later.',score:'8.6',date:'2024-02-28',epss:'0.59',exploit:'poc',attck:['T1190','T1078'],actor:'Unknown'}, {id:'CVE-2024-10234',vendor:'Omron',product:'NJ/NX Series PLC',desc:'Authentication bypass in OMRON Sysmac Studio allowing RCE on NJ/NX PLCs',action:'Update to Sysmac Studio v1.50 or later.',score:'9.8',date:'2024-01-18',epss:'0.74',exploit:'active',attck:['T1190'],actor:'APT41'} ];
+const IOC_DATABASE = []; // Not verified by a connected authoritative feed.
+const ZERO_DAY_WATCH = []; // Not verified by a connected authoritative feed.
+const OT_SUPPLEMENTAL = []; // Not verified by a connected authoritative feed.
 const RSS_FEEDS = [ { name: "CISA Advisories", url: "https://www.cisa.gov/cybersecurity-advisories/all.xml" }, { name: "CISA ICS Advisories", url: "https://www.cisa.gov/cybersecurity-advisories/ics-advisories.xml" }, { name: "BleepingComputer", url: "https://www.bleepingcomputer.com/feed/" }, { name: "The Hacker News", url: "https://feeds.feedburner.com/TheHackersNews" }, { name: "Dark Reading", url: "https://www.darkreading.com/rss.xml" }, { name: "Krebs on Security", url: "https://krebsonsecurity.com/feed/" }, { name: "SecurityWeek", url: "https://www.securityweek.com/rss" }, { name: "SANS ISC", url: "https://isc.sans.edu/rssfeed.xml" }, { name: "Rapid7 Blog", url: "https://blog.rapid7.com/rss/" }, { name: "The Record", url: "https://therecord.media/feed/" }, { name: "Check Point Research", url: "https://research.checkpoint.com/feed/" }, { name: "Unit 42 (Palo Alto)", url: "https://unit42.paloaltonetworks.com/feed/" }, { name: "Talos Intelligence", url: "https://blog.talosintelligence.com/rss/" }, { name: "CrowdStrike", url: "https://www.crowdstrike.com/blog/feed/" }, { name: "Dragos ICS Security", url: "https://dragos.com/feed/" }, { name: "DFIR Report", url: "https://thedfirreport.com/feed/" }, { name: "Google TAG", url: "https://blog.google/threat-analysis-group/rss/" }, { name: "Tenable Blog", url: "https://www.tenable.com/blog/feed" }, { name: "Mandiant", url: "https://www.mandiant.com/resources/blog/rss.xml" }, { name: "SentinelOne Labs", url: "https://labs.sentinelone.com/feed/" }, { name: "Red Canary", url: "https://redcanary.com/blog/feed/" }, { name: "Qualys Blog", url: "https://blog.qualys.com/feed/" }, { name: "Sophos News", url: "https://news.sophos.com/en-us/feed/" }, { name: "IBM Security", url: "https://securityintelligence.com/feed/" }, { name: "PacketStorm", url: "https://rss.packetstormsecurity.com/files/" }, { name: "Security Affairs", url: "https://securityaffairs.co/wordpress/feed" } ];
 const RSS_PROXIES = [ 
     url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, 
     url => `https://corsproxy.io/?${encodeURIComponent(url)}` 
 ];
 const CISA_KEV = 'https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json';
-const FEED_CACHE_KEY = 'zg_feed_v50';
+const FEED_CACHE_KEY = 'zg_feed_verified_v54';
 const FEED_CACHE_TTL = 4 * 60 * 60 * 1000;
-const STATIC_NEWS_FALLBACK = [ {source:'CISA',title:'Critical ICS vulnerabilities patched in Siemens and Rockwell products',link:'https://www.cisa.gov/news-events/ics-advisories',pubDate:'2025-03-15'}, {source:'The Hacker News',title:'Ransomware gangs increasingly targeting OT/ICS environments',link:'https://thehackernews.com',pubDate:'2025-03-12'}, {source:'BleepingComputer',title:'New zero-day exploited in widely used industrial control software',link:'https://www.bleepingcomputer.com',pubDate:'2025-03-10'}, {source:'SecurityWeek',title:'Nation-state actors shift focus to critical infrastructure supply chains',link:'https://www.securityweek.com',pubDate:'2025-03-08'}, {source:'Dark Reading',title:'MITRE ATT&CK for ICS v14 released with new telemetry mappings',link:'https://www.darkreading.com',pubDate:'2025-03-05'}, {source:'Dragos',title:'Quarterly ICS Threat Landscape Report highlights emerging OT threats',link:'https://dragos.com',pubDate:'2025-02-28'} ];
+const STATIC_NEWS_FALLBACK = []; // Not verified by a connected authoritative feed.
 
 let allVulns = []; 
 let bookmarks = new Set(); 
@@ -335,10 +335,11 @@ let disclosureChartInstance = null;
 function openDB() { 
     return new Promise((resolve, reject) => { 
         try { 
-            const request = indexedDB.open('ZeroGuardDB', 1); 
+            const request = indexedDB.open('ZeroGuardDB', 2); 
             request.onupgradeneeded = (event) => { 
                 const db = event.target.result; 
-                if (!db.objectStoreNames.contains('vulns')) db.createObjectStore('vulns', { keyPath: 'id' }); 
+                if (!db.objectStoreNames.contains('vulns')) db.createObjectStore('vulns', { keyPath: 'id' });
+                else event.target.transaction.objectStore('vulns').clear(); // discard old fabricated scores 
             }; 
             request.onsuccess = (event) => resolve(event.target.result); 
             request.onerror = (event) => reject(event.target.error); 
@@ -388,8 +389,24 @@ function saveBookmarks() {
     } catch {} 
 }
 
+function safeExternalUrl(value) {
+    try { const url = new URL(String(value ?? '')); return url.protocol === 'https:' ? url.href : '#'; }
+    catch { return '#'; }
+}
+function metric(value, max) {
+    if (value === null || value === undefined || value === '') return null;
+    const number = Number(value);
+    return Number.isFinite(number) && number >= 0 && number <= max ? number : null;
+}
+function formatScore(value) { const n = metric(value, 10); return n === null ? '—' : n.toFixed(1); }
+function formatEPSS(value) { const n = metric(value, 1); return n === null ? '—' : n.toFixed(2); }
+function csvCell(value) {
+    let x = String(value ?? '');
+    if (/^[=+\-@\t\r]/.test(x)) x = "'" + x;
+    return '"' + x.replace(/"/g, '""') + '"';
+}
 function esc(s) { 
-    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); 
+    return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); 
 }
 
 function fmtDate(d) { 
@@ -401,32 +418,36 @@ function fmtDate(d) {
     } 
 }
 
-function severityBadge(score) { 
-    const s = parseFloat(score); 
+function severityBadge(score) {
+    const s = metric(score, 10);
+    if (s === null) return '<span class="badge badge-accent">UNSCORED</span>'; 
     if (s >= 9) return '<span class="badge badge-red">CRITICAL</span>'; 
     if (s >= 7) return '<span class="badge badge-orange">HIGH</span>'; 
     if (s >= 4) return '<span class="badge badge-yellow">MEDIUM</span>'; 
     return '<span class="badge badge-green">LOW</span>'; 
 }
 
-function severityLabel(score) { 
-    const s = parseFloat(score); 
+function severityLabel(score) {
+    const s = metric(score, 10);
+    if (s === null) return 'unknown'; 
     if (s >= 9) return 'critical'; 
     if (s >= 7) return 'high'; 
     if (s >= 4) return 'medium'; 
     return 'low'; 
 }
 
-function scoreColor(score) { 
-    const s = parseFloat(score); 
+function scoreColor(score) {
+    const s = metric(score, 10);
+    if (s === null) return 'var(--text3)'; 
     if (s >= 9) return 'var(--red)'; 
     if (s >= 7) return 'var(--orange)'; 
     if (s >= 4) return 'var(--yellow)'; 
     return 'var(--green)'; 
 }
 
-function epssColor(epss) { 
-    const e = parseFloat(epss); 
+function epssColor(epss) {
+    const e = metric(epss, 1);
+    if (e === null) return 'var(--text3)'; 
     if (e >= 0.7) return 'var(--red)'; 
     if (e >= 0.4) return 'var(--orange)'; 
     if (e >= 0.1) return 'var(--yellow)'; 
@@ -436,7 +457,7 @@ function epssColor(epss) {
 function exploitBadge(status) { 
     if (status === 'active') return '<span class="badge badge-red badge-sm">⚠ Active</span>'; 
     if (status === 'poc') return '<span class="badge badge-orange badge-sm">PoC</span>'; 
-    return '<span class="badge badge-green badge-sm">None</span>'; 
+    return '<span class="badge badge-accent badge-sm">Not assessed</span>'; 
 }
 
 function attckBadge(code) { 
@@ -445,8 +466,9 @@ function attckBadge(code) {
 }
 
 function remediationBadge(status) { 
-    if (status === 'patched') return '<span class="badge badge-green badge-sm">✓ Yes</span>'; 
-    return '<span class="badge badge-red badge-sm">✗ No</span>'; 
+    if (status === 'patched') return '<span class="badge badge-green badge-sm">Verified patched</span>';
+    if (status === 'unpatched') return '<span class="badge badge-red badge-sm">Verified unpatched</span>';
+    return '<span class="badge badge-accent badge-sm">Not assessed</span>'; 
 }
 
 function genKeyword(id) { 
@@ -624,10 +646,10 @@ async function loadFeeds(forceRefresh = false) {
     if (items.length === 0) { 
         showToast('RSS networks busy, loading cached intelligence fallback', 'warning'); 
         var cachedFallback = getCache(FEED_CACHE_KEY);
-        items = cachedFallback && cachedFallback.length > 0 ? cachedFallback : STATIC_NEWS_FALLBACK; 
+        items = cachedFallback && cachedFallback.length > 0 ? cachedFallback : []; 
     } 
     feedItems = items; 
-    setCache(FEED_CACHE_KEY, items); 
+    if (successCount && items.length) setCache(FEED_CACHE_KEY, items); 
     feedPage = 1; 
     renderFeedPage(); 
     buildOverviewNews(); 
@@ -638,12 +660,13 @@ async function doSync(force = true) {
     var btn = document.getElementById('syncBtn'); 
     btn.classList.add('syncing'); 
     btn.disabled = true; 
-    showToast('🔄 Force syncing CISA KEV + ICS-CERT feeds…', 'info'); 
+    showToast('Syncing official CISA KEV catalog…', 'info'); 
     
     // Cache-busting timestamp to prevent proxy/browser caching of old responses
     var kevUrl = CISA_KEV + '?_=' + Date.now();
     
-    var proxies = [ 
+    var proxies = [
+        url => url, // official source before third-party CORS relays
         url => `https://corsproxy.io/?${encodeURIComponent(url)}`, 
         url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, 
         url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}` 
@@ -682,7 +705,7 @@ async function doSync(force = true) {
         var ts = new Date().toLocaleTimeString(); 
         document.getElementById('syncStatus').textContent = 'Synced ' + ts; 
         document.getElementById('pageSub').textContent = allVulns.length + ' entries · Last sync ' + ts; 
-        showToast('✅ Successfully synced ' + allVulns.length + ' vulnerabilities', 'info'); 
+        showToast('Synced ' + allVulns.length + ' CISA KEV records. External CVSS/EPSS not yet connected.', 'info'); 
         updateLiveIndicator(true); 
         
         // Force refresh feeds on manual sync to ensure latest news
@@ -691,8 +714,10 @@ async function doSync(force = true) {
         console.error('All KEV proxies failed. Last error:', lastError);
         var cached = await loadFromDB(); 
         if (cached.length > 0) { 
-            allVulns = cached; 
-            rebuildTables(); 
+            allVulns = cached;
+            rebuildTables();
+            updateLiveIndicator(false);
+            document.getElementById('syncStatus').textContent = 'Offline · cached records'; 
             showToast('⚠ Live sync failed (' + lastError + '). Using cached data (' + allVulns.length + ' entries).', 'warning'); 
         } else { 
             showToast('⚠ Sync failed (' + lastError + ') and no cache available. Check network/console.', 'critical'); 
@@ -703,68 +728,27 @@ async function doSync(force = true) {
     btn.disabled = false; 
 }
 
-async function processVulns(vulns) { 
-    var kevMapped = vulns.map(function(v) { 
-        var supp = findSupplemental(v.cveID); 
-        var epss = supp ? supp.epss : generateEPSS(v.cveID); 
-        var exploit = supp ? supp.exploit : 'none'; 
-        var attck = supp ? supp.attck : generateAttck(v.cveID); 
-        var actor = supp ? supp.actor : null; 
-        var cat = classify(v); 
-        var score = supp ? supp.score : stableScore(v.cveID); 
-        var remediationStatus = supp ? (supp.exploit === 'none' ? 'patched' : 'unpatched') : 'patched'; 
-        var action = supp ? supp.action : generateRemediation(v.vendorProject || 'the vendor', v.product || 'the affected product', v.requiredAction || ''); 
-        return { 
-            id: v.cveID, 
-            vendor: v.vendorProject || 'Unknown', 
-            product: v.product || '—', 
-            desc: v.shortDescription || 'No description.', 
-            action: action, 
-            score: score, 
-            severity: severityLabel(score), 
-            date: normalizeDate(v.dateAdded || ''), 
-            keyword: genKeyword(v.cveID), 
-            cat: cat, 
-            epss: epss, 
-            exploit: exploit, 
-            attck: attck, 
-            actor: actor, 
-            inKEV: true, 
-            riskScore: calcRiskScore(score, epss, exploit, true), 
-            remediationStatus: remediationStatus 
-        }; 
-    }); 
-    var kevIds = new Set(kevMapped.map(function(v) { return v.id; })); 
-    var suppMapped = OT_SUPPLEMENTAL.filter(function(v) { return !kevIds.has(v.id); }).map(function(v) { 
-        return { 
-            id: v.id, 
-            vendor: v.vendor, 
-            product: v.product, 
-            desc: v.desc, 
-            action: v.action, 
-            score: v.score, 
-            severity: severityLabel(v.score), 
-            date: normalizeDate(v.date), 
-            keyword: genKeyword(v.id), 
-            cat: 'ot', 
-            epss: v.epss || generateEPSS(v.id), 
-            exploit: v.exploit || 'none', 
-            attck: v.attck || generateAttck(v.id), 
-            actor: v.actor || null, 
-            inKEV: false, 
-            riskScore: calcRiskScore(v.score, v.epss, v.exploit, false), 
-            remediationStatus: v.exploit === 'none' ? 'patched' : 'unpatched' 
-        }; 
-    }); 
-    allVulns = kevMapped.concat(suppMapped); 
-    allVulns.sort(function(a, b) { 
-        var da = a.date ? new Date(a.date).getTime() : 0; 
-        var db = b.date ? new Date(b.date).getTime() : 0; 
-        if (db !== da) return db - da; 
-        return b.id.localeCompare(a.id); 
-    }); 
-    await saveToDB(allVulns); 
-    rebuildTables(); 
+async function processVulns(vulns) {
+    if (!Array.isArray(vulns)) throw new Error('Invalid CISA KEV feed');
+    const seen = new Set();
+    allVulns = vulns.filter(v => {
+        const id = typeof v?.cveID === 'string' ? v.cveID.trim().toUpperCase() : '';
+        if (!/^CVE-\d{4}-\d{4,}$/.test(id) || seen.has(id)) return false;
+        seen.add(id); return true;
+    }).map(v => {
+        const id = v.cveID.trim().toUpperCase();
+        return { id, vendor: String(v.vendorProject || 'Unknown'), product: String(v.product || 'Unknown'),
+            desc: String(v.shortDescription || 'No CISA description supplied.'),
+            action: String(v.requiredAction || 'Refer to the CISA KEV entry and vendor advisory.'),
+            date: normalizeDate(v.dateAdded || ''), keyword: genKeyword(id), cat: classify(v),
+            score: null, severity: 'unknown', epss: null, attck: [], actor: null,
+            exploit: 'active', remediationStatus: 'unknown', inKEV: true, riskScore: null,
+            source: 'CISA KEV', dueDate: normalizeDate(v.dueDate || ''),
+            ransomwareUse: String(v.knownRansomwareCampaignUse || 'Unknown') };
+    });
+    allVulns.sort((a,b) => (b.date || '').localeCompare(a.date || '') || b.id.localeCompare(a.id));
+    await saveToDB(allVulns);
+    rebuildTables();
 }
 
 function rebuildTables() { 
@@ -811,38 +795,10 @@ function rebuildTables() {
     updateCharts(); 
 }
 
-function generateEPSS(cveId) { 
-    var hash = 0; 
-    for (var i = 0; i < cveId.length; i++) { 
-        hash = ((hash << 5) - hash) + cveId.charCodeAt(i); 
-        hash |= 0; 
-    } 
-    return (Math.abs(hash) % 100) / 100; 
-}
-
-function generateAttck(cveId) { 
-    var codes = Object.keys(MITRE_ATTCK_TECHNIQUES); 
-    var hash = 0; 
-    for (var i = 0; i < cveId.length; i++) { 
-        hash = ((hash << 5) - hash) + cveId.charCodeAt(i); 
-        hash |= 0; 
-    } 
-    var numTechs = 1 + (Math.abs(hash) % 3); 
-    var selected = []; 
-    for (var i = 0; i < numTechs; i++) { 
-        selected.push(codes[(Math.abs(hash) + i * 37) % codes.length]); 
-    } 
-    return selected; 
-}
-
-function stableScore(cveId) { 
-    var hash = 0; 
-    for (var i = 0; i < cveId.length; i++) { 
-        hash = ((hash << 5) - hash) + cveId.charCodeAt(i); 
-        hash |= 0; 
-    } 
-    return Math.min(10, Math.max(3.5, 5.0 + (Math.abs(hash) % 50) / 10)).toFixed(1); 
-}
+// Never fabricate scores or threat-technique mappings from CVE identifiers.
+function generateEPSS() { return null; }
+function generateAttck() { return []; }
+function stableScore() { return null; }
 
 function animateCount(id, target) { 
     var el = document.getElementById(id); 
@@ -954,8 +910,8 @@ function renderTablePage(tab) {
             </td>
             <td><strong>${esc(v.vendor)}</strong></td>
             <td style="color:var(--text2);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(v.product)}</td>
-            <td style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(v.score)}">${v.score}</td>
-            <td style="font-family:var(--font-mono);font-weight:600;color:${epssColor(v.epss)}">${parseFloat(v.epss).toFixed(2)}</td>
+            <td style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(v.score)}">${formatScore(v.score)}</td>
+            <td style="font-family:var(--font-mono);font-weight:600;color:${epssColor(v.epss)}">${formatEPSS(v.epss)}</td>
             <td>${exploitBadge(v.exploit)}</td>
             <td>${remediationBadge(v.remediationStatus)}</td>
             <td style="max-width:120px;overflow:hidden">${attckHtml}</td>
@@ -1052,8 +1008,8 @@ function buildBookmarksPage() {
                     <div style="font-size:11px;color:var(--green)">${esc(v.action)}</div>
                 </div>
                 <div class="watchlist-meta">
-                    <span class="watchlist-tag">CVSS: ${v.score}</span>
-                    <span class="watchlist-tag">EPSS: ${parseFloat(v.epss).toFixed(2)}</span>
+                    <span class="watchlist-tag">CVSS: ${formatScore(v.score)}</span>
+                    <span class="watchlist-tag">EPSS: ${formatEPSS(v.epss)}</span>
                     ${v.attck ? v.attck.slice(0, 2).map(function(a) { return `<span class="watchlist-tag">${esc(a)}</span>`; }).join('') : ''}
                 </div>
             </div>
@@ -1065,53 +1021,11 @@ function buildBookmarksPage() {
     container.innerHTML = html; 
 }
 
-function buildZeroDayWatch() { 
-    var activeContainer = document.getElementById('zeroday-container'); 
-    var patchedContainer = document.getElementById('patched-zeroday-container'); 
-    var active = ZERO_DAY_WATCH.filter(function(z) { return z.status === 'active'; }).sort(function(a, b) { return new Date(b.dateDiscovered) - new Date(a.dateDiscovered); }); 
-    var patched = ZERO_DAY_WATCH.filter(function(z) { return z.status === 'patched'; }).sort(function(a, b) { return new Date(b.dateDiscovered) - new Date(a.dateDiscovered); }); 
-    
-    var activeHtml = active.map(function(z) {
-        return `<div class="watchlist-item">
-            <div class="watchlist-info">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-                    <span class="watchlist-id">${esc(z.id)}</span>
-                    <span class="badge badge-red badge-sm">⚠ Active Zero-Day</span>
-                    ${exploitBadge(z.exploitStatus)}
-                </div>
-                <div style="font-size:12px;font-weight:600;color:var(--text)">${esc(z.vendor)} — ${esc(z.product)}</div>
-                <div class="watchlist-desc">${esc(z.desc)}</div>
-                <div class="watchlist-meta">
-                    <span class="watchlist-tag">Discovered: ${fmtDate(z.dateDiscovered)}</span>
-                    <span class="watchlist-tag">Actor: ${esc(z.actor)}</span>
-                    <span class="watchlist-tag">CVSS: ${z.score}</span>
-                </div>
-                <div style="margin-top:8px">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-value" style="font-size:11.5px;color:var(--green)">${esc(z.mitigation)}</div>
-                </div>
-            </div>
-        </div>`;
-    }).join('');
-    activeContainer.innerHTML = activeHtml || '<div class="empty-state"><p>No active zero-days.</p></div>';
-    
-    var patchedHtml = patched.map(function(pz) {
-        return `<div class="watchlist-item" style="border-left-color:var(--green)">
-            <div class="watchlist-info">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                    <span class="watchlist-id" style="color:var(--green)">${esc(pz.id)}</span>
-                    <span class="badge badge-green badge-sm">✓ Patched</span>
-                </div>
-                <div style="font-size:11px;color:var(--text2)">${esc(pz.vendor)} — ${esc(pz.product)}</div>
-                <div style="font-size:11px;color:var(--text3);margin-top:2px">${esc(pz.desc.substring(0, 120))}…</div>
-                <div style="margin-top:6px">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-value" style="font-size:11px;color:var(--text2)">${esc(pz.mitigation)}</div>
-                </div>
-            </div>
-        </div>`;
-    }).join('');
-    patchedContainer.innerHTML = patchedHtml || '<div class="empty-state"><p>No patched zero-days.</p></div>';
+function buildZeroDayWatch() {
+    document.getElementById('zeroday-container').innerHTML =
+        '<div class="empty-state"><p>No independently verified zero-day source is connected. CISA KEV confirms known exploitation, not necessarily exploitation before a patch was available. An empty list does not mean there are no zero-days.</p></div>';
+    document.getElementById('patched-zeroday-container').innerHTML =
+        '<div class="empty-state"><p>No source-verified historical zero-day records are available. Check official vendor advisories for remediation guidance.</p></div>';
 }
 
 function buildThreatActors() { 
@@ -1137,23 +1051,10 @@ function buildThreatActors() {
     } 
     document.getElementById('threat-actors-container').innerHTML = html; 
     
-    var recentActivity = [
-        {actor:'LockBit',action:'Deployed ransomware against healthcare provider',date:'2025-03-10',severity:'critical'},
-        {actor:'Volt Typhoon',action:'Exploited Cisco IOS XE zero-day in SCADA environment',date:'2025-02-18',severity:'critical'},
-        {actor:'APT41',action:'Targeting Palo Alto Networks PAN-OS firewalls in OT DMZ',date:'2025-03-15',severity:'critical'},
-        {actor:'BlackCat',action:'Exploiting Ivanti Endpoint Manager for OT network access',date:'2025-01-11',severity:'critical'},
-        {actor:'APT28',action:'Phishing campaign targeting ICS engineering workstations',date:'2024-12-15',severity:'high'},
-        {actor:'Lazarus Group',action:'Deployed AppleJeus variant targeting cryptocurrency exchanges',date:'2024-11-28',severity:'high'}
-    ].sort(function(a, b) { return new Date(b.date) - new Date(a.date); }); 
-    
-    var actHtml = ''; 
-    for (var j = 0; j < recentActivity.length; j++) { 
-        actHtml += `<div class="timeline-item ${recentActivity[j].severity}">
-            <div class="timeline-date">${fmtDate(recentActivity[j].date)}</div>
-            <div class="timeline-content"><strong>${esc(recentActivity[j].actor)}:</strong> ${esc(recentActivity[j].action)}</div>
-        </div>`; 
-    } 
-    document.getElementById('actor-activity-container').innerHTML = actHtml; 
+    document.getElementById('actor-activity-container').innerHTML =
+        '<div class="empty-state"><p>Verified recent actor activity requires a dated, cited feed. Static actor profiles are background context, not attribution for the CISA KEV records.</p></div>';
+
+
 }
 
 function buildIOCList() { 
@@ -1298,13 +1199,14 @@ function updateRiskChart(tc) {
     var critical = allVulns.filter(function(v) { return parseFloat(v.score) >= 9; }).length; 
     var high = allVulns.filter(function(v) { return parseFloat(v.score) >= 7 && parseFloat(v.score) < 9; }).length; 
     var medium = allVulns.filter(function(v) { return parseFloat(v.score) >= 4 && parseFloat(v.score) < 7; }).length; 
-    var low = allVulns.filter(function(v) { return parseFloat(v.score) < 4; }).length; 
+    var low = allVulns.filter(function(v) { return metric(v.score, 10) !== null && parseFloat(v.score) < 4; }).length;
+    var unknown = allVulns.filter(v => metric(v.score, 10) === null).length; 
     var ctx = canvas.getContext('2d'); 
     riskChartInstance = new Chart(ctx, { 
         type: 'doughnut', 
         data: { 
-            labels: ['Critical (9-10)', 'High (7-8.9)', 'Medium (4-6.9)', 'Low (0-3.9)'], 
-            datasets: [{ data: [critical, high, medium, low], backgroundColor: [tc.red, tc.orange, tc.yellow, tc.green], borderWidth: 0 }] 
+            labels: ['Critical (9-10)', 'High (7-8.9)', 'Medium (4-6.9)', 'Low (0-3.9)', 'Unscored'], 
+            datasets: [{ data: [critical, high, medium, low, unknown], backgroundColor: [tc.red, tc.orange, tc.yellow, tc.green, tc.text], borderWidth: 0 }] 
         }, 
         options: { 
             responsive: true, 
@@ -1326,7 +1228,7 @@ function updateSeverityChart(tc) {
     }; 
     allVulns.forEach(function(v) { 
         var cat = v.cat === 'ot' ? 'OT/ICS' : v.cat === 'consumer' ? 'Consumer' : 'IT'; 
-        sevCounts[cat][v.severity]++; 
+        sevCounts[cat][v.severity] = (sevCounts[cat][v.severity] || 0) + 1; 
     }); 
     var ctx = canvas.getContext('2d'); 
     severityChartInstance = new Chart(ctx, { 
@@ -1388,7 +1290,7 @@ function updateEPSSScatter(tc) {
     var sample = allVulns.slice(0, 100); 
     var datasets = { it: { data: [], label: 'IT' }, ot: { data: [], label: 'OT/ICS' }, consumer: { data: [], label: 'Consumer' } }; 
     sample.forEach(function(v) { 
-        datasets[v.cat].data.push({ x: parseFloat(v.score), y: parseFloat(v.epss) }); 
+        if (metric(v.score, 10) !== null && metric(v.epss, 1) !== null) datasets[v.cat].data.push({ x: Number(v.score), y: Number(v.epss) }); 
     }); 
     var colors = { it: tc.accent, ot: tc.cyan, consumer: tc.orange }; 
     var ctx = canvas.getContext('2d'); 
@@ -1502,7 +1404,7 @@ function updateComplianceMapping(tc) {
 
 function buildOverviewNews() { 
     var cached = getCache(FEED_CACHE_KEY); 
-    var items = cached ? cached.slice(0, 10) : STATIC_NEWS_FALLBACK; 
+    var items = feedItems.length ? feedItems.slice(0, 10) : (cached ? cached.slice(0, 10) : []); 
     var tbody = document.getElementById('overview-news-tbody'); 
     if (!items.length) { 
         tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text3);padding:20px">Sync to load latest intelligence</td></tr>'; 
@@ -1522,7 +1424,7 @@ function buildOverviewNews() {
         } 
         html += `<tr>
             <td><span class="badge badge-accent">${esc(item.source || 'Feed')}</span></td>
-            <td><a href="${esc(item.link || '#')}" target="_blank" rel="noopener noreferrer" style="color:var(--text);font-weight:500;font-size:12.5px">${esc((item.title || '').substring(0, 100))}</a></td>
+            <td><a href="${esc(safeExternalUrl(item.link))}" target="_blank" rel="noopener noreferrer" style="color:var(--text);font-weight:500;font-size:12.5px">${esc((item.title || '').substring(0, 100))}</a></td>
             <td style="color:var(--text3);font-size:11.5px;white-space:nowrap">${fmtDate(item.pubDate)}</td>
             <td>${relevance}</td>
         </tr>`; 
@@ -1577,7 +1479,7 @@ function openDetail(cveId) {
         return `${attckBadge(a)} <span style="font-size:10px;color:var(--text3)">${esc(MITRE_ATTCK_TECHNIQUES[a] || '')}</span><br>`; 
     }).join('') : '<span style="color:var(--text3)">—</span>'; 
     
-    var riskPct = Math.min(100, parseFloat(v.riskScore) * 10); 
+    var riskPct = v.riskScore === null ? 0 : Math.min(100, parseFloat(v.riskScore) * 10); 
     var riskColor = parseFloat(v.riskScore) >= 7 ? 'var(--red)' : parseFloat(v.riskScore) >= 4 ? 'var(--orange)' : 'var(--green)'; 
     
     document.getElementById('detail-body').innerHTML = `
@@ -1586,12 +1488,12 @@ function openDetail(cveId) {
             <div class="detail-section"><div class="detail-label">Product</div><div class="detail-value">${esc(v.product)}</div></div>
             <div class="detail-section"><div class="detail-label">Category</div><div class="detail-value"><span class="badge ${v.cat === 'ot' ? 'badge-cyan' : v.cat === 'consumer' ? 'badge-orange' : 'badge-accent'}">${v.cat.toUpperCase()}</span></div></div>
             <div class="detail-section"><div class="detail-label">Date Added</div><div class="detail-value">${fmtDate(v.date)}</div></div>
-            <div class="detail-section"><div class="detail-label">CVSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:${scoreColor(v.score)}">${v.score} / 10 ${severityBadge(v.score)}</div></div>
-            <div class="detail-section"><div class="detail-label">EPSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:${epssColor(v.epss)}">${parseFloat(v.epss).toFixed(2)} <span style="font-size:11px;color:var(--text3)">(${(parseFloat(v.epss) * 100).toFixed(1)}% exploitation probability)</span></div></div>
+            <div class="detail-section"><div class="detail-label">CVSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:${scoreColor(v.score)}">${formatScore(v.score)} / 10 ${severityBadge(v.score)}</div></div>
+            <div class="detail-section"><div class="detail-label">EPSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:${epssColor(v.epss)}">${formatEPSS(v.epss)} <span style="font-size:11px;color:var(--text3)">(${v.epss === null ? 'EPSS not available' : (parseFloat(v.epss) * 100).toFixed(1) + '% model probability'})</span></div></div>
             <div class="detail-section"><div class="detail-label">Exploit Status</div><div class="detail-value">${exploitBadge(v.exploit)}</div></div>
             <div class="detail-section"><div class="detail-label">Remediation Status</div><div class="detail-value">${remediationBadge(v.remediationStatus)}</div></div>
             <div class="detail-section"><div class="detail-label">CISA KEV</div><div class="detail-value">${v.inKEV ? '<span class="badge badge-red badge-sm">⚠ In KEV</span>' : '<span class="badge badge-green badge-sm">Not listed</span>'}</div></div>
-            <div class="detail-section"><div class="detail-label">Risk Score</div><div class="risk-meter" style="margin-top:4px"><div class="risk-bar" style="height:10px"><div class="risk-fill" style="width:${riskPct}%;background:${riskColor}"></div></div><span style="font-family:var(--font-mono);font-weight:700;color:${riskColor}">${v.riskScore}</span></div></div>
+            <div class="detail-section"><div class="detail-label">Risk Score</div><div class="risk-meter" style="margin-top:4px"><div class="risk-bar" style="height:10px"><div class="risk-fill" style="width:${riskPct}%;background:${riskColor}"></div></div><span style="font-family:var(--font-mono);font-weight:700;color:${riskColor}">${v.riskScore ?? 'Not scored'}</span></div></div>
             <div class="detail-section detail-full"><div class="detail-label">MITRE ATT&CK Techniques</div><div class="detail-value" style="line-height:1.8">${attckHtml}</div></div>
             ${v.actor ? `<div class="detail-section"><div class="detail-label">Associated Threat Actor</div><div class="detail-value" style="color:var(--pink);font-weight:600">${esc(v.actor)}</div></div>` : ''}
             <div class="detail-section detail-full"><div class="detail-label">Description</div><div class="detail-value">${esc(v.desc)}</div></div>
@@ -1638,8 +1540,8 @@ function handleVendorSearch(q) {
                 <td><strong>${esc(v.vendor)}</strong></td>
                 <td style="color:var(--text2)">${esc(v.product)}</td>
                 <td><span class="badge ${v.cat === 'ot' ? 'badge-cyan' : v.cat === 'consumer' ? 'badge-orange' : 'badge-accent'}">${v.cat.toUpperCase()}</span></td>
-                <td style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(v.score)}">${v.score}</td>
-                <td style="font-family:var(--font-mono);color:${epssColor(v.epss)}">${parseFloat(v.epss).toFixed(2)}</td>
+                <td style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(v.score)}">${formatScore(v.score)}</td>
+                <td style="font-family:var(--font-mono);color:${epssColor(v.epss)}">${formatEPSS(v.epss)}</td>
                 <td>${remediationBadge(v.remediationStatus)}</td>
                 <td style="max-width:120px;overflow:hidden">${v.attck ? v.attck.slice(0, 2).map(function(a) { return attckBadge(a); }).join(' ') : '—'}</td>
                 <td class="tooltip-cell" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)">
@@ -1678,7 +1580,7 @@ function renderFeedPage() {
             <div class="feed-source">${esc(slice[i].source)}</div>
             <div class="feed-title">${esc(slice[i].title)}</div>
             <div class="feed-date">${slice[i].pubDate ? fmtDate(slice[i].pubDate) : '—'}</div>
-            <a href="${esc(slice[i].link)}" target="_blank" rel="noopener noreferrer" class="feed-link">
+            <a href="${esc(safeExternalUrl(slice[i].link))}" target="_blank" rel="noopener noreferrer" class="feed-link">
                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
                 View Article →
             </a>
@@ -1754,11 +1656,11 @@ function doExport() {
             if (includeATTCK) hdr.push('MITRE_ATTCK');
             
             var rows = data.map(function(v) {
-                var row = [v.id, v.vendor, v.product, v.score, v.severity, v.cat, v.date, '"' + (v.desc || '').replace(/"/g, '""') + '"', v.remediationStatus];
+                var row = [v.id, v.vendor, v.product, v.score, v.severity, v.cat, v.date, v.desc, v.remediationStatus];
                 if (includeEPSS) row.push(v.epss);
                 if (includeExploit) row.push(v.exploit);
                 if (includeATTCK) row.push((v.attck || []).join('|'));
-                return row.join(',');
+                return row.map(csvCell).join(',');
             });
             download(fn + '.csv', [hdr.join(','), ...rows].join('\n'), 'text/csv');
         } else if (fmt === 'pdf') {
@@ -1778,7 +1680,7 @@ DETAILED LIST
 ------------------------------
 `;
             data.forEach(function(v) {
-                text += `${v.id} | CVSS: ${v.score} | ${v.vendor} | ${v.product} | Remediation: ${v.remediationStatus}
+                text += `${v.id} | CVSS: ${formatScore(v.score)} | ${v.vendor} | ${v.product} | Remediation: ${v.remediationStatus}
 ${v.desc}
 Remediation: ${v.action}
 
