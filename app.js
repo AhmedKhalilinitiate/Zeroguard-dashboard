@@ -160,8 +160,15 @@ function openDetail(id){
  for(const [name,value] of [["CVSS",score(v.cvss)],["EPSS 30-day",probability(v.epss)],["Known exploitation",v.inKEV?"CISA KEV confirmed":"Not confirmed by connected KEV"],["Category",v.category||"Unknown"],["Date added / published",date(v.date)],["Agency due date",date(v.dueDate)],["Ransomware use",v.ransomwareUse||"Not assessed"],["Patch deployed?","Not assessed — requires asset evidence"]]){
  const cell=element("div");append(cell,element("small","",name),element("strong","",value));grid.append(cell);
  }body.append(grid);
- for(const [title,content] of [["Description",v.description],["Recommended action",v.action],["CWE",Array.isArray(v.cwe)?v.cwe.join(", "):""]]){
+ for(const [title,content] of [["Description",v.description],["Verified vendor remediation",v.remediation?.details||"No vendor-specific remediation verified from connected advisories. Consult the vendor bulletin and CISA recommendations."],["CWE",Array.isArray(v.cwe)?v.cwe.join(", "):""]]){
  if(content){body.append(element("h3","spaced",title),element("p","wrap",content));}}
+ if(v.remediation?.details){
+  body.append(element("p","muted","Source: "+(v.remediation.source||"CISA CSAF")+" · "+(v.remediation.category||"not classified")+" · Published/updated: "+date(v.remediation.updated)));
+  for(const [label,url] of [["Vendor advisory / patch instructions",v.remediation.vendorUrl],["Official CISA CSAF evidence",v.remediation.advisoryUrl]]){
+   if(href(url)){const link=element("a","button secondary",label+" ↗");link.href=href(url);link.target="_blank";link.rel="noopener noreferrer";link.style.marginRight="8px";body.append(link);}
+  }
+ }
+ if(v.kevAction){body.append(element("h3","spaced","CISA KEV required action (agency guidance)"),element("p","wrap",v.kevAction),element("p","muted","CISA catalog guidance may be generic and does not establish an applicable vendor patch."));}
  const links=element("div","spaced");for(const [title,url] of [["Official NVD record","https://nvd.nist.gov/vuln/detail/"+id],["CISA KEV catalog",KEV_URL],["FIRST EPSS","https://www.first.org/epss/"]]){
  const link=element("a","button secondary",title+" ↗");link.href=url;link.target="_blank";link.rel="noopener noreferrer";link.style.marginRight="8px";links.append(link);
  }body.append(links);dialog.showModal();
@@ -196,7 +203,7 @@ function renderView(view){
 function render(){renderOverview();renderView(state.view);}
 function exportCSV(){
  const records=state.data?.vulnerabilities||[];if(!records.length)return;
- const columns=["id","vendor","product","category","cvss","epss","inKEV","date","dueDate","action","description"];
+ const columns=["id","vendor","product","category","cvss","epss","inKEV","date","dueDate","actionStatus","action","kevAction","description"];
  function quoted(val){let s=String(val??"");if(/^[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';}
  const csv=[columns.join(","),...records.map(v=>columns.map(k=>quoted(v[k])).join(","))].join("\r\n");
  const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob);
