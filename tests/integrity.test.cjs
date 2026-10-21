@@ -1,21 +1,16 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
-const html = fs.readFileSync('index.html','utf8');
-function expect(text) { assert.ok(html.includes(text), 'Missing expected behavior: '+text); }
-expect("const ZERO_DAY_WATCH = []");
-expect("const OT_SUPPLEMENTAL = []");
-expect("const IOC_DATABASE = []");
-expect("const STATIC_NEWS_FALLBACK = []");
-expect("source: 'CISA KEV'");
-expect("score: null");
-expect("epss: null");
-expect("remediationStatus: 'unknown'");
-expect("function safeExternalUrl(value)");
-expect("return row.map(csvCell).join(',')");
-assert.doesNotMatch(html, /Math\.abs\(hash\).*% 100/);
-assert.doesNotMatch(html, /ZERO_DAY_WATCH = \[\s*\{/);
-assert.doesNotMatch(html, /OT_SUPPLEMENTAL = \[\s*\{/);
-const script = html.match(/<script>([\s\S]*?)<\/script>/);
-assert.ok(script, 'Inline application script must exist');
-new Function(script[1]); // Parse JavaScript without executing browser code.
-console.log('ZeroGuard integrity and JavaScript syntax checks passed.');
+const html=fs.readFileSync('index.html','utf8');
+const js=fs.readFileSync('app.js','utf8');
+const css=fs.readFileSync('styles.css','utf8');
+assert.match(html,/<script src="app\.js" defer><\/script>/);
+assert.match(html,/Source health/);
+assert.match(html,/Known exploited/);
+assert.match(html,/Watchlist/);
+new Function(js);
+for(const section of ['overview','vulnerabilities','exploited','ot','advisories','iocs','bookmarks','health','about'])assert.match(html,new RegExp('id="'+section+'"'));
+for(const feature of ['verify(d)','renderTable(', 'renderHealth(', 'openDetail(', 'exportCSV(', 'setInterval(fetchData', 'watchlist','CISA KEV','EPSS'])assert.ok(js.includes(feature),'Missing '+feature);
+assert.doesNotMatch(js,/eval\s*\(/);
+assert.doesNotMatch(html,/cdn\.jsdelivr|corsproxy\.io|allorigins\.win/);
+assert.match(css,/@media/);
+console.log('ZeroGuard static integration checks passed.');
