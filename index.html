@@ -291,7 +291,7 @@ a { color: inherit; text-decoration: none; }
 
 <script>
 /* ═══════════════════════════════════════════════════════
-ZEROGUARD PRO v5.3 — FIXED SYNC & CACHE BYPASS
+ZEROGUARD PRO v5.4 — VERIFIED CISA KEV MODE
 - Cache-busting timestamps on all API calls
 - Force refresh on manual sync
 - Enhanced error logging for troubleshooting
@@ -389,8 +389,24 @@ function saveBookmarks() {
     } catch {} 
 }
 
+function safeExternalUrl(value) {
+    try { const url = new URL(String(value ?? '')); return url.protocol === 'https:' ? url.href : '#'; }
+    catch { return '#'; }
+}
+function metric(value, max) {
+    if (value === null || value === undefined || value === '') return null;
+    const number = Number(value);
+    return Number.isFinite(number) && number >= 0 && number <= max ? number : null;
+}
+function formatScore(value) { const n = metric(value, 10); return n === null ? '—' : n.toFixed(1); }
+function formatEPSS(value) { const n = metric(value, 1); return n === null ? '—' : n.toFixed(2); }
+function csvCell(value) {
+    let x = String(value ?? '');
+    if (/^[=+\-@\t\r]/.test(x)) x = "'" + x;
+    return '"' + x.replace(/"/g, '""') + '"';
+}
 function esc(s) { 
-    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); 
+    return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); 
 }
 
 function fmtDate(d) { 
@@ -402,32 +418,36 @@ function fmtDate(d) {
     } 
 }
 
-function severityBadge(score) { 
-    const s = parseFloat(score); 
+function severityBadge(score) {
+    const s = metric(score, 10);
+    if (s === null) return '<span class="badge badge-accent">UNSCORED</span>'; 
     if (s >= 9) return '<span class="badge badge-red">CRITICAL</span>'; 
     if (s >= 7) return '<span class="badge badge-orange">HIGH</span>'; 
     if (s >= 4) return '<span class="badge badge-yellow">MEDIUM</span>'; 
     return '<span class="badge badge-green">LOW</span>'; 
 }
 
-function severityLabel(score) { 
-    const s = parseFloat(score); 
+function severityLabel(score) {
+    const s = metric(score, 10);
+    if (s === null) return 'unknown'; 
     if (s >= 9) return 'critical'; 
     if (s >= 7) return 'high'; 
     if (s >= 4) return 'medium'; 
     return 'low'; 
 }
 
-function scoreColor(score) { 
-    const s = parseFloat(score); 
+function scoreColor(score) {
+    const s = metric(score, 10);
+    if (s === null) return 'var(--text3)'; 
     if (s >= 9) return 'var(--red)'; 
     if (s >= 7) return 'var(--orange)'; 
     if (s >= 4) return 'var(--yellow)'; 
     return 'var(--green)'; 
 }
 
-function epssColor(epss) { 
-    const e = parseFloat(epss); 
+function epssColor(epss) {
+    const e = metric(epss, 1);
+    if (e === null) return 'var(--text3)'; 
     if (e >= 0.7) return 'var(--red)'; 
     if (e >= 0.4) return 'var(--orange)'; 
     if (e >= 0.1) return 'var(--yellow)'; 
@@ -437,7 +457,7 @@ function epssColor(epss) {
 function exploitBadge(status) { 
     if (status === 'active') return '<span class="badge badge-red badge-sm">⚠ Active</span>'; 
     if (status === 'poc') return '<span class="badge badge-orange badge-sm">PoC</span>'; 
-    return '<span class="badge badge-green badge-sm">None</span>'; 
+    return '<span class="badge badge-accent badge-sm">Not assessed</span>'; 
 }
 
 function attckBadge(code) { 
@@ -446,8 +466,9 @@ function attckBadge(code) {
 }
 
 function remediationBadge(status) { 
-    if (status === 'patched') return '<span class="badge badge-green badge-sm">✓ Yes</span>'; 
-    return '<span class="badge badge-red badge-sm">✗ No</span>'; 
+    if (status === 'patched') return '<span class="badge badge-green badge-sm">Verified patched</span>';
+    if (status === 'unpatched') return '<span class="badge badge-red badge-sm">Verified unpatched</span>';
+    return '<span class="badge badge-accent badge-sm">Not assessed</span>'; 
 }
 
 function genKeyword(id) { 
@@ -889,8 +910,8 @@ function renderTablePage(tab) {
             </td>
             <td><strong>${esc(v.vendor)}</strong></td>
             <td style="color:var(--text2);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(v.product)}</td>
-            <td style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(v.score)}">${v.score}</td>
-            <td style="font-family:var(--font-mono);font-weight:600;color:${epssColor(v.epss)}">${parseFloat(v.epss).toFixed(2)}</td>
+            <td style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(v.score)}">${formatScore(v.score)}</td>
+            <td style="font-family:var(--font-mono);font-weight:600;color:${epssColor(v.epss)}">${formatEPSS(v.epss)}</td>
             <td>${exploitBadge(v.exploit)}</td>
             <td>${remediationBadge(v.remediationStatus)}</td>
             <td style="max-width:120px;overflow:hidden">${attckHtml}</td>
@@ -987,8 +1008,8 @@ function buildBookmarksPage() {
                     <div style="font-size:11px;color:var(--green)">${esc(v.action)}</div>
                 </div>
                 <div class="watchlist-meta">
-                    <span class="watchlist-tag">CVSS: ${v.score}</span>
-                    <span class="watchlist-tag">EPSS: ${parseFloat(v.epss).toFixed(2)}</span>
+                    <span class="watchlist-tag">CVSS: ${formatScore(v.score)}</span>
+                    <span class="watchlist-tag">EPSS: ${formatEPSS(v.epss)}</span>
                     ${v.attck ? v.attck.slice(0, 2).map(function(a) { return `<span class="watchlist-tag">${esc(a)}</span>`; }).join('') : ''}
                 </div>
             </div>
@@ -1178,13 +1199,14 @@ function updateRiskChart(tc) {
     var critical = allVulns.filter(function(v) { return parseFloat(v.score) >= 9; }).length; 
     var high = allVulns.filter(function(v) { return parseFloat(v.score) >= 7 && parseFloat(v.score) < 9; }).length; 
     var medium = allVulns.filter(function(v) { return parseFloat(v.score) >= 4 && parseFloat(v.score) < 7; }).length; 
-    var low = allVulns.filter(function(v) { return parseFloat(v.score) < 4; }).length; 
+    var low = allVulns.filter(function(v) { return metric(v.score, 10) !== null && parseFloat(v.score) < 4; }).length;
+    var unknown = allVulns.filter(v => metric(v.score, 10) === null).length; 
     var ctx = canvas.getContext('2d'); 
     riskChartInstance = new Chart(ctx, { 
         type: 'doughnut', 
         data: { 
-            labels: ['Critical (9-10)', 'High (7-8.9)', 'Medium (4-6.9)', 'Low (0-3.9)'], 
-            datasets: [{ data: [critical, high, medium, low], backgroundColor: [tc.red, tc.orange, tc.yellow, tc.green], borderWidth: 0 }] 
+            labels: ['Critical (9-10)', 'High (7-8.9)', 'Medium (4-6.9)', 'Low (0-3.9)', 'Unscored'], 
+            datasets: [{ data: [critical, high, medium, low, unknown], backgroundColor: [tc.red, tc.orange, tc.yellow, tc.green, tc.text], borderWidth: 0 }] 
         }, 
         options: { 
             responsive: true, 
@@ -1206,7 +1228,7 @@ function updateSeverityChart(tc) {
     }; 
     allVulns.forEach(function(v) { 
         var cat = v.cat === 'ot' ? 'OT/ICS' : v.cat === 'consumer' ? 'Consumer' : 'IT'; 
-        sevCounts[cat][v.severity]++; 
+        sevCounts[cat][v.severity] = (sevCounts[cat][v.severity] || 0) + 1; 
     }); 
     var ctx = canvas.getContext('2d'); 
     severityChartInstance = new Chart(ctx, { 
@@ -1268,7 +1290,7 @@ function updateEPSSScatter(tc) {
     var sample = allVulns.slice(0, 100); 
     var datasets = { it: { data: [], label: 'IT' }, ot: { data: [], label: 'OT/ICS' }, consumer: { data: [], label: 'Consumer' } }; 
     sample.forEach(function(v) { 
-        datasets[v.cat].data.push({ x: parseFloat(v.score), y: parseFloat(v.epss) }); 
+        if (metric(v.score, 10) !== null && metric(v.epss, 1) !== null) datasets[v.cat].data.push({ x: Number(v.score), y: Number(v.epss) }); 
     }); 
     var colors = { it: tc.accent, ot: tc.cyan, consumer: tc.orange }; 
     var ctx = canvas.getContext('2d'); 
@@ -1402,7 +1424,7 @@ function buildOverviewNews() {
         } 
         html += `<tr>
             <td><span class="badge badge-accent">${esc(item.source || 'Feed')}</span></td>
-            <td><a href="${esc(item.link || '#')}" target="_blank" rel="noopener noreferrer" style="color:var(--text);font-weight:500;font-size:12.5px">${esc((item.title || '').substring(0, 100))}</a></td>
+            <td><a href="${esc(safeExternalUrl(item.link))}" target="_blank" rel="noopener noreferrer" style="color:var(--text);font-weight:500;font-size:12.5px">${esc((item.title || '').substring(0, 100))}</a></td>
             <td style="color:var(--text3);font-size:11.5px;white-space:nowrap">${fmtDate(item.pubDate)}</td>
             <td>${relevance}</td>
         </tr>`; 
@@ -1457,7 +1479,7 @@ function openDetail(cveId) {
         return `${attckBadge(a)} <span style="font-size:10px;color:var(--text3)">${esc(MITRE_ATTCK_TECHNIQUES[a] || '')}</span><br>`; 
     }).join('') : '<span style="color:var(--text3)">—</span>'; 
     
-    var riskPct = Math.min(100, parseFloat(v.riskScore) * 10); 
+    var riskPct = v.riskScore === null ? 0 : Math.min(100, parseFloat(v.riskScore) * 10); 
     var riskColor = parseFloat(v.riskScore) >= 7 ? 'var(--red)' : parseFloat(v.riskScore) >= 4 ? 'var(--orange)' : 'var(--green)'; 
     
     document.getElementById('detail-body').innerHTML = `
@@ -1466,12 +1488,12 @@ function openDetail(cveId) {
             <div class="detail-section"><div class="detail-label">Product</div><div class="detail-value">${esc(v.product)}</div></div>
             <div class="detail-section"><div class="detail-label">Category</div><div class="detail-value"><span class="badge ${v.cat === 'ot' ? 'badge-cyan' : v.cat === 'consumer' ? 'badge-orange' : 'badge-accent'}">${v.cat.toUpperCase()}</span></div></div>
             <div class="detail-section"><div class="detail-label">Date Added</div><div class="detail-value">${fmtDate(v.date)}</div></div>
-            <div class="detail-section"><div class="detail-label">CVSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:${scoreColor(v.score)}">${v.score} / 10 ${severityBadge(v.score)}</div></div>
-            <div class="detail-section"><div class="detail-label">EPSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:${epssColor(v.epss)}">${parseFloat(v.epss).toFixed(2)} <span style="font-size:11px;color:var(--text3)">(${(parseFloat(v.epss) * 100).toFixed(1)}% exploitation probability)</span></div></div>
+            <div class="detail-section"><div class="detail-label">CVSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:${scoreColor(v.score)}">${formatScore(v.score)} / 10 ${severityBadge(v.score)}</div></div>
+            <div class="detail-section"><div class="detail-label">EPSS Score</div><div class="detail-value" style="font-family:var(--font-mono);font-weight:700;font-size:18px;color:${epssColor(v.epss)}">${formatEPSS(v.epss)} <span style="font-size:11px;color:var(--text3)">(${v.epss === null ? 'EPSS not available' : (parseFloat(v.epss) * 100).toFixed(1) + '% model probability'})</span></div></div>
             <div class="detail-section"><div class="detail-label">Exploit Status</div><div class="detail-value">${exploitBadge(v.exploit)}</div></div>
             <div class="detail-section"><div class="detail-label">Remediation Status</div><div class="detail-value">${remediationBadge(v.remediationStatus)}</div></div>
             <div class="detail-section"><div class="detail-label">CISA KEV</div><div class="detail-value">${v.inKEV ? '<span class="badge badge-red badge-sm">⚠ In KEV</span>' : '<span class="badge badge-green badge-sm">Not listed</span>'}</div></div>
-            <div class="detail-section"><div class="detail-label">Risk Score</div><div class="risk-meter" style="margin-top:4px"><div class="risk-bar" style="height:10px"><div class="risk-fill" style="width:${riskPct}%;background:${riskColor}"></div></div><span style="font-family:var(--font-mono);font-weight:700;color:${riskColor}">${v.riskScore}</span></div></div>
+            <div class="detail-section"><div class="detail-label">Risk Score</div><div class="risk-meter" style="margin-top:4px"><div class="risk-bar" style="height:10px"><div class="risk-fill" style="width:${riskPct}%;background:${riskColor}"></div></div><span style="font-family:var(--font-mono);font-weight:700;color:${riskColor}">${v.riskScore ?? 'Not scored'}</span></div></div>
             <div class="detail-section detail-full"><div class="detail-label">MITRE ATT&CK Techniques</div><div class="detail-value" style="line-height:1.8">${attckHtml}</div></div>
             ${v.actor ? `<div class="detail-section"><div class="detail-label">Associated Threat Actor</div><div class="detail-value" style="color:var(--pink);font-weight:600">${esc(v.actor)}</div></div>` : ''}
             <div class="detail-section detail-full"><div class="detail-label">Description</div><div class="detail-value">${esc(v.desc)}</div></div>
@@ -1518,8 +1540,8 @@ function handleVendorSearch(q) {
                 <td><strong>${esc(v.vendor)}</strong></td>
                 <td style="color:var(--text2)">${esc(v.product)}</td>
                 <td><span class="badge ${v.cat === 'ot' ? 'badge-cyan' : v.cat === 'consumer' ? 'badge-orange' : 'badge-accent'}">${v.cat.toUpperCase()}</span></td>
-                <td style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(v.score)}">${v.score}</td>
-                <td style="font-family:var(--font-mono);color:${epssColor(v.epss)}">${parseFloat(v.epss).toFixed(2)}</td>
+                <td style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(v.score)}">${formatScore(v.score)}</td>
+                <td style="font-family:var(--font-mono);color:${epssColor(v.epss)}">${formatEPSS(v.epss)}</td>
                 <td>${remediationBadge(v.remediationStatus)}</td>
                 <td style="max-width:120px;overflow:hidden">${v.attck ? v.attck.slice(0, 2).map(function(a) { return attckBadge(a); }).join(' ') : '—'}</td>
                 <td class="tooltip-cell" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)">
@@ -1558,7 +1580,7 @@ function renderFeedPage() {
             <div class="feed-source">${esc(slice[i].source)}</div>
             <div class="feed-title">${esc(slice[i].title)}</div>
             <div class="feed-date">${slice[i].pubDate ? fmtDate(slice[i].pubDate) : '—'}</div>
-            <a href="${esc(slice[i].link)}" target="_blank" rel="noopener noreferrer" class="feed-link">
+            <a href="${esc(safeExternalUrl(slice[i].link))}" target="_blank" rel="noopener noreferrer" class="feed-link">
                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
                 View Article →
             </a>
@@ -1634,11 +1656,11 @@ function doExport() {
             if (includeATTCK) hdr.push('MITRE_ATTCK');
             
             var rows = data.map(function(v) {
-                var row = [v.id, v.vendor, v.product, v.score, v.severity, v.cat, v.date, '"' + (v.desc || '').replace(/"/g, '""') + '"', v.remediationStatus];
+                var row = [v.id, v.vendor, v.product, v.score, v.severity, v.cat, v.date, v.desc, v.remediationStatus];
                 if (includeEPSS) row.push(v.epss);
                 if (includeExploit) row.push(v.exploit);
                 if (includeATTCK) row.push((v.attck || []).join('|'));
-                return row.join(',');
+                return row.map(csvCell).join(',');
             });
             download(fn + '.csv', [hdr.join(','), ...rows].join('\n'), 'text/csv');
         } else if (fmt === 'pdf') {
@@ -1658,7 +1680,7 @@ DETAILED LIST
 ------------------------------
 `;
             data.forEach(function(v) {
-                text += `${v.id} | CVSS: ${v.score} | ${v.vendor} | ${v.product} | Remediation: ${v.remediationStatus}
+                text += `${v.id} | CVSS: ${formatScore(v.score)} | ${v.vendor} | ${v.product} | Remediation: ${v.remediationStatus}
 ${v.desc}
 Remediation: ${v.action}
 
