@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const html=fs.readFileSync('index.html','utf8');
+const js=fs.readFileSync('app.js','utf8');
+const css=fs.readFileSync('styles.css','utf8');
+assert.match(html,/<script[^>]*src="app\.js"/);
+assert.match(html,/<link[^>]*href="styles\.css"/);
+new Function(js);
+for(const text of ['data/intelligence.json','fetch(', 'setInterval(', 'localStorage', 'CISA KEV','EPSS','CVSS','Refresh data','Source health'])assert.ok((html+js).includes(text),'Missing '+text);
+assert.match(js,/textContent/);
+assert.doesNotMatch(js,/eval\s*\(/);
+assert.doesNotMatch(js,/innerHTML\s*=\s*.*description/);
+assert.match(css,/@media/);
+console.log('app structure and JS syntax: PASS');
