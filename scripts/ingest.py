@@ -38,14 +38,14 @@ RSS = {
 }
 STATS = {}
 
-def fetch(url, max_bytes=8_000_000, retries=1):
+def fetch(url, max_bytes=8_000_000, retries=1, timeout=12):
     # Sources are fixed, trusted HTTPS destinations. No user-supplied URLs or proxies.
     if not url.startswith("https://"):
         raise ValueError("HTTPS required")
     for attempt in range(retries + 1):
         try:
             headers = {"User-Agent": UA, "Accept": "application/json,application/xml,text/xml,text/csv,*/*"}
-            with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=12) as resp:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=timeout) as resp:
                 if resp.status != 200:
                     raise ValueError("HTTP " + str(resp.status))
                 b = resp.read(max_bytes + 1)
@@ -160,12 +160,12 @@ def nvd(records):
     base = "https://services.nvd.nist.gov/rest/json/cves/2.0"
     params = {"lastModStartDate": start.strftime("%Y-%m-%dT%H:%M:%S.000"),
               "lastModEndDate": end.strftime("%Y-%m-%dT%H:%M:%S.000"),
-              "resultsPerPage": 2000}
+              "resultsPerPage": 250}
     visited = 0
-    for page in range(6):
-        params["startIndex"] = page * 2000
+    for page in range(4):
+        params["startIndex"] = page * 250
         url = base + "?" + urllib.parse.urlencode(params)
-        data = fetch_json(url)
+        data = json.loads(fetch(url, retries=0, max_bytes=3_000_000, timeout=28).decode('utf-8-sig'))
         batch = data.get("vulnerabilities", [])
         for item in batch:
             row = normalize_nvd(item)
@@ -180,7 +180,7 @@ def nvd(records):
             else:
                 records[cid] = row
             visited += 1
-        if (page + 1) * 2000 >= data.get("totalResults", 0) or not batch: break
+        if (page + 1) * 250 >= data.get("totalResults", 0) or not batch: break
         time.sleep(6)
     STATS["nvd"] = {"ok": True, "count": visited, "scope": "Recently modified CVEs, past %d days" % days, "url": base}
     return visited
@@ -254,7 +254,12 @@ def rss():
 
 def urlhaus():
     source = "https://urlhaus.abuse.ch/downloads/csv_recent/"
-    raw = fetch(source, 7_000_000).decode("utf-8-sig", errors="replace")
+    # URLhaus bulk feed can be very large. Stream only a bounded prefix of its
+    # newest CSV entries; never load the entire multi-megabyte archive.
+    request = urllib.request.Request(source, headers={"User-Agent": UA, "Accept": "text/csv"})
+    with urllib.request.urlopen(request, timeout=18) as response:
+        raw = response.read(2_000_000).decode("utf-8-sig", errors="replace")
+    raw = raw.rsplit("\n", 1)[0]
     # The URLhaus CSV format includes comment lines; never fetch or follow reported malicious URLs.
     lines = (line for line in raw.splitlines() if line and not line.startswith("#"))
     indicators = []
@@ -271,7 +276,7 @@ def urlhaus():
                            "date":stamp(date), "threat":threat[:100],
                            "tags":tags[:180], "source":"abuse.ch URLhaus", "evidence":evidence})
         if len(indicators) >= 100: break
-    STATS["urlhaus"] = {"ok": True, "count": len(indicators), "url": source}
+    STATS["urlhaus"] = {"ok": True, "count": len(indicators), "url": source, "scope": "Bounded first 2MB of recent public CSV"}
     return indicators
 
 def main():
