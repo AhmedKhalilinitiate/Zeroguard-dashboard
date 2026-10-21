@@ -21,8 +21,18 @@ for row in data["vulnerabilities"]:
         val=row.get(key)
         assert val is None or (isinstance(val,(int,float)) and 0<=val<=maxval)
     if row["inKEV"]: assert "CISA KEV" in row["source"]
+    remediation=row.get("remediation")
+    if remediation and remediation.get("details"):
+        assert remediation.get("source","").startswith("CISA CSAF")
+        assert remediation.get("advisoryUrl","").startswith("https://raw.githubusercontent.com/cisagov/CSAF/")
+        assert row.get("action")==remediation["details"]
+    elif row.get("action"):
+        raise AssertionError("Generic CISA guidance incorrectly shown as verified vendor action: "+row["id"])
+    if row.get("kevAction"):
+        assert row["inKEV"], "KEV action on an unverified record"
+
 for item in data.get("articles",[])+data.get("advisories",[]):
     assert item["url"].startswith("https://")
 for item in data.get("indicators",[]):
     assert item["evidence"].startswith("https://urlhaus.abuse.ch/")
-print("Validated",len(ids),"unique CVEs")
+print("Validated",len(ids),"unique CVEs with separated official KEV guidance and CSAF remediation")
