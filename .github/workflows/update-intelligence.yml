@@ -11,7 +11,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: zeroguard-intelligence
+  group: zeroguard-intelligence-v6-bounded
   cancel-in-progress: true
 jobs:
   ingest:
