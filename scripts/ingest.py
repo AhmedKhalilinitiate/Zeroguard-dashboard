@@ -3,6 +3,7 @@
 Runs on GitHub Actions. Uses Python's standard library only.
 """
 import csv
+import csaf
 import io
 import json
 import os
@@ -30,8 +31,6 @@ CONSUMER = ("android", "apple", "iphone", "ipad", "samsung mobile", "chromium",
             "chrome", "mozilla firefox", "safari", "pixel", "ios", "macos",
             "windows 11", "windows 10", "home router", "tp-link", "netgear")
 RSS = {
-    "CISA advisories": "https://www.cisa.gov/cybersecurity-advisories/all.xml",
-    "CISA ICS": "https://www.cisa.gov/cybersecurity-advisories/ics-advisories.xml",
     "BleepingComputer": "https://www.bleepingcomputer.com/feed/",
     "The Hacker News": "https://feeds.feedburner.com/TheHackersNews",
     "SANS ISC": "https://isc.sans.edu/rssfeed.xml",
@@ -110,7 +109,7 @@ def normalize_nvd(raw):
     cvss, vector = best_cvss(c)
     return {
         "id": cid, "vendor": "", "product": "", "description": descriptions,
-        "action": "", "date": stamp(c.get("published")), "modified": stamp(c.get("lastModified")),
+        "action": "", "kevAction": "", "date": stamp(c.get("published")), "modified": stamp(c.get("lastModified")),
         "cvss": cvss, "vector": vector, "epss": None, "percentile": None,
         "inKEV": False, "exploitedKnown": False, "dueDate": "", "ransomwareUse": "",
         "cwe": weaknesses[:5], "references": references, "source": ["NVD"],
@@ -139,12 +138,14 @@ def kev(records):
             **old, "id": cid, "vendor": str(v.get("vendorProject") or ""),
             "product": str(v.get("product") or ""),
             "description": str(v.get("shortDescription") or old.get("description") or "")[:1200],
-            "action": str(v.get("requiredAction") or "")[:1500],
+            "kevAction": str(v.get("requiredAction") or "")[:1500],
+            "action": (old.get("remediation") or {}).get("details", ""),
             "date": stamp(v.get("dateAdded")), "dueDate": stamp(v.get("dueDate")),
             "ransomwareUse": str(v.get("knownRansomwareCampaignUse") or "Unknown"),
             "inKEV": True, "exploitedKnown": True, "remediationStatus": "unknown",
             "source": sorted(set(old.get("source", [])) | {"CISA KEV"}),
             "cvss": old.get("cvss"), "epss": old.get("epss"),
+            "remediation": old.get("remediation"),
             "percentile": old.get("percentile"), "vector": old.get("vector",""),
             "cwe": old.get("cwe", []), "references": old.get("references", []),
             "modified": old.get("modified",""), "published": old.get("published","")
@@ -249,7 +250,7 @@ def rss():
             STATS["rss_" + name] = {"ok": False, "error": str(err)[:150], "url": url}
     articles.sort(key=lambda r:r["date"], reverse=True)
     advisories.sort(key=lambda r:r["date"], reverse=True)
-    STATS["rss"] = {"ok": ok > 0, "sources": ok, "totalSources": len(RSS)}
+    STATS["rss"] = {"ok": ok > 0, "sources": ok, "totalSources": len(RSS), "scope": "Independent security publisher RSS; official CISA uses CSAF"}
     return articles[:200], advisories[:100]
 
 def urlhaus():
@@ -299,22 +300,36 @@ def main():
     except Exception as e:
         STATS["epss"] = {"ok":False, "error":str(e)[:180]}
         print("EPSS unavailable:",e, file=sys.stderr)
+    try:
+        csaf_articles, csaf_advisories, csaf_health = csaf.collect(records, fetch_json)
+        STATS.update(csaf_health)
+    except Exception as err:
+        STATS["csaf"] = {"ok": False, "error": str(err)[:160]}
+        csaf_articles, csaf_advisories = [], []
     try: articles, advisories = rss()
     except Exception as e:
         STATS["rss"] = {"ok":False, "error":str(e)[:180]}
         articles, advisories = [], []
+    articles = csaf_articles + articles
+    advisories = csaf_advisories + advisories
+    articles.sort(key=lambda r: r.get("date") or "", reverse=True)
+    advisories.sort(key=lambda r: r.get("date") or "", reverse=True)
     try: indicators = urlhaus()
     except Exception as e:
         STATS["urlhaus"] = {"ok":False, "error":str(e)[:180]}
         indicators = []
         print("URLhaus unavailable:",e, file=sys.stderr)
     for v in records.values():
+        v["kevAction"] = v.get("kevAction") or (v.get("action", "") if "remediation" not in v and v.get("inKEV") else "")
+        verified = v.get("remediation") or {}
+        v["action"] = verified.get("details", "")
+        v["actionStatus"] = "vendor-specific" if verified.get("details") else "not independently verified"
         v["category"] = category(v.get("vendor",""), v.get("product",""), v.get("description",""))
     sorted_rows = sorted(records.values(), key=lambda v:(v.get("date") or "", v["id"]), reverse=True)
     generated = NOW.isoformat(timespec="seconds").replace("+00:00","Z")
     output = {"schema": 1, "generatedAt": generated,
               "sources": STATS, "vulnerabilities": sorted_rows,
-              "articles": articles, "advisories": advisories, "indicators": indicators}
+              "articles": articles[:230], "advisories": advisories[:100], "indicators": indicators}
     temp = DATA / "intelligence.tmp"
     temp.write_text(json.dumps(output, ensure_ascii=False, separators=(",",":")), encoding="utf-8")
     temp.replace(DATA / "intelligence.json")
