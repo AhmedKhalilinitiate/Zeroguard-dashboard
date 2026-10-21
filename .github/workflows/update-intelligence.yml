@@ -12,7 +12,7 @@ permissions:
   contents: write
 concurrency:
   group: zeroguard-intelligence
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   ingest:
     runs-on: ubuntu-latest
