@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-21T11:01:06Z",
-  "records": 2020,
+  "generatedAt": "2026-10-21T11:04:53Z",
+  "records": 2019,
   "sources": {
     "kev": {
       "ok": true,
@@ -8,22 +8,15 @@
       "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
     },
     "nvd": {
-      "ok": true,
-      "count": 90,
-      "scope": "Recently modified CVEs, past 7 days",
-      "url": "https://services.nvd.nist.gov/rest/json/cves/2.0"
-    },
-    "epss": {
-      "ok": true,
-      "count": 1844,
-      "url": "https://www.first.org/epss/"
+      "ok": false,
+      "error": "The read operation timed out"
     },
     "csaf_CISA OT": {
       "ok": true,
       "count": 28,
       "failedDocuments": 0,
       "vendorActions": 99,
-      "cvssAdded": 102,
+      "cvssAdded": 100,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF OT advisories"
     },
@@ -32,9 +25,14 @@
       "count": 13,
       "failedDocuments": 1,
       "vendorActions": 78,
-      "cvssAdded": 80,
+      "cvssAdded": 76,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF IT advisories"
+    },
+    "epss": {
+      "ok": true,
+      "count": 2013,
+      "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
       "ok": true,
