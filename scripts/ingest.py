@@ -38,14 +38,14 @@ RSS = {
 }
 STATS = {}
 
-def fetch(url, max_bytes=8_000_000, retries=2):
+def fetch(url, max_bytes=8_000_000, retries=1):
     # Sources are fixed, trusted HTTPS destinations. No user-supplied URLs or proxies.
     if not url.startswith("https://"):
         raise ValueError("HTTPS required")
     for attempt in range(retries + 1):
         try:
             headers = {"User-Agent": UA, "Accept": "application/json,application/xml,text/xml,text/csv,*/*"}
-            with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=28) as resp:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=12) as resp:
                 if resp.status != 200:
                     raise ValueError("HTTP " + str(resp.status))
                 b = resp.read(max_bytes + 1)
