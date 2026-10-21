@@ -296,16 +296,16 @@ def main():
         STATS["nvd"] = {"ok":False, "error":str(e)[:180]}
         print("NVD unavailable:",e, file=sys.stderr)
     try:
-        epss(records)
-    except Exception as e:
-        STATS["epss"] = {"ok":False, "error":str(e)[:180]}
-        print("EPSS unavailable:",e, file=sys.stderr)
-    try:
         csaf_articles, csaf_advisories, csaf_health = csaf.collect(records, fetch_json)
         STATS.update(csaf_health)
     except Exception as err:
         STATS["csaf"] = {"ok": False, "error": str(err)[:160]}
         csaf_articles, csaf_advisories = [], []
+    try:
+        epss(records)
+    except Exception as e:
+        STATS["epss"] = {"ok":False, "error":str(e)[:180]}
+        print("EPSS unavailable:",e, file=sys.stderr)
     try: articles, advisories = rss()
     except Exception as e:
         STATS["rss"] = {"ok":False, "error":str(e)[:180]}
