@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-21T11:04:53Z",
-  "records": 2019,
+  "generatedAt": "2026-10-21T17:13:48Z",
+  "records": 2021,
   "sources": {
     "kev": {
       "ok": true,
@@ -8,8 +8,10 @@
       "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
     },
     "nvd": {
-      "ok": false,
-      "error": "The read operation timed out"
+      "ok": true,
+      "count": 90,
+      "scope": "Recently modified CVEs, past 7 days",
+      "url": "https://services.nvd.nist.gov/rest/json/cves/2.0"
     },
     "csaf_CISA OT": {
       "ok": true,
@@ -24,14 +26,14 @@
       "ok": true,
       "count": 13,
       "failedDocuments": 1,
-      "vendorActions": 78,
-      "cvssAdded": 76,
+      "vendorActions": 79,
+      "cvssAdded": 77,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF IT advisories"
     },
     "epss": {
       "ok": true,
-      "count": 2013,
+      "count": 2018,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
@@ -56,10 +58,8 @@
       "scope": "Independent security publisher RSS; official CISA uses CSAF"
     },
     "urlhaus": {
-      "ok": true,
-      "count": 100,
-      "url": "https://urlhaus.abuse.ch/downloads/csv_recent/",
-      "scope": "Bounded first 2MB of recent public CSV"
+      "ok": false,
+      "error": "HTTP Error 410: Gone"
     }
   }
 }
