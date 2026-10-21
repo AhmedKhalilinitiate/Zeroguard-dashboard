@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-21T10:39:19Z",
-  "records": 1844,
+  "generatedAt": "2026-10-21T11:01:06Z",
+  "records": 2020,
   "sources": {
     "kev": {
       "ok": true,
@@ -18,15 +18,23 @@
       "count": 1844,
       "url": "https://www.first.org/epss/"
     },
-    "rss_CISA advisories": {
-      "ok": false,
-      "error": "HTTP Error 403: Forbidden",
-      "url": "https://www.cisa.gov/cybersecurity-advisories/all.xml"
+    "csaf_CISA OT": {
+      "ok": true,
+      "count": 28,
+      "failedDocuments": 0,
+      "vendorActions": 99,
+      "cvssAdded": 102,
+      "url": "https://github.com/cisagov/CSAF",
+      "scope": "Latest public official CISA CSAF OT advisories"
     },
-    "rss_CISA ICS": {
-      "ok": false,
-      "error": "HTTP Error 403: Forbidden",
-      "url": "https://www.cisa.gov/cybersecurity-advisories/ics-advisories.xml"
+    "csaf_CISA IT": {
+      "ok": true,
+      "count": 13,
+      "failedDocuments": 1,
+      "vendorActions": 78,
+      "cvssAdded": 80,
+      "url": "https://github.com/cisagov/CSAF",
+      "scope": "Latest public official CISA CSAF IT advisories"
     },
     "rss_BleepingComputer": {
       "ok": true,
@@ -46,7 +54,8 @@
     "rss": {
       "ok": true,
       "sources": 3,
-      "totalSources": 5
+      "totalSources": 3,
+      "scope": "Independent security publisher RSS; official CISA uses CSAF"
     },
     "urlhaus": {
       "ok": true,
