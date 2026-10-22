@@ -63,7 +63,7 @@ function priority(v){
  return (v.inKEV?50:0)+(number(v.epss)||0)*20+(number(v.cvss)||0)*2;
 }
 function vulnerabilityList(){
- return (state.data?.vulnerabilities||[]).slice().sort((a,b)=>priority(b)-priority(a)||safe(b.date).localeCompare(safe(a.date)));
+ return (state.data?.vulnerabilities||[]).slice().sort((a,b)=>safe(b.published||b.displayDate||b.date).localeCompare(safe(a.published||a.displayDate||a.date))||b.id.localeCompare(a.id));
 }
 function category(v){return v.category||"it";}
 function sourceTag(v){
@@ -80,7 +80,7 @@ function goto(view){
  state.view=view;
  document.querySelectorAll(".page").forEach(el=>el.classList.toggle("active",el.id===view));
  document.querySelectorAll(".nav").forEach(el=>el.classList.toggle("active",el.dataset.view===view));
- const names={overview:"Executive overview",vulnerabilities:"Vulnerability explorer",exploited:"Known exploited",ot:"OT / ICS intelligence",advisories:"News & advisories",iocs:"IOC intelligence",bookmarks:"Your watchlist",health:"Source health",about:"About ZeroGuard"};
+ const names={overview:"Executive overview",vulnerabilities:"Vulnerability explorer",exploited:"Known exploited",ot:"OT / ICS intelligence",advisories:"News & advisories",emerging:"Emerging reports",iocs:"IOC intelligence",bookmarks:"Your watchlist",health:"Source health",about:"About ZeroGuard"};
  $("view-title").textContent=names[view]||"ZeroGuard";
  $("sidebar").classList.remove("open");
  if(view!=="overview")renderView(view);
@@ -121,7 +121,7 @@ function toolbar(scope){
  const bar=element("div","toolbar");
  const search=element("input");search.type="search";search.placeholder="Search CVE, vendor, product, description…";search.setAttribute("aria-label","Search vulnerabilities");search.value=state.filters[scope]?.query||"";
  const select=element("select");select.setAttribute("aria-label","Filter severity");for(const [v,t] of [["all","All severities"],["critical","Critical"],["high","High"],["medium","Medium"],["low","Low"],["unscored","Unscored"]]){const opt=element("option","",t);opt.value=v;select.append(opt);}select.value=state.filters[scope]?.severity||"all";
- const order=element("select");order.setAttribute("aria-label","Sort vulnerabilities");for(const [v,t] of [["priority","Priority"],["date","Newest"],["cvss","CVSS"],["epss","EPSS"]]){const opt=element("option","",t);opt.value=v;order.append(opt);}order.value=state.filters[scope]?.sort||"priority";
+ const order=element("select");order.setAttribute("aria-label","Sort vulnerabilities");for(const [v,t] of [["date","Newest first"],["priority","Priority"],["cvss","CVSS"],["epss","EPSS"]]){const opt=element("option","",t);opt.value=v;order.append(opt);}order.value=state.filters[scope]?.sort||"priority";
  function change(){state.filters[scope]={query:search.value,severity:select.value,sort:order.value};state.pages[scope]=1;renderView(scope);const fresh=document.querySelector("#"+scope+"-table input");if(fresh){fresh.focus();fresh.setSelectionRange(search.selectionStart||fresh.value.length,search.selectionEnd||fresh.value.length);}}
  // Search is debounced to avoid focus churn and slow re-render on each keystroke.
  let timer;search.addEventListener("input",()=>{clearTimeout(timer);timer=setTimeout(change,180);});
@@ -133,8 +133,8 @@ function renderTable(scope,rows,target){
  const el=$(target);clear(el);
  const settings=state.filters[scope]||{};const query=(settings.query||"").trim().toLowerCase();
  let filtered=rows.filter(v=>(!query||[v.id,v.vendor,v.product,v.description,...(v.cwe||[])].some(t=>safe(t).toLowerCase().includes(query)))&&(!settings.severity||settings.severity==="all"||severity(v)===settings.severity));
- const sort=settings.sort||"priority";
- filtered.sort((a,b)=>sort==="cvss"?(number(b.cvss)??-1)-(number(a.cvss)??-1):sort==="epss"?(number(b.epss)??-1)-(number(a.epss)??-1):sort==="date"?safe(b.date).localeCompare(safe(a.date)):priority(b)-priority(a));
+ const sort=settings.sort||"date";
+ filtered.sort((a,b)=>sort==="cvss"?(number(b.cvss)??-1)-(number(a.cvss)??-1):sort==="epss"?(number(b.epss)??-1)-(number(a.epss)??-1):sort==="date"?safe(b.published||b.displayDate||b.date).localeCompare(safe(a.published||a.displayDate||a.date))||b.id.localeCompare(a.id):priority(b)-priority(a));
  el.append(toolbar(scope));
  const wrap=element("div","tablebox");
  const scroll=element("div","table-scroll");const table=element("table","datatable");const thead=element("thead");const tr=element("tr");
@@ -146,7 +146,7 @@ function renderTable(scope,rows,target){
  const vendor=element("td");append(vendor,element("span","vendor",v.vendor||"Unspecified"),element("span","product",v.product||"Not established"));
  append(row,first,vendor,element("td","",score(v.cvss)),element("td","",probability(v.epss)));
  const exploited=element("td");exploited.append(v.inKEV?badge("Confirmed", "red"):badge("Not established", ""));row.append(exploited);
- append(row,element("td","",date(v.date)),element("td","",Array.isArray(v.source)?v.source.join(", "):"—"));tbody.append(row);
+ append(row,element("td","",date(v.published||v.displayDate||v.date)),element("td","",Array.isArray(v.source)?v.source.join(", "):"—"));tbody.append(row);
  }
  if(!filtered.length){const row=element("tr");const cell=element("td","empty","No matching vulnerabilities in the loaded snapshot.");cell.colSpan=7;row.append(cell);tbody.append(row);}
  table.append(tbody);scroll.append(table);wrap.append(scroll);
@@ -157,7 +157,7 @@ function openDetail(id){
  const dialog=$("detail"),body=$("detail-body");clear(body);
  body.append(element("div","eyebrow","VULNERABILITY INTELLIGENCE"),element("h2","",v.id),element("p","muted",(v.vendor||"Unspecified vendor")+" · "+(v.product||"Product not established")));
  const grid=element("div","detail-grid");
- for(const [name,value] of [["CVSS",score(v.cvss)],["EPSS 30-day",probability(v.epss)],["Known exploitation",v.inKEV?"CISA KEV confirmed":"Not confirmed by connected KEV"],["Category",v.category||"Unknown"],["Date added / published",date(v.date)],["Agency due date",date(v.dueDate)],["Ransomware use",v.ransomwareUse||"Not assessed"],["Patch deployed?","Not assessed — requires asset evidence"]]){
+ for(const [name,value] of [["CVSS",score(v.cvss)],["EPSS 30-day",probability(v.epss)],["Known exploitation",v.inKEV?"CISA KEV confirmed":"Not confirmed by connected KEV"],["Category",v.category||"Unknown"],["Published",date(v.published||v.displayDate||v.date)],["Agency due date",date(v.dueDate)],["Ransomware use",v.ransomwareUse||"Not assessed"],["Patch deployed?","Not assessed — requires asset evidence"]]){
  const cell=element("div");append(cell,element("small","",name),element("strong","",value));grid.append(cell);
  }body.append(grid);
  for(const [title,content] of [["Description",v.description],["Verified vendor remediation",v.remediation?.details||"No vendor-specific remediation verified from connected advisories. Consult the vendor bulletin and CISA recommendations."],["CWE",Array.isArray(v.cwe)?v.cwe.join(", "):""]]){
@@ -176,13 +176,17 @@ function openDetail(id){
 function renderArticles(target,articles){
  const root=$(target);clear(root);if(!articles.length){root.append(empty("No articles available from the latest successful collector run."));return;}
  for(const item of articles){const card=element("article","article");append(card,element("span","",item.source||"Publisher"),element("h3","",item.title),element("small","",date(item.date)));
+ if(item.status)card.append(element("p","muted",item.status));
  if(item.reportedZeroDay)card.append(element("p","muted","Reported zero-day mention · not independently verified."));
  const url=href(item.url);if(url){const a=element("a","", "Read original source ↗");a.href=url;a.target="_blank";a.rel="noopener noreferrer";card.append(element("div"),a);}root.append(card);}
 }
+function renderReports(){
+ renderArticles("emerging-list",state.data?.reports||[]);
+}
 function renderIOCs(){
  const root=$("ioc-list");clear(root);const data=state.data?.indicators||[];
- root.append(element("p","muted",data.length+" recent URLhaus indicators · malicious destinations are intentionally not clickable."));
- const items=element("div","panel");if(!data.length)items.append(empty("No validated IOC data in this snapshot."));
+ root.append(element("p","muted",data.length+" source-attributed reported indicators. Reputation feeds are not proof of compromise; verify locally before taking action. Indicators are intentionally not clickable."));
+ const items=element("div","panel");if(!data.length)items.append(empty("No published IOC reputation indicators in this snapshot. Check Source health for retrieval errors."));
  for(const ioc of data.slice(0,100)){const row=element("div","compact-row");const left=element("div","wrap");append(left,element("strong","",ioc.value),element("small","",ioc.threat+" · "+date(ioc.date)+" · "+ioc.source));const controls=element("div");const copy=element("button","textbutton","Copy");copy.addEventListener("click",()=>navigator.clipboard?.writeText(ioc.value));const link=href(ioc.evidence);append(controls,copy);if(link){const a=element("a","textbutton"," Evidence ↗");a.href=link;a.target="_blank";a.rel="noopener noreferrer";controls.append(a);}append(row,left,controls);items.append(row);}root.append(items);
 }
 function renderHealth(){
@@ -197,13 +201,14 @@ function renderView(view){
  else if(view==="ot"){renderTable(view,all.filter(v=>category(v)==="ot"),"ot-table");const root=$("ics-list");clear(root);for(const a of (state.data?.advisories||[]).slice(0,15)){const row=element("div","compact-row");const link=element("a","",a.title);link.href=href(a.url)||"#";link.target="_blank";link.rel="noopener noreferrer";append(row,append(element("div"),link,element("small","",date(a.date))));root.append(row);}if(!root.childNodes.length)root.append(empty("CISA ICS RSS feed not available."));}
  else if(view==="advisories")renderArticles("article-list",state.data?.articles||[]);
  else if(view==="iocs")renderIOCs();
+ else if(view==="emerging")renderReports();
  else if(view==="bookmarks")renderTable(view,all.filter(v=>watchlist.has(v.id)),"watchlist-table");
  else if(view==="health")renderHealth();
 }
 function render(){renderOverview();renderView(state.view);}
 function exportCSV(){
  const records=state.data?.vulnerabilities||[];if(!records.length)return;
- const columns=["id","vendor","product","category","cvss","epss","inKEV","date","dueDate","actionStatus","action","kevAction","description"];
+ const columns=["id","vendor","product","category","cvss","epss","inKEV","published","date","dueDate","actionStatus","action","kevAction","description"];
  function quoted(val){let s=String(val??"");if(/^[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';}
  const csv=[columns.join(","),...records.map(v=>columns.map(k=>quoted(v[k])).join(","))].join("\r\n");
  const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob);
