@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-21T21:43:49Z",
-  "records": 2018,
+  "generatedAt": "2026-10-22T04:48:27Z",
+  "records": 1970,
   "sources": {
     "kev": {
       "ok": true,
@@ -9,7 +9,7 @@
     },
     "nvd": {
       "ok": true,
-      "count": 87,
+      "count": 39,
       "scope": "Recently modified CVEs, past 7 days",
       "url": "https://services.nvd.nist.gov/rest/json/cves/2.0"
     },
@@ -33,7 +33,7 @@
     },
     "epss": {
       "ok": true,
-      "count": 2015,
+      "count": 1967,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
