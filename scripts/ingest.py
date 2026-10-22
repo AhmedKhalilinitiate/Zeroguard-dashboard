@@ -295,7 +295,7 @@ def github_advisories():
     reports = []
     cve_rows = []
     seen = set()
-    for ecosystem in ("npm", "packagist"):
+    for ecosystem in ("npm", "composer"):
         source = GHSA_API + "?" + urllib.parse.urlencode({
             "ecosystem": ecosystem, "per_page": "100", "sort": "published", "direction": "desc"
         })
