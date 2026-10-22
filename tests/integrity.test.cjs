@@ -8,9 +8,12 @@ assert.match(html,/Source health/);
 assert.match(html,/Known exploited/);
 assert.match(html,/Watchlist/);
 new Function(js);
-for(const section of ['overview','vulnerabilities','exploited','ot','advisories','iocs','bookmarks','health','about'])assert.match(html,new RegExp('id="'+section+'"'));
+for(const section of ['overview','vulnerabilities','exploited','ot','advisories','emerging','iocs','bookmarks','health','about'])assert.match(html,new RegExp('id="'+section+'"'));
 for(const feature of ['verify(d)','renderTable(', 'renderHealth(', 'openDetail(', 'exportCSV(', 'setInterval(fetchData', 'watchlist','CISA KEV','EPSS'])assert.ok(js.includes(feature),'Missing '+feature);
 assert.doesNotMatch(js,/eval\s*\(/);
 assert.doesNotMatch(html,/cdn\.jsdelivr|corsproxy\.io|allorigins\.win/);
 assert.match(css,/@media/);
 console.log('ZeroGuard static integration checks passed.');
+
+assert.match(js, /sort===\"date\"/);
+assert.match(js, /function renderReports/);
