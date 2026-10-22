@@ -34,5 +34,13 @@ for row in data["vulnerabilities"]:
 for item in data.get("articles",[])+data.get("advisories",[]):
     assert item["url"].startswith("https://")
 for item in data.get("indicators",[]):
-    assert item["evidence"].startswith("https://urlhaus.abuse.ch/")
+    source=item.get("source","")
+    evidence=item.get("evidence","")
+    if source=="IPsum / stamparm":
+        assert item["type"]=="ip"
+        assert evidence=="https://github.com/stamparm/ipsum"
+    elif source=="abuse.ch URLhaus":
+        assert evidence.startswith("https://urlhaus.abuse.ch/")
+    else:
+        raise AssertionError("Unknown IOC provenance: "+source)
 print("Validated",len(ids),"unique CVEs with separated official KEV guidance and CSAF remediation")
