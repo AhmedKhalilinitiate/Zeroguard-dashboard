@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-22T11:54:25Z",
-  "records": 1970,
+  "generatedAt": "2026-10-22T13:48:16Z",
+  "records": 2106,
   "sources": {
     "kev": {
       "ok": true,
@@ -8,17 +8,15 @@
       "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
     },
     "nvd": {
-      "ok": true,
-      "count": 39,
-      "scope": "Recently modified CVEs, past 7 days",
-      "url": "https://services.nvd.nist.gov/rest/json/cves/2.0"
+      "ok": false,
+      "error": "The read operation timed out"
     },
     "csaf_CISA OT": {
       "ok": true,
       "count": 28,
       "failedDocuments": 0,
       "vendorActions": 99,
-      "cvssAdded": 100,
+      "cvssAdded": 0,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF OT advisories"
     },
@@ -27,13 +25,25 @@
       "count": 13,
       "failedDocuments": 1,
       "vendorActions": 79,
-      "cvssAdded": 77,
+      "cvssAdded": 0,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF IT advisories"
     },
+    "ghsa_npm": {
+      "ok": true,
+      "count": 100,
+      "url": "https://github.com/advisories",
+      "scope": "Published GitHub security advisories for npm"
+    },
+    "ghsa_composer": {
+      "ok": true,
+      "count": 46,
+      "url": "https://github.com/advisories",
+      "scope": "Published GitHub security advisories for composer"
+    },
     "epss": {
       "ok": true,
-      "count": 1967,
+      "count": 2092,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
@@ -57,9 +67,11 @@
       "totalSources": 3,
       "scope": "Independent security publisher RSS; official CISA uses CSAF"
     },
-    "urlhaus": {
-      "ok": false,
-      "error": "HTTP Error 410: Gone"
+    "ioc_ipsum": {
+      "ok": true,
+      "count": 200,
+      "url": "https://github.com/stamparm/ipsum",
+      "scope": "Aggregated IP blocklist signals; not independently confirmed IOCs"
     }
   }
 }
