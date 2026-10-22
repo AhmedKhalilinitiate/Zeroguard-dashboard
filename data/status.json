@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-22T17:11:54Z",
-  "records": 2104,
+  "generatedAt": "2026-10-22T21:37:18Z",
+  "records": 2858,
   "sources": {
     "kev": {
       "ok": true,
@@ -9,7 +9,7 @@
     },
     "nvd": {
       "ok": true,
-      "count": 4,
+      "count": 3,
       "scope": "Recently modified CVEs, past 7 days",
       "url": "https://services.nvd.nist.gov/rest/json/cves/2.0"
     },
@@ -17,8 +17,8 @@
       "ok": true,
       "count": 28,
       "failedDocuments": 0,
-      "vendorActions": 99,
-      "cvssAdded": 0,
+      "vendorActions": 899,
+      "cvssAdded": 753,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF OT advisories"
     },
@@ -26,8 +26,8 @@
       "ok": true,
       "count": 13,
       "failedDocuments": 1,
-      "vendorActions": 79,
-      "cvssAdded": 0,
+      "vendorActions": 82,
+      "cvssAdded": 5,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF IT advisories"
     },
@@ -45,7 +45,7 @@
     },
     "epss": {
       "ok": true,
-      "count": 2091,
+      "count": 2830,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
