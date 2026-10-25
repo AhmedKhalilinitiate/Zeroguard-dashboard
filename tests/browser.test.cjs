@@ -68,7 +68,7 @@ const fixture={
  assert.ok(lead,"Missing OT model lead");
  assert.match(risk.confidence(lead),/firmware unknown/);
  assert.equal(risk.priority(lead,reviewAsset[0]).tier,"Expedited review");
- const saved=risk.makePackage(reviewAsset,new Map([[risk.caseKey(lead),risk.sanitizeReview({status:"Under investigation",owner:"OT Team",evidence:"approved network diagram"})]]),"2026-10-25");
+ const saved=risk.makePackage(reviewAsset,new w.Map([[risk.caseKey(lead),risk.sanitizeReview({status:"Under investigation",owner:"OT Team",evidence:"approved network diagram"})]]),"2026-10-25");
  const restored=risk.loadPackage(saved);
  assert.equal(restored.cases.get(risk.caseKey(lead)).owner,"OT Team");
  w.document.querySelector('[data-view="vulnerabilities"]').click();
