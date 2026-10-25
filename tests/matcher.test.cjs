@@ -21,3 +21,11 @@ assert.equal(m.parseInventory(JSON.stringify(spdx),"bom.json")[0].version,"1.5.0
 assert.equal(m.parseInventory("[]","bom.json").length,0);
 assert.throws(()=>m.parseInventory('{"assets":[{"version":"1.0"}]}',"a.json"));
 console.log("Asset matcher: 14 checks passed");
+
+const forti={id:"CVE-2026-55555",vendor:"Fortinet",product:"FortiOS",affectedSystemLabel:"Fortinet FortiOS",affectedSystems:[{name:"Fortinet FortiOS",version:"Version not specified",source:"CISA KEV"}],inKEV:true};
+const discovered=m.scan([{id:"f1",name:"Fortinet",version:""}],[forti],{discovery:true});
+assert.equal(discovered.discovery,1,"Vendor query Fortinet should surface the known CVE as a research lead");
+assert.equal(discovered.findings[0].status,"discovery");
+assert.equal(m.scan([{id:"f1",name:"Fortinet"}],[forti]).findings.length,0,"Vendor-only query cannot confirm an asset");
+assert.equal(m.scan([{id:"x",name:"UnrelatedCorp"}],[forti],{discovery:true}).findings.length,0);
+console.log("Fortinet vendor discovery regression tests passed");

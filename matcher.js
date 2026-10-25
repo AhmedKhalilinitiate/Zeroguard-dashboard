@@ -57,6 +57,16 @@ function parseInventory(text,filename){
  if(raw.length>MAX_ASSETS)throw Error("Maximum 5,000 assets per scan.");
  return raw.map(asAsset);
 }
+function vendorDiscovery(asset,vuln){
+ const q=norm(asset.name),vendor=norm(asset.vendor);
+ const family=q||vendor;
+ if(!family||family.length<4)return null;
+ const words=[vuln.vendor,vuln.product,...(vuln.affectedSystems||[]).map(x=>x.name)].map(norm);
+ const aliases=family==="fortinet"?["fortinet","fortios","fortigate","fortimail","fortiweb","forticlient","fortimanager","fortianalyzer","fortiproxy","fortiswitch","fortiauthenticator"]:null;
+ const found=words.some(w=>w===family||w.startsWith(family+" ")||(aliases&&aliases.some(a=>w===a||w.startsWith(a+" ")||w.includes(" "+a+" "))));
+ if(!found)return null;
+ return {assetId:asset.id,assetName:asset.name,host:asset.host,cve:vuln.id,status:"discovery",evidence:{system:vuln.affectedSystemLabel||vuln.product||vuln.vendor||"Vendor advisory",range:"Check affected product and version",source:(vuln.source||[]).join(", "),url:(vuln.references||[])[0]||"",identity:"vendor discovery",versionResult:"unknown"},kev:!!vuln.inKEV,cvss:vuln.cvss,epss:vuln.epss,priority:(vuln.inKEV?50:0)+(Number(vuln.cvss)||0)*3+(Number(vuln.epss)||0)*10};
+}
 function identity(asset,system){
  const aP=purl(asset.purl),sName=str(system.name);
  const sP=purl(sName.startsWith("pkg:")?sName:"");
@@ -86,7 +96,7 @@ function assess(asset,vuln){
  }
  return best;
 }
-function scan(assets,vulns){
+function scan(assets,vulns,options={}){
  const findings=[],covered=new Set();const index=new Map();
  for(const v of vulns||[])for(const s of v.affectedSystems||[]){
   const keys=[norm(s.name)];const pkg=/^(npm|composer):\s*(.+)$/i.exec(s.name);if(pkg)keys.push(norm(pkg[2]));
@@ -95,10 +105,11 @@ function scan(assets,vulns){
  for(const asset of assets){const candidates=new Set();for(const key of [norm(asset.name),norm(asset.vendor+" "+asset.name),norm(purl(asset.purl)?.name)]){
   for(const v of index.get(key)||[])candidates.add(v);}
   if(asset.cpe){const c=cpe(asset.cpe);if(c)for(const v of index.get(norm(c.vendor+" "+c.product))||[])candidates.add(v);}
-  for(const v of candidates){const f=assess(asset,v);if(f){findings.push(f);covered.add(asset.id);}}
+  if(options.discovery){for(const v of vulns||[]){const f=vendorDiscovery(asset,v);if(f){findings.push(f);covered.add(asset.id);}}}
+  else for(const v of candidates){const f=assess(asset,v);if(f){findings.push(f);covered.add(asset.id);}}
  }
  findings.sort((a,b)=>b.priority-a.priority||a.cve.localeCompare(b.cve));
- return{assets:assets.length,matchedAssets:covered.size,findings,confirmed:findings.filter(x=>x.status==="version-match").length,review:findings.filter(x=>x.status==="review").length};
+ return{assets:assets.length,matchedAssets:covered.size,findings,confirmed:findings.filter(x=>x.status==="version-match").length,review:findings.filter(x=>x.status==="review").length,discovery:findings.filter(x=>x.status==="discovery").length};
 }
-return{parseInventory,scan,assess,versionRange,compare,purl,cpe,identity,MAX_ASSETS};
+return{parseInventory,scan,assess,versionRange,compare,purl,cpe,identity,vendorDiscovery,MAX_ASSETS};
 });
