@@ -61,7 +61,7 @@ const fixture={
  w.document.getElementById("asset-name").value="RUGGEDCOM RSG2100";
  w.document.getElementById("asset-add").click();
  // Imported OT-format devices select OT screening mode, not generic package assessment.
- const reviewAsset=w.ZeroGuardMatcher.parseInventory("id,name,vendor,site,quantity\\nsubstation-1,RUGGEDCOM RSG2100,Siemens,9005,6\\n","substation.csv");
+ const reviewAsset=w.ZeroGuardMatcher.parseInventory("id,name,vendor,site,quantity\nsubstation-1,RUGGEDCOM RSG2100,Siemens,9005,6\n","substation.csv");
  assert.equal(reviewAsset[0].site,"9005");
  const risk=w.ZeroGuardOT;
  const lead=w.ZeroGuardMatcher.scan(reviewAsset,fixture.vulnerabilities,{otScreen:true}).findings.find(f=>f.cve==="CVE-2025-12345");
