@@ -105,7 +105,8 @@ function scan(assets,vulns,options={}){
  for(const asset of assets){const candidates=new Set();for(const key of [norm(asset.name),norm(asset.vendor+" "+asset.name),norm(purl(asset.purl)?.name)]){
   for(const v of index.get(key)||[])candidates.add(v);}
   if(asset.cpe){const c=cpe(asset.cpe);if(c)for(const v of index.get(norm(c.vendor+" "+c.product))||[])candidates.add(v);}
-  if(options.discovery){for(const v of vulns||[]){const f=vendorDiscovery(asset,v);if(f){findings.push(f);covered.add(asset.id);}}}\n  else for(const v of candidates){const f=assess(asset,v);if(f){findings.push(f);covered.add(asset.id);}}
+  if(options.discovery){for(const v of vulns||[]){const f=vendorDiscovery(asset,v);if(f){findings.push(f);covered.add(asset.id);}}}
+  else for(const v of candidates){const f=assess(asset,v);if(f){findings.push(f);covered.add(asset.id);}}
  }
  findings.sort((a,b)=>b.priority-a.priority||a.cve.localeCompare(b.cve));
  return{assets:assets.length,matchedAssets:covered.size,findings,confirmed:findings.filter(x=>x.status==="version-match").length,review:findings.filter(x=>x.status==="review").length,discovery:findings.filter(x=>x.status==="discovery").length};
