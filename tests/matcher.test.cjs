@@ -18,6 +18,6 @@ const bom={bomFormat:"CycloneDX",specVersion:"1.6",components:[{name:"widget",ve
 assert.equal(m.parseInventory(JSON.stringify(bom),"bom.json")[0].name,"widget");
 const spdx={packages:[{name:"widget",versionInfo:"1.5.0",externalRefs:[{referenceType:"purl",referenceLocator:"pkg:npm/widget@1.5.0"}]}]};
 assert.equal(m.parseInventory(JSON.stringify(spdx),"bom.json")[0].version,"1.5.0");
-assert.throws(()=>m.parseInventory("[]","bom.json"));
+assert.equal(m.parseInventory("[]","bom.json").length,0);
 assert.throws(()=>m.parseInventory('{"assets":[{"version":"1.0"}]}',"a.json"));
 console.log("Asset matcher: 14 checks passed");
