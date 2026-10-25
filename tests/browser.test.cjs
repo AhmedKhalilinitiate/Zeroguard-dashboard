@@ -5,6 +5,7 @@ const html=fs.readFileSync('index.html','utf8');
 const app=fs.readFileSync('app.js','utf8');
 const matcher=fs.readFileSync('matcher.js','utf8');
 const assets=fs.readFileSync('assets.js','utf8');
+const ot=fs.readFileSync('ot-risk.js','utf8');
 const excel=fs.readFileSync('xlsx.js','utf8');
 const fixture={
  schema:1,generatedAt:new Date().toISOString(),
@@ -28,6 +29,7 @@ const fixture={
  w.eval(app);
  w.TextDecoder=require("node:util").TextDecoder;
  w.eval(excel);
+ w.eval(ot);
  w.eval(assets);
  await new Promise(resolve=>setTimeout(resolve,100));
  assert.match(w.document.getElementById("stats").textContent,/2/,"Overview should load");
@@ -53,6 +55,8 @@ const fixture={
  w.document.getElementById("asset-version").value="18.0.0";
  w.document.getElementById("asset-add").click();
  w.document.getElementById("asset-scan").click();
+ assert.ok(w.document.getElementById("ot-investigations").textContent.length>0);
+ assert.ok(w.document.getElementById("ot-summary").textContent.includes("Assets missing evidence"));
  assert.match(w.document.getElementById("asset-feedback").textContent,/Assessed 1 assets/);
  w.document.querySelector('[data-view="vulnerabilities"]').click();
  const rows=w.document.querySelectorAll("#vulnerability-table tbody tr");
