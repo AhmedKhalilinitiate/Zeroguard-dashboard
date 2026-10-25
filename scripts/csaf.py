@@ -5,6 +5,7 @@ cisa.gov RSS endpoints that return HTTP 403 to GitHub-hosted runners.
 CSAF is the OASIS Common Security Advisory Framework 2.0.
 """
 import re
+import affected
 from datetime import datetime
 from urllib.parse import urlparse
 
@@ -112,7 +113,8 @@ def parse_advisory(raw, source_url, kind):
         news["cves"].append(cve)
         changes.append({"id": cve, "description": desc, "remediation": selected,
                         "cvss": cvss, "date": date, "source": "CISA CSAF " + kind,
-                        "advisoryUrl": source_url, "products": (selected or {}).get("products") or []})
+                        "advisoryUrl": source_url, "products": (selected or {}).get("products") or [],
+                        "affectedSystems": affected.csaf_affected(v,names,"CISA CSAF "+kind,source_url)})
     news["cves"] = list(dict.fromkeys(news["cves"]))
     news["remediationCount"] = sum(1 for c in changes if c["remediation"])
     return news, changes
@@ -132,6 +134,7 @@ def apply(records, changes, kind):
                    "references": [], "remediationStatus": "unknown", "source": []}
             records[cid] = old
         old["source"] = sorted(set(old.get("source") or []) | {item["source"]})
+        old["affectedSystems"] = affected.combine(old.get("affectedSystems"),item.get("affectedSystems"))
         if not old.get("description") and item["description"]:
             old["description"] = item["description"]
         if not old.get("date"):
