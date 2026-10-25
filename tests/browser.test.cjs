@@ -43,6 +43,9 @@ const fixture={
   assert.ok(content.textContent.trim().length>0,"Empty render for "+view);
  }
  w.document.querySelector('[data-view="assets"]').click();
+ w.document.getElementById("asset-quick-query").value="Siemens";
+ w.document.getElementById("asset-quick-button").click();
+ assert.match(w.document.getElementById("asset-quick-results").textContent,/CVE-2025-12345/,"Quick vendor discovery must find matching CVE");
  w.document.getElementById("asset-name").value="Node.js";
  w.document.getElementById("asset-version").value="18.0.0";
  w.document.getElementById("asset-add").click();
