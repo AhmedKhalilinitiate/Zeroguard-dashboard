@@ -30,6 +30,24 @@ if(items.length>250)root.append(el("p","Showing first 250 matches; CSV export in
 function exportCSV(){const columns=["assetId","assetName","host","cve","status","priority","kev","cvss","epss","system","affectedRange","source","evidenceUrl","identityMatch","versionCheck"];
 const rows=filtered().map(f=>[f.assetId,f.assetName,f.host,f.cve,f.status,f.priority,f.kev,f.cvss,f.epss,f.evidence.system,f.evidence.range,f.evidence.source,f.evidence.url,f.evidence.identity,f.evidence.versionResult]);
 download("zeroguard-asset-findings.csv",[columns.join(","),...rows.map(r=>r.map(csvCell).join(","))].join("\r\n"));}
+function quickDiscovery(){
+ const q=$("asset-quick-query").value.trim(),root=$("asset-quick-results");root.replaceChildren();
+ if(q.length<3){root.append(el("div","Enter at least three characters to discover vendor CVEs.","empty"));return;}
+ const search=api().scan([{id:"vendor-lookup",name:q,version:"",vendor:""}],currentCVEs,{discovery:true});
+ root.append(el("p",search.discovery+" matching CVE research leads for '"+q+"'. This is NOT proof your specific product/version is affected.","muted"));
+ const wrap=el("div",undefined,"table-scroll"),table=el("table",undefined,"datatable");
+ const head=el("tr");for(const label of ["CVE","Affected system / product","CISA KEV","CVSS","Investigate"])head.append(el("th",label));const thead=el("thead");thead.append(head);table.append(thead);
+ const tbody=el("tbody");
+ for(const f of search.findings.slice(0,100)){
+  const row=el("tr");row.append(el("td",f.cve),el("td",f.evidence.system),el("td",f.kev?"Known exploited":"Not confirmed"),el("td",f.cvss??"Unscored"));
+  const cell=el("td"),btn=el("button","Open CVE →","textbutton");btn.addEventListener("click",()=>document.dispatchEvent(new CustomEvent("zeroguard:open-cve",{detail:{id:f.cve}})));cell.append(btn);row.append(cell);tbody.append(row);
+ }
+ table.append(tbody);wrap.append(table);root.append(wrap);
+ if(search.findings.length>100)root.append(el("p","Showing top 100 by triage priority. Use Search all for further research.","muted"));
+ if(!search.discovery)root.append(el("div","No matching CVEs in the loaded dataset. This does not mean the vendor has no vulnerabilities.","empty"));
+}
+$("asset-quick-button").addEventListener("click",quickDiscovery);
+$("asset-quick-query").addEventListener("keydown",e=>{if(e.key==="Enter")quickDiscovery();});
 $("asset-file").addEventListener("change",upload);$("asset-add").addEventListener("click",add);$("asset-scan").addEventListener("click",run);
 $("asset-mode").addEventListener("change",()=>{result=null;feedback("Assessment mode changed. Run assessment to update findings.");render();});
 $("asset-filter").addEventListener("input",render);$("asset-status").addEventListener("change",render);
