@@ -35,3 +35,30 @@ assert.equal(scan.findings.some(f=>f.cve==="CVE-2026-12347"),false,"Model withou
 assert.equal(scan.findings.find(f=>f.cve==="CVE-2026-12345").status,"model-lead");
 assert.equal(scan.confirmed,0,"Missing firmware cannot confirm a vulnerability");
 console.log("OT Excel row parser and conservative model-screening checks passed");
+
+function storedZip(parts){
+ const local=[],directory=[];let pos=0;
+ for(const [name,content] of Object.entries(parts)){
+  const nb=Buffer.from(name),payload=Buffer.from(content);
+  const h=Buffer.alloc(30);h.writeUInt32LE(0x04034b50,0);h.writeUInt16LE(20,4);h.writeUInt16LE(nb.length,26);h.writeUInt32LE(payload.length,18);h.writeUInt32LE(payload.length,22);
+  local.push(h,nb,payload);
+  const cd=Buffer.alloc(46);cd.writeUInt32LE(0x02014b50,0);cd.writeUInt16LE(20,4);cd.writeUInt16LE(20,6);cd.writeUInt32LE(payload.length,20);cd.writeUInt32LE(payload.length,24);cd.writeUInt16LE(nb.length,28);cd.writeUInt32LE(pos,42);
+  directory.push(cd,nb);pos+=h.length+nb.length+payload.length;
+ }
+ const dir=Buffer.concat(directory),end=Buffer.alloc(22);end.writeUInt32LE(0x06054b50,0);end.writeUInt16LE(directory.length/2,8);end.writeUInt16LE(directory.length/2,10);end.writeUInt32LE(dir.length,12);end.writeUInt32LE(pos,16);
+ const out=Buffer.concat([...local,dir,end]);return out.buffer.slice(out.byteOffset,out.byteOffset+out.byteLength);
+}
+const worksheet='<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>'+
+'<row r="3"><c r="A3" t="inlineStr"><is><t>Substation Name:</t></is></c><c r="B3" t="inlineStr"><is><t>9005 SUBSTATION</t></is></c></row>'+
+'<row r="8">'+[['B8','Asset Type'],['C8','Asset Qty.'],['D8','Vendor Name'],['E8','Model Number']].map(([cell,value])=>'<c r="'+cell+'" t="inlineStr"><is><t>'+value+'</t></is></c>').join('')+'</row>'+
+'<row r="9"><c r="A9" t="inlineStr"><is><t>TELECOM ROOM</t></is></c></row>'+
+'<row r="10"><c r="B10" t="inlineStr"><is><t>IED</t></is></c><c r="C10"><v>24</v></c><c r="D10" t="inlineStr"><is><t>SIEMENS</t></is></c><c r="E10" t="inlineStr"><is><t>SWT3000</t></is></c></row>'+
+'</sheetData></worksheet>';
+(async()=>{
+ const parsed=await xlsx.parse(storedZip({'xl/worksheets/sheet1.xml':worksheet}),"9005 SUBSTATION.xlsx");
+ assert.equal(parsed.length,1);
+ assert.equal(parsed[0].quantity,24);
+ assert.equal(parsed[0].name,"SWT3000");
+ console.log("Complete native XLSX ZIP import passed");
+ dom.window.close();
+})().catch(e=>{console.error(e);process.exitCode=1;});
