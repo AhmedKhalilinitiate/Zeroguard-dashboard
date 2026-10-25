@@ -14,6 +14,28 @@ A responsive, source-attributed, security intelligence dashboard that updates **
 - **Unscored stays unscored:** no fabricated CVSS, EPSS, ATT&CK, zero-day status, actor attribution or patch deployment claims.
 - **Scheduled updates:** `.github/workflows/update-intelligence.yml` runs **every six hours** plus manual dispatch. The browser fetches the published snapshot every 15 minutes while open.
 
+
+## Asset exposure assessment (v7)
+
+Select **Asset exposure** in the left navigation. The workspace imports asset inventories **locally inside the browser**: no asset data is transmitted to ZeroGuard or committed to GitHub.
+
+Supported formats:
+- CSV with `name,version,vendor,purl,cpe,host,criticality,exposure` (only `name`, PURL or CPE is necessary; a download template is available).
+- JSON arrays or `{"assets":[...]}`.
+- CycloneDX JSON software bills of materials (`components`).
+- SPDX JSON documents (`packages`).
+
+Import up to 5,000 assets / 5 MB, or add assets individually. Select **Run assessment**, then filter findings or download a CSV report. Imported data remains in memory and is cleared by page reload or **Clear inventory**.
+
+### Interpretation and safety
+- **Version match** means a source-backed package identity/PURL or comparable CPE identity matched an affected-version expression. It is a triage *candidate*, not a proof of exploitability.
+- **Needs verification** means the product appears related but version or applicability evidence is insufficient.
+- Only limited numeric version conditions are evaluated (`<`, `<=`, `>`, `>=`, `=`). Unsupported pre-release, ecosystem-specific or complex constraints stay unknown. Complex NVD CPE Boolean applicability and environment-specific conditions require manual verification.
+- The matcher does not inspect live hosts, detect runtime configurations, authenticate to assets, or guarantee exhaustive CVE coverage. Missing findings never imply the asset is secure.
+- Priority is a **local heuristic** informed by CISA KEV, CVSS, EPSS, asset criticality and exposure. It is not an authoritative risk score.
+
+Tests: `node tests/matcher.test.cjs` and `node tests/browser.test.cjs` (the latter needs `jsdom@26`).
+
 ## Deployment
 
 1. In GitHub **Settings → Pages**, select **GitHub Actions** as the build/deployment source.
