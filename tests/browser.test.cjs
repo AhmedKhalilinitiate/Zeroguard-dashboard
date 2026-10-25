@@ -3,6 +3,8 @@ const fs=require('node:fs');
 const {JSDOM}=require('jsdom');
 const html=fs.readFileSync('index.html','utf8');
 const app=fs.readFileSync('app.js','utf8');
+const matcher=fs.readFileSync('matcher.js','utf8');
+const assets=fs.readFileSync('assets.js','utf8');
 const fixture={
  schema:1,generatedAt:new Date().toISOString(),
  vulnerabilities:[
@@ -21,11 +23,13 @@ const fixture={
  w.fetch=async()=>({ok:true,json:async()=>fixture});
  w.document.getElementById("detail").showModal=function(){this.open=true;};
  w.localStorage.clear();
+ w.eval(matcher);
  w.eval(app);
+ w.eval(assets);
  await new Promise(resolve=>setTimeout(resolve,100));
  assert.match(w.document.getElementById("stats").textContent,/2/,"Overview should load");
  const expected={
-  overview:"stats", vulnerabilities:"vulnerability-table",exploited:"exploited-table",
+  overview:"stats", assets:"asset-stats", vulnerabilities:"vulnerability-table",exploited:"exploited-table",
   ot:"ot-table",advisories:"article-list",emerging:"emerging-list",iocs:"ioc-list",
   bookmarks:"watchlist-table",health:"health-list",about:"about"
  };
@@ -38,6 +42,12 @@ const fixture={
   assert.ok(content,"Missing tab container "+view);
   assert.ok(content.textContent.trim().length>0,"Empty render for "+view);
  }
+ w.document.querySelector('[data-view="assets"]').click();
+ w.document.getElementById("asset-name").value="Node.js";
+ w.document.getElementById("asset-version").value="18.0.0";
+ w.document.getElementById("asset-add").click();
+ w.document.getElementById("asset-scan").click();
+ assert.match(w.document.getElementById("asset-feedback").textContent,/Assessed 1 assets/);
  w.document.querySelector('[data-view="vulnerabilities"]').click();
  const rows=w.document.querySelectorAll("#vulnerability-table tbody tr");
  assert.equal(rows[0].textContent.includes("CVE-2026-99999"),true,"Newest CVE must display first despite lower priority");

@@ -47,6 +47,7 @@ async function fetchData(manual=false){
   if(!res.ok)throw Error("HTTP "+res.status);
   const data=verify(await res.json());
   state.data=data;render();
+  document.dispatchEvent(new CustomEvent("zeroguard:feed",{detail:{vulnerabilities:data.vulnerabilities}}));
   const hours=freshness()/3600000;
   status(hours<12,"Snapshot "+(hours<12?"current":"outdated"));
   $("last-updated").textContent="Last ingested: "+date(data.generatedAt)+" UTC";
@@ -80,7 +81,7 @@ function goto(view){
  state.view=view;
  document.querySelectorAll(".page").forEach(el=>el.classList.toggle("active",el.id===view));
  document.querySelectorAll(".nav").forEach(el=>el.classList.toggle("active",el.dataset.view===view));
- const names={overview:"Executive overview",vulnerabilities:"Vulnerability explorer",exploited:"Known exploited",ot:"OT / ICS intelligence",advisories:"News & advisories",search:"Research search",emerging:"Emerging reports",iocs:"IOC intelligence",bookmarks:"Your watchlist",health:"Source health",about:"About ZeroGuard"};
+ const names={overview:"Executive overview",vulnerabilities:"Vulnerability explorer",assets:"Asset exposure assessment",exploited:"Known exploited",ot:"OT / ICS intelligence",advisories:"News & advisories",search:"Research search",emerging:"Emerging reports",iocs:"IOC intelligence",bookmarks:"Your watchlist",health:"Source health",about:"About ZeroGuard"};
  $("view-title").textContent=names[view]||"ZeroGuard";
  $("sidebar").classList.remove("open");
  if(view!=="overview")renderView(view);
@@ -275,6 +276,7 @@ $("global-search-button").addEventListener("click",doGlobalSearch);
 $("global-query").addEventListener("keydown",event=>{if(event.key==="Enter")doGlobalSearch();});
 document.addEventListener("keydown",event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==="k"){event.preventDefault();goto("search");$("global-query").focus();}});
 
+document.addEventListener("zeroguard:open-cve",e=>{goto("vulnerabilities");openDetail(e.detail.id);});
 document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>goto(b.dataset.view)));
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>goto(b.dataset.go)));
 $("mobile-menu").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
