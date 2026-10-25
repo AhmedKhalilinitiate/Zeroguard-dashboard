@@ -100,7 +100,7 @@ function assess(asset,vuln){
 function squish(value){return norm(value).replace(/[^a-z0-9]/g,"");}
 function manufacturerName(name){
  const key=squish(name);
- const aliases={sel:"schweitzerengineeringlaboratories",hirshman:"hirschmann",hirschman:"hirschmann",alcatel:"alcatellucent",juniper:"junipernetworks"};
+ const aliases={sel:"schweitzerengineeringlaboratories",generalelectric:"ge",gevernova:"ge",hirshman:"hirschmann",hirschman:"hirschmann",alcatel:"alcatellucent",juniper:"junipernetworks"};
  return aliases[key]||key;
 }
 function otScreen(assets,vulns){
@@ -108,11 +108,11 @@ function otScreen(assets,vulns){
  for(const asset of assets){
   const manufacturer=manufacturerName(asset.vendor);
   const model=squish(asset.name);
-  if(!manufacturer||manufacturer.length<3)continue;
+  if(!manufacturer||manufacturer.length<2)continue;
   let added=0;
   for(const v of vulns||[]){
    const vend=[v.vendor,...(v.affectedSystems||[]).map(x=>x.name)].map(manufacturerName);
-   const vendMatched=vend.some(x=>x===manufacturer||x.startsWith(manufacturer)&&x.length>manufacturer.length&&/^\d/.test(x.slice(manufacturer.length))===false||x.includes(manufacturer)&&manufacturer.length>=5);
+   const vendMatched=vend.some(x=>x===manufacturer||(manufacturer.length>=4&&(x.startsWith(manufacturer)||x.includes(manufacturer))));
    if(!vendMatched)continue;
    const strings=[v.product,v.description,...(v.affectedSystems||[]).map(x=>x.name)].map(squish);
    const modelMatch=model.length>=5&&/\d/.test(model)&&strings.some(x=>x.includes(model));
