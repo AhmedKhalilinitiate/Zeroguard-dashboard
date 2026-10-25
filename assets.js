@@ -11,7 +11,7 @@ function download(name,body){const url=URL.createObjectURL(new Blob([body],{type
 function setVulnerabilities(items){currentCVEs=Array.isArray(items)?items:[];if(assets.length)run();}
 async function upload(e){const file=e.target.files?.[0];if(!file)return;try{if(file.size>5*1024*1024)throw Error("Inventory must be 5 MB or smaller.");const data=await file.text();assets=api().parseInventory(data,file.name);result=null;feedback(assets.length+" assets imported from "+file.name+". Click Run assessment.");render();}catch(err){feedback("Import failed: "+err.message);}e.target.value="";}
 function add(){try{const name=$("asset-name").value.trim(),version=$("asset-version").value.trim(),host=$("asset-host").value.trim();if(!name)throw Error("Enter a product name.");if(assets.length>=api().MAX_ASSETS)throw Error("Asset limit reached.");assets.push({id:"manual-"+(assets.length+1),name,version,host,vendor:"",purl:"",cpe:"",criticality:"medium",exposure:"unknown"});result=null;feedback(assets.length+" assets in current workspace.");$("asset-name").value="";$("asset-version").value="";$("asset-host").value="";render();}catch(err){feedback(err.message);}}
-function run(){if(!assets.length){feedback("Import or add at least one asset.");return;}result=api().scan(assets,currentCVEs);feedback("Assessed "+assets.length+" assets against "+currentCVEs.length+" loaded CVEs. The inventory remains in this browser session.");render();}
+function run(){if(!assets.length){feedback("Import or add at least one asset.");return;}result=api().scan(assets,currentCVEs,{discovery:$("asset-mode").value==="discovery"});feedback("Assessed "+assets.length+" assets against "+currentCVEs.length+" loaded CVEs. The inventory remains in this browser session.");render();}
 function filtered(){const text=$("asset-filter").value.toLowerCase().trim(),status=$("asset-status").value;return(result?.findings||[]).filter(f=>(status==="all"||f.status===status)&&(!text||[f.assetName,f.host,f.cve,f.evidence.system].join(" ").toLowerCase().includes(text)));}
 function render(){const stats=$("asset-stats"),root=$("asset-findings");stats.replaceChildren();root.replaceChildren();
 for(const [label,val] of [["Assets",assets.length],["CVEs evaluated",currentCVEs.length],["Version matches",result?.confirmed||0],["Review candidates",result?.review||0]]){const card=el("div",undefined,"stat");card.append(el("label",label),el("strong",val));stats.append(card);}
@@ -22,7 +22,7 @@ for(const label of ["Asset / host","CVE","Assessment","Evidence","Priority"])hea
 const thead=el("thead");thead.append(header);table.append(thead);const tbody=el("tbody");
 for(const f of items.slice(0,250)){const tr=el("tr"),asset=el("td");asset.append(el("strong",f.assetName),el("div",f.host||f.assetId,"muted"));tr.append(asset);
 const cv=el("td"),button=el("button",f.cve,"cve-link");button.addEventListener("click",()=>document.dispatchEvent(new CustomEvent("zeroguard:open-cve",{detail:{id:f.cve}})));cv.append(button);tr.append(cv);
-tr.append(el("td",f.status==="version-match"?"Version match · verify applicability":"Needs verification"));
+tr.append(el("td",f.status==="discovery"?"Vendor research lead · NOT an affected asset":f.status==="version-match"?"Version match · verify applicability":"Needs verification"));
 const evid=el("td");evid.append(el("div",f.evidence.system),el("small",(f.evidence.range||"Version unknown")+" · "+f.evidence.source,"muted"));
 if(/^https:\/\//.test(f.evidence.url)){const a=el("a","Evidence ↗");a.href=f.evidence.url;a.target="_blank";a.rel="noopener noreferrer";evid.append(a);}tr.append(evid);tr.append(el("td",f.priority));tbody.append(tr);}
 table.append(tbody);wrap.append(table);box.append(wrap);root.append(box);
@@ -31,6 +31,7 @@ function exportCSV(){const columns=["assetId","assetName","host","cve","status",
 const rows=filtered().map(f=>[f.assetId,f.assetName,f.host,f.cve,f.status,f.priority,f.kev,f.cvss,f.epss,f.evidence.system,f.evidence.range,f.evidence.source,f.evidence.url,f.evidence.identity,f.evidence.versionResult]);
 download("zeroguard-asset-findings.csv",[columns.join(","),...rows.map(r=>r.map(csvCell).join(","))].join("\r\n"));}
 $("asset-file").addEventListener("change",upload);$("asset-add").addEventListener("click",add);$("asset-scan").addEventListener("click",run);
+$("asset-mode").addEventListener("change",()=>{result=null;feedback("Assessment mode changed. Run assessment to update findings.");render();});
 $("asset-filter").addEventListener("input",render);$("asset-status").addEventListener("change",render);
 $("asset-clear").addEventListener("click",()=>{assets=[];result=null;feedback("Inventory cleared from the active browser session.");render();});
 $("asset-export").addEventListener("click",exportCSV);
