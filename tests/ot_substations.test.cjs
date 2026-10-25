@@ -61,4 +61,4 @@ const worksheet='<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheet
  assert.equal(parsed[0].name,"SWT3000");
  console.log("Complete native XLSX ZIP import passed");
  dom.window.close();
-})().catch(e=>{console.error(e);process.exitCode=1;});
+})().catch(e=>{console.error(e);dom.window.close();process.exitCode=1;});
