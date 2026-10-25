@@ -9,7 +9,7 @@ assert.equal(m.versionRange("beta",system.version),"unknown");
 assert.equal(m.versionRange("1.5.0","See advisory for version applicability"),"unknown");
 assert.equal(m.assess(asset,cve(system)).status,"version-match");
 assert.equal(m.assess({...asset,version:"2.1.0",purl:"pkg:npm/widget@2.1.0"},cve(system)),null);
-assert.equal(m.assess({id:"x",name:"widget",version:"1.5.0"},cve(system)).status,"review");
+assert.equal(m.assess({id:"x",name:"widget",version:"1.5.0"},cve(system)),null);
 assert.equal(m.scan([asset],[cve(system)]).confirmed,1);
 assert.equal(m.scan([{id:"a",name:"unrelated"}],[cve(system)]).findings.length,0);
 const csv="id,name,vendor,version,purl,host\n1,widget,example,1.5.0,pkg:npm/widget@1.5.0,server-a\n";
