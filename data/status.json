@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-24T20:51:08Z",
-  "records": 2886,
+  "generatedAt": "2026-10-25T04:42:54Z",
+  "records": 3867,
   "sources": {
     "kev": {
       "ok": true,
@@ -9,7 +9,7 @@
     },
     "nvd": {
       "ok": true,
-      "count": 3,
+      "count": 1000,
       "scope": "Recently modified CVEs, past 7 days",
       "url": "https://services.nvd.nist.gov/rest/json/cves/2.0"
     },
@@ -39,13 +39,13 @@
     },
     "ghsa_composer": {
       "ok": true,
-      "count": 40,
+      "count": 30,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for composer"
     },
     "epss": {
       "ok": true,
-      "count": 2874,
+      "count": 3855,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
