@@ -5,6 +5,7 @@ Runs on GitHub Actions. Uses Python's standard library only.
 import csv
 import ipaddress
 import csaf
+import affected
 import io
 import json
 import os
@@ -116,7 +117,8 @@ def normalize_nvd(raw):
         "cvss": cvss, "vector": vector, "epss": None, "percentile": None,
         "inKEV": False, "exploitedKnown": False, "dueDate": "", "ransomwareUse": "",
         "cwe": weaknesses[:5], "references": references, "source": ["NVD"],
-        "published": stamp(c.get("published")), "remediationStatus": "unknown"
+        "published": stamp(c.get("published")), "remediationStatus": "unknown",
+        "affectedSystems": affected.nvd_configurations(c.get("configurations"),cid)
     }
 
 def load_previous():
@@ -181,6 +183,7 @@ def nvd(records):
                     if row.get(key) is not None and row.get(key) != "": old[key] = row[key]
                 if not old.get("description"): old["description"] = row["description"]
                 old["source"] = sorted(set(old.get("source", [])) | {"NVD"})
+                old["affectedSystems"] = affected.combine(old.get("affectedSystems"),row.get("affectedSystems"))
             else:
                 records[cid] = row
             visited += 1
@@ -330,7 +333,8 @@ def github_advisories():
                     cve_rows.append({
                         "id":cveid,"description":description or title,
                         "date":published,"source":report["source"],"reference":url,
-                        "ecosystem":ecosystem
+                        "ecosystem":ecosystem,
+                        "affectedSystems":affected.ghsa_versions(issue,url)
                     })
                 count += 1
             STATS["ghsa_" + ecosystem] = {"ok":True,"count":count,"url":"https://github.com/advisories",
@@ -354,7 +358,8 @@ def merge_ghsa(records, rows):
                 "kevAction":"","cvss":None,"vector":"","epss":None,
                 "percentile":None,"inKEV":False,"exploitedKnown":False,
                 "dueDate":"","ransomwareUse":"","cwe":[],
-                "remediationStatus":"unknown"
+                "remediationStatus":"unknown",
+                "affectedSystems":item.get("affectedSystems",[])
             }
         else:
             rec=records[cid]
@@ -364,6 +369,7 @@ def merge_ghsa(records, rows):
                 refs.append(item["reference"])
             rec["references"]=refs[:15]
             if not rec.get("description"): rec["description"]=item["description"]
+            rec["affectedSystems"]=affected.combine(rec.get("affectedSystems"),item.get("affectedSystems"))
             if not rec.get("published"): rec["published"]=item["date"]
 
 
@@ -457,6 +463,7 @@ def main():
         verified = v.get("remediation") or {}
         v["action"] = verified.get("details", "")
         v["actionStatus"] = "vendor-specific" if verified.get("details") else "not independently verified"
+        affected.finalize(v)
         v["category"] = category(v.get("vendor",""), v.get("product",""), v.get("description",""))
     sorted_rows = sorted(records.values(), key=lambda v:(v.get("displayDate") or "", v["id"]), reverse=True)
     generated = NOW.isoformat(timespec="seconds").replace("+00:00","Z")

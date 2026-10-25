@@ -80,7 +80,7 @@ function goto(view){
  state.view=view;
  document.querySelectorAll(".page").forEach(el=>el.classList.toggle("active",el.id===view));
  document.querySelectorAll(".nav").forEach(el=>el.classList.toggle("active",el.dataset.view===view));
- const names={overview:"Executive overview",vulnerabilities:"Vulnerability explorer",exploited:"Known exploited",ot:"OT / ICS intelligence",advisories:"News & advisories",emerging:"Emerging reports",iocs:"IOC intelligence",bookmarks:"Your watchlist",health:"Source health",about:"About ZeroGuard"};
+ const names={overview:"Executive overview",vulnerabilities:"Vulnerability explorer",exploited:"Known exploited",ot:"OT / ICS intelligence",advisories:"News & advisories",search:"Research search",emerging:"Emerging reports",iocs:"IOC intelligence",bookmarks:"Your watchlist",health:"Source health",about:"About ZeroGuard"};
  $("view-title").textContent=names[view]||"ZeroGuard";
  $("sidebar").classList.remove("open");
  if(view!=="overview")renderView(view);
@@ -132,23 +132,26 @@ function severity(v){if(number(v.cvss)===null)return "unscored";if(v.cvss>=9)ret
 function renderTable(scope,rows,target){
  const el=$(target);clear(el);
  const settings=state.filters[scope]||{};const query=(settings.query||"").trim().toLowerCase();
- let filtered=rows.filter(v=>(!query||[v.id,v.vendor,v.product,v.description,...(v.cwe||[])].some(t=>safe(t).toLowerCase().includes(query)))&&(!settings.severity||settings.severity==="all"||severity(v)===settings.severity));
+ let filtered=rows.filter(v=>(!query||[v.id,v.vendor,v.product,v.description,...(v.affectedSystems||[]).flatMap(a=>[a.name,a.version,a.source]),...(v.cwe||[])].some(t=>safe(t).toLowerCase().includes(query)))&&(!settings.severity||settings.severity==="all"||severity(v)===settings.severity));
  const sort=settings.sort||"date";
  filtered.sort((a,b)=>sort==="cvss"?(number(b.cvss)??-1)-(number(a.cvss)??-1):sort==="epss"?(number(b.epss)??-1)-(number(a.epss)??-1):sort==="date"?safe(b.published||b.displayDate||b.date).localeCompare(safe(a.published||a.displayDate||a.date))||b.id.localeCompare(a.id):priority(b)-priority(a));
  el.append(toolbar(scope));
  const wrap=element("div","tablebox");
  const scroll=element("div","table-scroll");const table=element("table","datatable");const thead=element("thead");const tr=element("tr");
- for(const field of ["CVE / actions","Product","CVSS","EPSS 30d","Exploitation","Date","Source"])tr.append(element("th","",field));thead.append(tr);table.append(thead);
+ for(const field of ["CVE / actions","Product","Affected systems","CVSS","EPSS 30d","Exploitation","Date","Source"])tr.append(element("th","",field));thead.append(tr);table.append(thead);
  const tbody=element("tbody");const per=25;const page=Math.max(1,Math.min(state.pages[scope]||1,Math.ceil(filtered.length/per)||1));state.pages[scope]=page;
  for(const v of filtered.slice((page-1)*per,page*per)){
  const row=element("tr");
  const first=element("td");const id=element("button","cve-link",v.id);id.addEventListener("click",()=>openDetail(v.id));append(first,id,element("div","",null));first.lastChild.append(bookmarkButton(v.id));
  const vendor=element("td");append(vendor,element("span","vendor",v.vendor||"Unspecified"),element("span","product",v.product||"Not established"));
- append(row,first,vendor,element("td","",score(v.cvss)),element("td","",probability(v.epss)));
+ const sys=element("td");const systems=v.affectedSystems||[];
+ append(sys,element("span","vendor",v.affectedSystemLabel||"Not identified in connected sources"),element("span","product",systems.length?(systems[0].version||"")+" · "+systems[0].source:"Source evidence unavailable"));
+ if(systems.length>1)sys.append(element("small","muted","+"+(systems.length-1)+" more; open CVE"));
+ append(row,first,vendor,sys,element("td","",score(v.cvss)),element("td","",probability(v.epss)));
  const exploited=element("td");exploited.append(v.inKEV?badge("Confirmed", "red"):badge("Not established", ""));row.append(exploited);
  append(row,element("td","",date(v.published||v.displayDate||v.date)),element("td","",Array.isArray(v.source)?v.source.join(", "):"—"));tbody.append(row);
  }
- if(!filtered.length){const row=element("tr");const cell=element("td","empty","No matching vulnerabilities in the loaded snapshot.");cell.colSpan=7;row.append(cell);tbody.append(row);}
+ if(!filtered.length){const row=element("tr");const cell=element("td","empty","No matching vulnerabilities in the loaded snapshot.");cell.colSpan=8;row.append(cell);tbody.append(row);}
  table.append(tbody);scroll.append(table);wrap.append(scroll);
  const foot=element("div","footbar");const buttons=element("div","pagebuttons");const prev=element("button","", "← Previous"),next=element("button","","Next →");prev.disabled=page===1;next.disabled=page*per>=filtered.length;prev.addEventListener("click",()=>{state.pages[scope]=page-1;renderView(scope);});next.addEventListener("click",()=>{state.pages[scope]=page+1;renderView(scope);});append(buttons,prev,next);append(foot,element("span","",filtered.length+" results · Page "+page+" of "+(Math.ceil(filtered.length/per)||1)),buttons);wrap.append(foot);el.append(wrap);
 }
@@ -168,6 +171,10 @@ function openDetail(id){
    if(href(url)){const link=element("a","button secondary",label+" ↗");link.href=href(url);link.target="_blank";link.rel="noopener noreferrer";link.style.marginRight="8px";body.append(link);}
   }
  }
+ body.append(element("h3","spaced","Affected systems and versions"));
+ const affected=v.affectedSystems||[];
+ if(!affected.length)body.append(element("p","muted","Not identified in connected sources. Check the primary vendor advisory; this does not indicate safety."));
+ for(const system of affected){const block=element("div","compact-row");const info=element("div");append(info,element("strong","",system.name),element("small","",(system.version||"Version unknown")+" · "+system.source));block.append(info);if(href(system.url)){const a=element("a","textbutton","Evidence ↗");a.href=href(system.url);a.target="_blank";a.rel="noopener noreferrer";block.append(a);}body.append(block);}
  if(v.kevAction){body.append(element("h3","spaced","CISA KEV required action (agency guidance)"),element("p","wrap",v.kevAction),element("p","muted","CISA catalog guidance may be generic and does not establish an applicable vendor patch."));}
  const links=element("div","spaced");for(const [title,url] of [["Official NVD record","https://nvd.nist.gov/vuln/detail/"+id],["CISA KEV catalog",KEV_URL],["FIRST EPSS","https://www.first.org/epss/"]]){
  const link=element("a","button secondary",title+" ↗");link.href=url;link.target="_blank";link.rel="noopener noreferrer";link.style.marginRight="8px";links.append(link);
@@ -204,16 +211,70 @@ function renderView(view){
  else if(view==="emerging")renderReports();
  else if(view==="bookmarks")renderTable(view,all.filter(v=>watchlist.has(v.id)),"watchlist-table");
  else if(view==="health")renderHealth();
+ else if(view==="search")renderGlobalSearch();
 }
 function render(){renderOverview();renderView(state.view);}
 function exportCSV(){
  const records=state.data?.vulnerabilities||[];if(!records.length)return;
- const columns=["id","vendor","product","category","cvss","epss","inKEV","published","date","dueDate","actionStatus","action","kevAction","description"];
+ const columns=["id","vendor","product","affectedSystemLabel","affectedSystemCount","category","cvss","epss","inKEV","published","date","dueDate","actionStatus","action","kevAction","description"];
  function quoted(val){let s=String(val??"");if(/^[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';}
  const csv=[columns.join(","),...records.map(v=>columns.map(k=>quoted(v[k])).join(","))].join("\r\n");
  const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob);
  const a=document.createElement("a");a.href=url;a.download="zeroguard-intelligence-"+date(new Date().toISOString())+".csv";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
+
+function globalMatches(term,limit=100){
+ const tokens=term.toLowerCase().trim().split(/\s+/).filter(Boolean);
+ if(!tokens.length)return [];
+ const items=[];
+ function push(kind,label,subtitle,url,view,ref,fields){
+  const str=fields.map(s=>safe(s)).join(" ").toLowerCase();
+  if(!tokens.every(t=>str.includes(t)))return;
+  let weight=0;for(const t of tokens){if(label.toLowerCase().includes(t))weight+=15;else if(fields.slice(0,4).join(" ").toLowerCase().includes(t))weight+=8;else weight+=2;}
+  items.push({kind,label,subtitle,url,view,ref,weight});
+ }
+ const d=state.data||{};
+ for(const v of d.vulnerabilities||[]){
+  const systems=v.affectedSystems||[];
+  push("CVE",v.id,(v.affectedSystemLabel||"Affected system unknown")+" · CVSS "+score(v.cvss),null,"vulnerabilities",v.id,
+   [v.id,v.vendor,v.product,v.affectedSystemLabel,v.description,v.action,v.kevAction,
+    ...systems.flatMap(a=>[a.name,a.version,a.source]),...(v.cwe||[])]);
+ }
+ for(const [kind,entries,view] of [["Advisory",d.advisories,"ot"],["News",d.articles,"advisories"],["Emerging",d.reports,"emerging"]]){
+  for(const item of entries||[])push(kind,item.title,item.source+" · "+date(item.date),item.url,view,null,
+   [item.title,item.source,item.advisoryId,item.ecosystem,item.status,...(item.cves||[])]);
+ }
+ for(const ioc of d.indicators||[])push("IOC",ioc.value,ioc.source+" · "+ioc.threat,ioc.evidence,"iocs",ioc.value,[ioc.value,ioc.type,ioc.threat,ioc.source,ioc.tags]);
+ const rank={CVE:5,Advisory:4,Emerging:3,News:2,IOC:1};
+ return items.sort((a,b)=>b.weight-a.weight||(rank[b.kind]||0)-(rank[a.kind]||0)).slice(0,limit);
+}
+function renderGlobalSearch(){
+ const root=$("global-results");clear(root);
+ const input=$("global-query");const term=input.value.trim();
+ if(!term){root.append(empty("Enter a keyword or product name to search all dashboard intelligence."));return;}
+ const results=globalMatches(term);
+ const counts={};for(const r of results)counts[r.kind]=(counts[r.kind]||0)+1;
+ root.append(element("p","muted",results.length+" matching entries (top 100) · "+Object.entries(counts).map(([k,v])=>k+": "+v).join(" · ")));
+ if(!results.length){root.append(empty("No indexed matches. A missing match does not prove a system is secure."));return;}
+ for(const result of results){
+  const row=element("div","compact-row"),left=element("div","wrap");
+  append(left,badge(result.kind,result.kind==="CVE"?"orange":""),element("strong","", " "+result.label),element("small","",result.subtitle));
+  const btn=element("button","textbutton",result.kind==="CVE"?"Open CVE →":"Open entry →");
+  btn.addEventListener("click",()=>{
+   if(result.kind==="CVE"){goto("vulnerabilities");openDetail(result.ref);return;}
+   goto(result.view);
+   if(result.kind==="IOC"){const q=$("ioc-list");q.querySelectorAll(".compact-row").forEach(el=>{if(el.textContent.includes(result.ref)){el.scrollIntoView?.({block:"center"});el.style.outline="1px solid var(--blue)";}});}
+   else if(href(result.url)){window.open(href(result.url),"_blank","noopener,noreferrer");}
+  });
+  append(row,left,btn);root.append(row);
+ }
+}
+function doGlobalSearch(){goto("search");renderGlobalSearch();}
+$("global-search-open").addEventListener("click",()=>{goto("search");$("global-query").focus();});
+$("global-search-button").addEventListener("click",doGlobalSearch);
+$("global-query").addEventListener("keydown",event=>{if(event.key==="Enter")doGlobalSearch();});
+document.addEventListener("keydown",event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==="k"){event.preventDefault();goto("search");$("global-query").focus();}});
+
 document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>goto(b.dataset.view)));
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>goto(b.dataset.go)));
 $("mobile-menu").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
