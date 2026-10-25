@@ -52,6 +52,14 @@ Native Excel parsing uses built-in browser ZIP decompression and XML parsing, re
 
 Security operations must verify affected models, firmware, exposure, vendor bulletins and change windows prior to remediation. OT searches never send packets to substation controllers or other devices.
 
+## Evidence-first, nonintrusive OT investigation
+
+Use **Asset exposure → OT substations: vendor + model research screening** and import the local substation Excel files. ZeroGuard now provides two **independent** dimensions: source-evidence applicability confidence and **investigation priority**, based only on information present in the vulnerability source and *explicitly provided* criticality/exposure context. No firmware inference, live controller connection, automatic patching, or scanning.
+
+The **OT investigation and evidence register** provides missing asset-evidence counts, OT owner, review due dates, recorded evidence IDs, investigation status and six compensating-control categories. Controls default to *Not assessed*. **Evidence verified** requires a non-empty supporting reference; no actual validation of that evidence is claimed. Investigations and assets remain in browser memory, not on GitHub. Export **assessment JSON** to preserve and later restore the work, or **investigation CSV** for review. An unexported assessment disappears on page reload. Store downloaded reports under your organization's authorized OT document-handling rules.
+
+Supporting guidance: NIST SP 800-82 Rev.3 and CISA's OT asset inventory/foundations guidance emphasize safety, passive data sources, operational constraints and cautious change control. Sources and applicability must still be confirmed by an authorized OT engineer.
+
 ## Deployment
 
 1. In GitHub **Settings → Pages**, select **GitHub Actions** as the build/deployment source.

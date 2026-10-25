@@ -25,6 +25,7 @@ jobs:
           node tests/integrity.test.cjs
           node tests/app.test.cjs
           node tests/matcher.test.cjs
+          node tests/ot_risk.test.cjs
       - name: Install isolated DOM browser harness
         run: npm install --no-save --no-package-lock jsdom@26
       - name: Exercise all ten application tabs
