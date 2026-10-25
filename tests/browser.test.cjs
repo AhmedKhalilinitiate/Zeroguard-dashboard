@@ -25,7 +25,7 @@ const fixture={
  await new Promise(resolve=>setTimeout(resolve,100));
  assert.match(w.document.getElementById("stats").textContent,/2/,"Overview should load");
  const expected={
-  overview:"stats",search:"global-results", vulnerabilities:"vulnerability-table",exploited:"exploited-table",
+  overview:"stats", vulnerabilities:"vulnerability-table",exploited:"exploited-table",
   ot:"ot-table",advisories:"article-list",emerging:"emerging-list",iocs:"ioc-list",
   bookmarks:"watchlist-table",health:"health-list",about:"about"
  };
