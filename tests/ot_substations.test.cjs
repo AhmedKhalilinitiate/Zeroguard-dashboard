@@ -3,6 +3,7 @@ const fs=require("node:fs");
 const {JSDOM}=require("jsdom");
 const dom=new JSDOM("",{url:"https://example.test",runScripts:"outside-only"});
 dom.window.DecompressionStream=globalThis.DecompressionStream;
+dom.window.TextDecoder=require("node:util").TextDecoder;
 dom.window.eval(fs.readFileSync("xlsx.js","utf8"));
 const xlsx=dom.window.ZeroGuardXLSX;
 const sample=[
