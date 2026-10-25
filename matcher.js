@@ -43,7 +43,7 @@ function csv(text){
 }
 function asAsset(raw,i){
  const read=(...keys)=>{for(const k of keys){if(raw[k]!==undefined&&raw[k]!==null&&str(raw[k]))return str(raw[k]);}return"";};
- const obj={id:read("id","assetid","asset_id","bom-ref")||"asset-"+(i+1),name:read("name","product","software","component","package"),vendor:read("vendor","publisher","manufacturer","supplier"),version:read("version","installedversion","installed_version"),purl:read("purl","packageurl"),cpe:read("cpe","cpe23"),host:read("host","hostname","device","asset","system"),criticality:read("criticality","businesscriticality")||"medium",exposure:read("exposure","internetfacing")||"unknown"};
+ const obj={id:read("id","assetid","asset_id","bom-ref")||"asset-"+(i+1),name:read("name","product","software","component","package"),vendor:read("vendor","publisher","manufacturer","supplier"),version:read("version","installedversion","installed_version"),purl:read("purl","packageurl"),cpe:read("cpe","cpe23"),host:read("host","hostname","device","asset","system"),criticality:read("criticality","businesscriticality")||"medium",exposure:read("exposure","internetfacing")||"unknown",site:read("site","substation"),room:read("room"),panel:read("panel"),assetType:read("assettype","asset_type"),quantity:Number(read("quantity","assetqty","qty"))||1};
  if(!obj.name&&obj.purl){const p=purl(obj.purl);if(p)obj.name=p.name;}
  if(!obj.name&&obj.cpe){const c=cpe(obj.cpe);if(c)obj.name=c.product;}
  if(!obj.name)throw Error("Asset row "+(i+1)+" has no product, name, PURL or CPE.");
@@ -96,7 +96,40 @@ function assess(asset,vuln){
  }
  return best;
 }
+
+function squish(value){return norm(value).replace(/[^a-z0-9]/g,"");}
+function manufacturerName(name){
+ const key=squish(name);
+ const aliases={sel:"schweitzerengineeringlaboratories",hirshman:"hirschmann",hirschman:"hirschmann",alcatel:"alcatellucent",juniper:"junipernetworks"};
+ return aliases[key]||key;
+}
+function otScreen(assets,vulns){
+ const findings=[],covered=new Set(),modelCounts={};
+ for(const asset of assets){
+  const manufacturer=manufacturerName(asset.vendor);
+  const model=squish(asset.name);
+  if(!manufacturer||manufacturer.length<3)continue;
+  let added=0;
+  for(const v of vulns||[]){
+   const vend=[v.vendor,...(v.affectedSystems||[]).map(x=>x.name)].map(manufacturerName);
+   const vendMatched=vend.some(x=>x===manufacturer||x.startsWith(manufacturer)&&x.length>manufacturer.length&&/^\d/.test(x.slice(manufacturer.length))===false||x.includes(manufacturer)&&manufacturer.length>=5);
+   if(!vendMatched)continue;
+   const strings=[v.product,v.description,...(v.affectedSystems||[]).map(x=>x.name)].map(squish);
+   const modelMatch=model.length>=5&&/\d/.test(model)&&strings.some(x=>x.includes(model));
+   const source=(v.affectedSystems||[]).find(x=>modelMatch&&squish(x.name).includes(model))||(v.affectedSystems||[])[0];
+   const evidence={system:source?.name||v.product||asset.vendor,range:source?.version||"Firmware version not recorded",source:source?.source||(v.source||[]).join(", "),url:source?.url||(v.references||[])[0]||"",identity:modelMatch?"OT model reference":"manufacturer only",versionResult:"unknown"};
+   const status=modelMatch?"model-lead":"vendor-lead";
+   findings.push({assetId:asset.id,assetName:asset.name,host:asset.host,site:asset.site||"",room:asset.room||"",panel:asset.panel||"",assetType:asset.assetType||"",quantity:asset.quantity||1,cve:v.id,status,evidence,kev:!!v.inKEV,cvss:v.cvss,epss:v.epss,priority:(v.inKEV?50:0)+(Number(v.cvss)||0)*3+(Number(v.epss)||0)*10+(modelMatch?25:0)});
+   covered.add(asset.id);added++;
+  }
+  modelCounts[asset.id]=added;
+ }
+ findings.sort((a,b)=>(a.status==="model-lead"?0:1)-(b.status==="model-lead"?0:1)||b.priority-a.priority||a.cve.localeCompare(b.cve));
+ return{assets:assets.length,matchedAssets:covered.size,findings,confirmed:0,review:0,discovery:0,modelLeads:findings.filter(x=>x.status==="model-lead").length,vendorLeads:findings.filter(x=>x.status==="vendor-lead").length};
+}
+
 function scan(assets,vulns,options={}){
+ if(options.otScreen)return otScreen(assets,vulns);
  const findings=[],covered=new Set();const index=new Map();
  for(const v of vulns||[])for(const s of v.affectedSystems||[]){
   const keys=[norm(s.name)];const pkg=/^(npm|composer):\s*(.+)$/i.exec(s.name);if(pkg)keys.push(norm(pkg[2]));
@@ -111,5 +144,5 @@ function scan(assets,vulns,options={}){
  findings.sort((a,b)=>b.priority-a.priority||a.cve.localeCompare(b.cve));
  return{assets:assets.length,matchedAssets:covered.size,findings,confirmed:findings.filter(x=>x.status==="version-match").length,review:findings.filter(x=>x.status==="review").length,discovery:findings.filter(x=>x.status==="discovery").length};
 }
-return{parseInventory,scan,assess,versionRange,compare,purl,cpe,identity,vendorDiscovery,MAX_ASSETS};
+return{parseInventory,scan,assess,versionRange,compare,purl,cpe,identity,vendorDiscovery,otScreen,MAX_ASSETS};
 });
