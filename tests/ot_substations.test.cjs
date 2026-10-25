@@ -4,6 +4,8 @@ const {JSDOM}=require("jsdom");
 const dom=new JSDOM("",{url:"https://example.test",runScripts:"outside-only"});
 dom.window.DecompressionStream=globalThis.DecompressionStream;
 dom.window.TextDecoder=require("node:util").TextDecoder;
+dom.window.Response=globalThis.Response;
+dom.window.Blob=globalThis.Blob;
 dom.window.eval(fs.readFileSync("xlsx.js","utf8"));
 const xlsx=dom.window.ZeroGuardXLSX;
 const sample=[
@@ -37,14 +39,14 @@ assert.equal(scan.findings.find(f=>f.cve==="CVE-2026-12345").status,"model-lead"
 assert.equal(scan.confirmed,0,"Missing firmware cannot confirm a vulnerability");
 console.log("OT Excel row parser and conservative model-screening checks passed");
 
-function storedZip(parts){
+function storedZip(parts,compressed=false){
  const local=[],directory=[];let pos=0;
  for(const [name,content] of Object.entries(parts)){
-  const nb=Buffer.from(name),payload=Buffer.from(content);
-  const h=Buffer.alloc(30);h.writeUInt32LE(0x04034b50,0);h.writeUInt16LE(20,4);h.writeUInt16LE(nb.length,26);h.writeUInt32LE(payload.length,18);h.writeUInt32LE(payload.length,22);
-  local.push(h,nb,payload);
-  const cd=Buffer.alloc(46);cd.writeUInt32LE(0x02014b50,0);cd.writeUInt16LE(20,4);cd.writeUInt16LE(20,6);cd.writeUInt32LE(payload.length,20);cd.writeUInt32LE(payload.length,24);cd.writeUInt16LE(nb.length,28);cd.writeUInt32LE(pos,42);
-  directory.push(cd,nb);pos+=h.length+nb.length+payload.length;
+  const nb=Buffer.from(name),payload=Buffer.from(content),compressedPayload=compressed?require("node:zlib").deflateRawSync(payload):payload;
+  const h=Buffer.alloc(30);h.writeUInt32LE(0x04034b50,0);h.writeUInt16LE(20,4);h.writeUInt16LE(nb.length,26);h.writeUInt16LE(compressed?8:0,8);h.writeUInt32LE(compressedPayload.length,18);h.writeUInt32LE(payload.length,22);
+  local.push(h,nb,compressedPayload);
+  const cd=Buffer.alloc(46);cd.writeUInt32LE(0x02014b50,0);cd.writeUInt16LE(20,4);cd.writeUInt16LE(20,6);cd.writeUInt16LE(compressed?8:0,10);cd.writeUInt32LE(compressedPayload.length,20);cd.writeUInt32LE(payload.length,24);cd.writeUInt16LE(nb.length,28);cd.writeUInt32LE(pos,42);
+  directory.push(cd,nb);pos+=h.length+nb.length+compressedPayload.length;
  }
  const dir=Buffer.concat(directory),end=Buffer.alloc(22);end.writeUInt32LE(0x06054b50,0);end.writeUInt16LE(directory.length/2,8);end.writeUInt16LE(directory.length/2,10);end.writeUInt32LE(dir.length,12);end.writeUInt32LE(pos,16);
  const out=Buffer.concat([...local,dir,end]);return out.buffer.slice(out.byteOffset,out.byteOffset+out.byteLength);
@@ -60,6 +62,8 @@ const worksheet='<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheet
  assert.equal(parsed.length,1);
  assert.equal(parsed[0].quantity,24);
  assert.equal(parsed[0].name,"SWT3000");
- console.log("Complete native XLSX ZIP import passed");
+ const deflated=await xlsx.parse(storedZip({"xl/worksheets/sheet1.xml":worksheet},true),"9005 SUBSTATION.xlsx");
+ assert.equal(deflated[0].name,"SWT3000");
+ console.log("Complete stored and deflated OOXML XLSX imports passed");
  dom.window.close();
 })().catch(e=>{console.error(e);dom.window.close();process.exitCode=1;});
