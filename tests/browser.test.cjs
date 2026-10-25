@@ -26,6 +26,7 @@ const fixture={
  w.localStorage.clear();
  w.eval(matcher);
  w.eval(app);
+ w.TextDecoder=require("node:util").TextDecoder;
  w.eval(excel);
  w.eval(assets);
  await new Promise(resolve=>setTimeout(resolve,100));
