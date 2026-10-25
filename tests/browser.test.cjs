@@ -25,7 +25,7 @@ const fixture={
  await new Promise(resolve=>setTimeout(resolve,100));
  assert.match(w.document.getElementById("stats").textContent,/2/,"Overview should load");
  const expected={
-  overview:"stats", vulnerabilities:"vulnerability-table",exploited:"exploited-table",
+  overview:"stats",search:"global-results", vulnerabilities:"vulnerability-table",exploited:"exploited-table",
   ot:"ot-table",advisories:"article-list",emerging:"emerging-list",iocs:"ioc-list",
   bookmarks:"watchlist-table",health:"health-list",about:"about"
  };
@@ -41,10 +41,14 @@ const fixture={
  w.document.querySelector('[data-view="vulnerabilities"]').click();
  const rows=w.document.querySelectorAll("#vulnerability-table tbody tr");
  assert.equal(rows[0].textContent.includes("CVE-2026-99999"),true,"Newest CVE must display first despite lower priority");
+ w.document.getElementById("global-search-open").click();
+ const q=w.document.getElementById("global-query");q.value="Node.js";
+ w.document.getElementById("global-search-button").click();
+ assert.match(w.document.getElementById("global-results").textContent,/CVE-2026-99999/);
  w.document.querySelector('[data-view="iocs"]').click();
  assert.match(w.document.getElementById("ioc-list").textContent,/8.8.8.8/,"IOC source must render");
  w.document.querySelector('[data-view="emerging"]').click();
  assert.match(w.document.getElementById("emerging-list").textContent,/Node.js/,"Emerging reports must render");
- console.log("10 tabs, sorting, IOC rendering and emerging advisories: PASS");
+ console.log("All tabs, global search, sorting, IOC rendering and emerging advisories: PASS");
  w.close();
 })().catch(e=>{console.error(e);process.exitCode=1;});
