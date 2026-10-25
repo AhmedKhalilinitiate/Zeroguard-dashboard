@@ -28,6 +28,8 @@ jobs:
       - name: Install isolated DOM browser harness
         run: npm install --no-save --no-package-lock jsdom@26
       - name: Exercise all ten application tabs
-        run: node tests/browser.test.cjs
+        run: |
+          timeout 45s node tests/browser.test.cjs
+          timeout 45s node tests/ot_substations.test.cjs
       - name: Snapshot validation, when data is present
         run: python scripts/validate.py

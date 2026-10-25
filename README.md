@@ -36,6 +36,22 @@ Import up to 5,000 assets / 5 MB, or add assets individually. Select **Run asses
 
 Tests: `node tests/matcher.test.cjs` and `node tests/browser.test.cjs` (the latter needs `jsdom@26`).
 
+## Electrical substations: native Excel inventories
+
+In **Asset exposure**, import multiple `.xlsx` files directly from the customer questionnaire used by the two Riyadh substation inventories. Files are processed in memory inside the browser; they are never uploaded to GitHub or a server.
+
+- Reads *Substation Name*, *Asset Type*, *Asset Qty.*, *Vendor Name*, *Model Number*, *Firmware Number*, *Panel Name*, and the room-section headings from worksheets.
+- Supports multiple files at once (each row is an equipment line item; quantity is retained, **not** interpreted as individual serial-numbered devices).
+- Automatically selects **OT substations: vendor + model research screening** for these files.
+- **Model-referenced lead** means a manufacturer AND distinctive model reference occurs in the CVE's affected-system or description data; without firmware and applicability evidence it is not a confirmed impacted device.
+- **Vendor-only lead** is a broader investigative lead: same manufacturer, but no reliable model correlation. Do NOT treat as vulnerability on the inventoried system.
+- With missing manufacturer/model, no automatic matching is claimed. Source files in this format may leave firmware entirely blank.
+- Users can switch to *Installed asset/version assessment* when evidence supports specific firmware matching; this is still conservative and incomplete for complex industrial CPE conditions.
+
+Native Excel parsing uses built-in browser ZIP decompression and XML parsing, requires a recent modern browser, supports ordinary OOXML `.xlsx` (not password-protected or legacy `.xls`), and does not evaluate formulas. If an Excel file is not recognized, use the downloadable CSV template or pre-normalize it.
+
+Security operations must verify affected models, firmware, exposure, vendor bulletins and change windows prior to remediation. OT searches never send packets to substation controllers or other devices.
+
 ## Deployment
 
 1. In GitHub **Settings → Pages**, select **GitHub Actions** as the build/deployment source.
