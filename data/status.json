@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-27T18:02:12Z",
-  "records": 3891,
+  "generatedAt": "2026-10-27T22:15:12Z",
+  "records": 3904,
   "sources": {
     "kev": {
       "ok": true,
-      "count": 1758,
+      "count": 1760,
       "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
     },
     "nvd": {
@@ -33,19 +33,19 @@
     },
     "ghsa_npm": {
       "ok": true,
-      "count": 98,
+      "count": 100,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for npm"
     },
     "ghsa_composer": {
       "ok": true,
-      "count": 31,
+      "count": 33,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for composer"
     },
     "epss": {
       "ok": true,
-      "count": 3877,
+      "count": 3886,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
