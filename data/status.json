@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-10-28T12:56:46Z",
-  "records": 3904,
+  "generatedAt": "2026-10-28T22:36:21Z",
+  "records": 3951,
   "sources": {
     "kev": {
       "ok": true,
-      "count": 1760,
+      "count": 1762,
       "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
     },
     "nvd": {
       "ok": true,
-      "count": 999,
+      "count": 1000,
       "scope": "Recently modified CVEs, past 7 days",
       "url": "https://services.nvd.nist.gov/rest/json/cves/2.0"
     },
@@ -17,8 +17,8 @@
       "ok": true,
       "count": 28,
       "failedDocuments": 0,
-      "vendorActions": 899,
-      "cvssAdded": 0,
+      "vendorActions": 900,
+      "cvssAdded": 11,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF OT advisories"
     },
@@ -33,7 +33,7 @@
     },
     "ghsa_npm": {
       "ok": true,
-      "count": 100,
+      "count": 99,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for npm"
     },
@@ -45,7 +45,7 @@
     },
     "epss": {
       "ok": true,
-      "count": 3886,
+      "count": 3913,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
