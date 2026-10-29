@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-29T13:03:15Z",
-  "records": 3953,
+  "generatedAt": "2026-10-29T22:46:03Z",
+  "records": 3972,
   "sources": {
     "kev": {
       "ok": true,
-      "count": 1762,
+      "count": 1764,
       "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
     },
     "nvd": {
@@ -17,8 +17,8 @@
       "ok": true,
       "count": 28,
       "failedDocuments": 0,
-      "vendorActions": 900,
-      "cvssAdded": 0,
+      "vendorActions": 883,
+      "cvssAdded": 9,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF OT advisories"
     },
@@ -39,13 +39,13 @@
     },
     "ghsa_composer": {
       "ok": true,
-      "count": 33,
+      "count": 35,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for composer"
     },
     "epss": {
       "ok": true,
-      "count": 3915,
+      "count": 3956,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
