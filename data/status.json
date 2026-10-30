@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T22:46:03Z",
+  "generatedAt": "2026-10-30T05:50:41Z",
   "records": 3972,
   "sources": {
     "kev": {
@@ -18,7 +18,7 @@
       "count": 28,
       "failedDocuments": 0,
       "vendorActions": 883,
-      "cvssAdded": 9,
+      "cvssAdded": 0,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF OT advisories"
     },
@@ -39,7 +39,7 @@
     },
     "ghsa_composer": {
       "ok": true,
-      "count": 35,
+      "count": 32,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for composer"
     },
