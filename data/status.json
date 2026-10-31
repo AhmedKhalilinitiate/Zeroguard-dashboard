@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-30T22:21:41Z",
-  "records": 3976,
+  "generatedAt": "2026-10-31T05:43:09Z",
+  "records": 4001,
   "sources": {
     "kev": {
       "ok": true,
@@ -39,13 +39,13 @@
     },
     "ghsa_composer": {
       "ok": true,
-      "count": 33,
+      "count": 38,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for composer"
     },
     "epss": {
       "ok": true,
-      "count": 3958,
+      "count": 3977,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
