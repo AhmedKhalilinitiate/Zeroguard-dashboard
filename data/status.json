@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T12:32:04Z",
+  "generatedAt": "2026-10-31T21:36:19Z",
   "records": 4001,
   "sources": {
     "kev": {
@@ -45,7 +45,7 @@
     },
     "epss": {
       "ok": true,
-      "count": 3977,
+      "count": 3979,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
