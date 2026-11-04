@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T23:25:04Z",
+  "generatedAt": "2026-11-04T06:24:13Z",
   "records": 4005,
   "sources": {
     "kev": {
@@ -18,7 +18,7 @@
       "count": 28,
       "failedDocuments": 0,
       "vendorActions": 876,
-      "cvssAdded": 2,
+      "cvssAdded": 0,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF OT advisories"
     },
