@@ -1,17 +1,15 @@
 {
-  "generatedAt": "2026-11-06T19:25:32Z",
-  "records": 3992,
+  "generatedAt": "2026-11-07T05:59:12Z",
+  "records": 3268,
   "sources": {
     "kev": {
       "ok": true,
-      "count": 1768,
+      "count": 1769,
       "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
     },
     "nvd": {
-      "ok": true,
-      "count": 1000,
-      "scope": "Recently modified CVEs, past 7 days",
-      "url": "https://services.nvd.nist.gov/rest/json/cves/2.0"
+      "ok": false,
+      "error": "source too large"
     },
     "csaf_CISA OT": {
       "ok": true,
@@ -39,13 +37,13 @@
     },
     "ghsa_composer": {
       "ok": true,
-      "count": 35,
+      "count": 34,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for composer"
     },
     "epss": {
       "ok": true,
-      "count": 3984,
+      "count": 3259,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
