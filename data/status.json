@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-07T21:51:42Z",
+  "generatedAt": "2026-11-08T06:02:22Z",
   "records": 3267,
   "sources": {
     "kev": {
@@ -37,7 +37,7 @@
     },
     "ghsa_composer": {
       "ok": true,
-      "count": 34,
+      "count": 31,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for composer"
     },
