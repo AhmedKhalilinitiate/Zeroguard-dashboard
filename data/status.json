@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-14T18:03:22Z",
-  "records": 3396,
+  "generatedAt": "2026-11-14T22:24:59Z",
+  "records": 3109,
   "sources": {
     "kev": {
       "ok": true,
@@ -9,7 +9,7 @@
     },
     "nvd": {
       "ok": false,
-      "error": "HTTP Error 503: Service Unavailable"
+      "error": "The read operation timed out"
     },
     "csaf_CISA OT": {
       "ok": true,
@@ -43,7 +43,7 @@
     },
     "epss": {
       "ok": true,
-      "count": 3385,
+      "count": 3098,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
