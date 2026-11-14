@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-13T19:43:36Z",
-  "records": 3104,
+  "generatedAt": "2026-11-14T06:24:37Z",
+  "records": 3462,
   "sources": {
     "kev": {
       "ok": true,
@@ -25,7 +25,7 @@
       "count": 14,
       "failedDocuments": 0,
       "vendorActions": 19,
-      "cvssAdded": 3,
+      "cvssAdded": 0,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF IT advisories"
     },
@@ -43,7 +43,7 @@
     },
     "epss": {
       "ok": true,
-      "count": 3086,
+      "count": 3440,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
