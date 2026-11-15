@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-14T22:24:59Z",
-  "records": 3109,
+  "generatedAt": "2026-11-15T06:33:45Z",
+  "records": 3355,
   "sources": {
     "kev": {
       "ok": true,
@@ -9,7 +9,7 @@
     },
     "nvd": {
       "ok": false,
-      "error": "The read operation timed out"
+      "error": "HTTP Error 503: Service Unavailable"
     },
     "csaf_CISA OT": {
       "ok": true,
@@ -37,13 +37,13 @@
     },
     "ghsa_composer": {
       "ok": true,
-      "count": 30,
+      "count": 27,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for composer"
     },
     "epss": {
       "ok": true,
-      "count": 3098,
+      "count": 3344,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
