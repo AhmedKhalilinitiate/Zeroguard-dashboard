@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-15T18:52:25Z",
-  "records": 3627,
+  "generatedAt": "2026-11-16T06:31:18Z",
+  "records": 3355,
   "sources": {
     "kev": {
       "ok": true,
@@ -8,10 +8,8 @@
       "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
     },
     "nvd": {
-      "ok": true,
-      "count": 746,
-      "scope": "Recently modified CVEs, past 7 days",
-      "url": "https://services.nvd.nist.gov/rest/json/cves/2.0"
+      "ok": false,
+      "error": "HTTP Error 503: Service Unavailable"
     },
     "csaf_CISA OT": {
       "ok": true,
@@ -32,18 +30,20 @@
       "scope": "Latest public official CISA CSAF IT advisories"
     },
     "ghsa_npm": {
-      "ok": false,
-      "error": "HTTP Error 403: rate limit exceeded",
-      "url": "https://github.com/advisories"
+      "ok": true,
+      "count": 100,
+      "url": "https://github.com/advisories",
+      "scope": "Published GitHub security advisories for npm"
     },
     "ghsa_composer": {
-      "ok": false,
-      "error": "HTTP Error 403: rate limit exceeded",
-      "url": "https://github.com/advisories"
+      "ok": true,
+      "count": 27,
+      "url": "https://github.com/advisories",
+      "scope": "Published GitHub security advisories for composer"
     },
     "epss": {
       "ok": true,
-      "count": 3616,
+      "count": 3344,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
