@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-18T07:29:52Z",
-  "records": 4143,
+  "generatedAt": "2026-11-18T20:32:14Z",
+  "records": 4134,
   "sources": {
     "kev": {
       "ok": true,
-      "count": 1782,
+      "count": 1786,
       "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
     },
     "nvd": {
@@ -38,13 +38,14 @@
       "scope": "Published GitHub security advisories for npm"
     },
     "ghsa_composer": {
-      "ok": false,
-      "error": "HTTP Error 403: rate limit exceeded",
-      "url": "https://github.com/advisories"
+      "ok": true,
+      "count": 38,
+      "url": "https://github.com/advisories",
+      "scope": "Published GitHub security advisories for composer"
     },
     "epss": {
       "ok": true,
-      "count": 4122,
+      "count": 4119,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
