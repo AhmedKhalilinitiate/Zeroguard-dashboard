@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-17T20:55:59Z",
-  "records": 4123,
+  "generatedAt": "2026-11-18T07:29:52Z",
+  "records": 4143,
   "sources": {
     "kev": {
       "ok": true,
@@ -18,7 +18,7 @@
       "count": 28,
       "failedDocuments": 0,
       "vendorActions": 553,
-      "cvssAdded": 107,
+      "cvssAdded": 0,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF OT advisories"
     },
@@ -38,14 +38,13 @@
       "scope": "Published GitHub security advisories for npm"
     },
     "ghsa_composer": {
-      "ok": true,
-      "count": 37,
-      "url": "https://github.com/advisories",
-      "scope": "Published GitHub security advisories for composer"
+      "ok": false,
+      "error": "HTTP Error 403: rate limit exceeded",
+      "url": "https://github.com/advisories"
     },
     "epss": {
       "ok": true,
-      "count": 4104,
+      "count": 4122,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
