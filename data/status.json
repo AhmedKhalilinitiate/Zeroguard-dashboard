@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-20T20:22:10Z",
-  "records": 4758,
+  "generatedAt": "2026-11-21T07:09:43Z",
+  "records": 4773,
   "sources": {
     "kev": {
       "ok": true,
@@ -27,7 +27,7 @@
       "count": 14,
       "failedDocuments": 0,
       "vendorActions": 23,
-      "cvssAdded": 7,
+      "cvssAdded": 0,
       "url": "https://github.com/cisagov/CSAF",
       "scope": "Latest public official CISA CSAF IT advisories"
     },
@@ -39,13 +39,13 @@
     },
     "ghsa_composer": {
       "ok": true,
-      "count": 53,
+      "count": 57,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for composer"
     },
     "epss": {
       "ok": true,
-      "count": 4739,
+      "count": 4748,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
