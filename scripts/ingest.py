@@ -210,6 +210,9 @@ def nvd(records):
                 cid = c.get("id", "")
                 if CVE.fullmatch(cid) and c.get("vulnStatus") in ("Rejected", "REJECT"):
                     old = records.get(cid)
+                    if not old:
+                        old = {"id": cid, "source": [], "inKEV": False, "affectedSystems": []}
+                        records[cid] = old
                     if old:
                         old["nvdRejected"] = True
                         old["affectedSystems"] = [x for x in old.get("affectedSystems", []) if x.get("source") != "NVD CPE"]
