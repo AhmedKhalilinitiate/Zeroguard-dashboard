@@ -11,6 +11,15 @@ data=json.loads(p.read_text(encoding="utf-8"))
 assert data["schema"]==1
 assert datetime.fromisoformat(data["generatedAt"].replace("Z","+00:00")).tzinfo
 assert isinstance(data["vulnerabilities"],list) and len(data["vulnerabilities"])>=100
+nvd = data.get("sources", {}).get("nvd", {})
+if "partial" in nvd:
+    assert nvd["ok"] is not nvd["partial"]
+    if nvd["partial"]:
+        assert isinstance(nvd.get("cursor"), dict)
+        assert nvd["cursor"]["offset"] == nvd["processed"]
+    else:
+        assert nvd["processed"] >= nvd["totalResults"]
+        assert nvd["cursor"] is None
 ids=set()
 for row in data["vulnerabilities"]:
     assert re.fullmatch(r"CVE-\d{4}-\d{4,}",row["id"])
