@@ -10,6 +10,7 @@ const excel=fs.readFileSync('xlsx.js','utf8');
 const fixture={
  schema:1,generatedAt:new Date().toISOString(),
  vulnerabilities:[
+  {id:"CVE-2026-99998",vendor:"Node.js",product:"runtime",source:["NVD"],nvdRejected:true,cvss:10},
   {id:"CVE-2026-99999",published:"2026-10-22",date:"2026-10-22",vendor:"Node.js",product:"runtime",description:"Example recent",source:["NVD"],inKEV:false,category:"it",cvss:8.2,epss:.2},
   {id:"CVE-2025-12345",published:"2025-02-05",date:"2025-02-05",vendor:"Siemens",product:"PLC",description:"Older",source:["CISA KEV"],inKEV:true,category:"ot",cvss:9.3,epss:.82,action:"Install vendor update",affectedSystems:[{name:"Siemens RUGGEDCOM RSG2100",version:"Version not specified",source:"CISA KEV"}]}
  ],
@@ -78,6 +79,8 @@ const fixture={
  const q=w.document.getElementById("global-query");q.value="Node.js";
  w.document.getElementById("global-search-button").click();
  assert.match(w.document.getElementById("global-results").textContent,/CVE-2026-99999/);
+ assert.doesNotMatch(w.document.getElementById("global-results").textContent,/CVE-2026-99998/);
+ assert.doesNotMatch(w.document.getElementById("vulnerability-table").textContent,/CVE-2026-99998/);
  w.document.querySelector('[data-view="iocs"]').click();
  assert.match(w.document.getElementById("ioc-list").textContent,/8.8.8.8/,"IOC source must render");
  w.document.querySelector('[data-view="emerging"]').click();
