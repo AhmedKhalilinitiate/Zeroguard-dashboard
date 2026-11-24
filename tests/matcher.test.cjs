@@ -29,3 +29,10 @@ assert.equal(discovered.findings[0].status,"discovery");
 assert.equal(m.scan([{id:"f1",name:"Fortinet"}],[forti]).findings.length,0,"Vendor-only query cannot confirm an asset");
 assert.equal(m.scan([{id:"x",name:"UnrelatedCorp"}],[forti],{discovery:true}).findings.length,0);
 console.log("Fortinet vendor discovery regression tests passed");
+
+assert.equal(m.versionRange("1.2.3-rc1","=1.2.3"),"unknown");
+assert.equal(m.versionRange("1.2.3","1.2.x"),"unknown");
+assert.equal(m.versionRange("1.2.3","1.2.*"),"unknown");
+assert.equal(m.assess(asset,{...cve(system),nvdRejected:true}),null);
+assert.equal(m.assess({...asset,version:"1.6.0"},cve(system)).status,"review");
+console.log("Assurance matcher regression checks passed");
