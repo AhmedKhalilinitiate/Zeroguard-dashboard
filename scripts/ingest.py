@@ -191,14 +191,23 @@ def nvd(records):
     if cursor:
         params.update(lastModStartDate=cursor["start"], lastModEndDate=cursor["end"])
         offset = int(cursor["offset"])
+        params["resultsPerPage"] = max(1, min(250, int(cursor.get("pageSize", 250))))
     visited = 0
     total = None
     error = ""
     for page in range(4):
         params["startIndex"] = offset
         try:
-            url = base + "?" + urllib.parse.urlencode(params)
-            data = json.loads(fetch(url, retries=0, max_bytes=3_000_000, timeout=28).decode("utf-8-sig"))
+            while True:
+                url = base + "?" + urllib.parse.urlencode(params)
+                try:
+                    data = json.loads(fetch(url, retries=0, max_bytes=3_000_000, timeout=28).decode("utf-8-sig"))
+                    break
+                except ValueError as exc:
+                    if str(exc) != "source too large" or params["resultsPerPage"] == 1:
+                        raise
+                    params["resultsPerPage"] = max(1, params["resultsPerPage"] // 2)
+                    time.sleep(6)
             batch = data["vulnerabilities"]
             total = data["totalResults"]
             if not isinstance(batch, list) or type(total) is not int or total < 0 or data.get("startIndex", offset) != offset:
@@ -211,7 +220,8 @@ def nvd(records):
                 if CVE.fullmatch(cid) and c.get("vulnStatus") in ("Rejected", "REJECT"):
                     old = records.get(cid)
                     if not old:
-                        old = {"id": cid, "source": [], "inKEV": False, "affectedSystems": []}
+                        old = {"id": cid, "source": [], "inKEV": False, "affectedSystems": [],
+                               "vendor": "", "product": "", "description": ""}
                         records[cid] = old
                     if old:
                         old["nvdRejected"] = True
@@ -246,10 +256,12 @@ def nvd(records):
     complete = total is not None and offset >= total and not error
     STATS["nvd"] = {"ok": complete, "partial": not complete, "count": visited,
                     "totalResults": total, "processed": offset, "error": error,
+                    "pageSize": params["resultsPerPage"],
                     "scope": "Fixed NVD modified window; not historical coverage", "url": base,
                     "completedThrough": params["lastModEndDate"] if complete else None,
                     "cursor": None if complete else {"start": params["lastModStartDate"],
-                        "end": params["lastModEndDate"], "offset": offset}}
+                        "end": params["lastModEndDate"], "offset": offset,
+                        "pageSize": params["resultsPerPage"]}}
     return visited
 
 def epss(records):
