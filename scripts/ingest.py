@@ -178,7 +178,11 @@ def nvd(records):
     cursor = {}
     try:
         snapshot = json.loads((DATA / "intelligence.json").read_text(encoding="utf-8"))
-        cursor = snapshot.get("sources", {}).get("nvd", {}).get("cursor") or {}
+        previous_nvd = snapshot.get("sources", {}).get("nvd", {})
+        cursor = previous_nvd.get("cursor") or {}
+        if not cursor and previous_nvd.get("completedThrough"):
+            start = datetime.fromisoformat(previous_nvd["completedThrough"]).replace(tzinfo=timezone.utc) - timedelta(seconds=1)
+            end = min(NOW, start + timedelta(days=days))
     except (OSError, ValueError):
         pass
     fmt = lambda dt: dt.strftime("%Y-%m-%dT%H:%M:%S.000")
@@ -240,6 +244,7 @@ def nvd(records):
     STATS["nvd"] = {"ok": complete, "partial": not complete, "count": visited,
                     "totalResults": total, "processed": offset, "error": error,
                     "scope": "Fixed NVD modified window; not historical coverage", "url": base,
+                    "completedThrough": params["lastModEndDate"] if complete else None,
                     "cursor": None if complete else {"start": params["lastModStartDate"],
                         "end": params["lastModEndDate"], "offset": offset}}
     return visited
@@ -421,7 +426,7 @@ def merge_ghsa(records, rows):
                 refs.append(item["reference"])
             rec["references"]=refs[:15]
             if not rec.get("description"): rec["description"]=item["description"]
-            rec["affectedSystems"]=affected.combine(rec.get("affectedSystems"),item.get("affectedSystems"))
+            rec["affectedSystems"]=affected.combine([x for x in rec.get("affectedSystems", []) if x.get("url") != item["reference"]],item.get("affectedSystems"))
             if not rec.get("published"): rec["published"]=item["date"]
 
 
@@ -441,7 +446,7 @@ def main():
     previous = load_previous()
     # Preserve previously sourced non-KEV CVEs. The previous implementation
     # removed all of them on EVERY refresh, making new disclosures disappear.
-    # Retain recently discovered records for an explicit rolling 120-day window.
+    # Retain previously collected records; this is not a full historical backfill.
     records = previous.copy()  # Preserve collected historical records for legacy OT assets.
     # No newly generated data can be published without a successfully validated KEV catalog.
     try:
