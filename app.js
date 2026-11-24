@@ -47,7 +47,7 @@ async function fetchData(manual=false){
   if(!res.ok)throw Error("HTTP "+res.status);
   const data=verify(await res.json());
   state.data=data;render();
-  document.dispatchEvent(new CustomEvent("zeroguard:feed",{detail:{vulnerabilities:data.vulnerabilities}}));
+  document.dispatchEvent(new CustomEvent("zeroguard:feed",{detail:{vulnerabilities:data.vulnerabilities.filter(v=>!v.nvdRejected&&(v.source||[]).length)}}));
   const hours=freshness()/3600000;
   status(hours<12,"Snapshot "+(hours<12?"current":"outdated"));
   $("last-updated").textContent="Last ingested: "+date(data.generatedAt)+" UTC";
@@ -64,7 +64,7 @@ function priority(v){
  return (v.inKEV?50:0)+(number(v.epss)||0)*20+(number(v.cvss)||0)*2;
 }
 function vulnerabilityList(){
- return (state.data?.vulnerabilities||[]).slice().sort((a,b)=>safe(b.published||b.displayDate||b.date).localeCompare(safe(a.published||a.displayDate||a.date))||b.id.localeCompare(a.id));
+ return (state.data?.vulnerabilities||[]).filter(v=>!v.nvdRejected&&(v.source||[]).length).sort((a,b)=>safe(b.published||b.displayDate||b.date).localeCompare(safe(a.published||a.displayDate||a.date))||b.id.localeCompare(a.id));
 }
 function category(v){return v.category||"it";}
 function sourceTag(v){
