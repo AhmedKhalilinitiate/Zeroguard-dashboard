@@ -6,10 +6,11 @@ const str=x=>String(x??"").trim();
 function norm(x){return str(x).toLowerCase().replace(/[_\s-]+/g," ").replace(/[^a-z0-9.+@/ ]/g,"").replace(/\s+/g," ").trim();}
 function purl(value){const s=str(value);const m=/^pkg:([a-z0-9.+-]+)\/([^?#]+?)(?:@([^?#]+))?(?:\?[^#]*)?(?:#.*)?$/i.exec(s);if(!m)return null;try{return{type:m[1].toLowerCase(),name:decodeURIComponent(m[2]).toLowerCase(),version:decodeURIComponent(m[3]||"")};}catch{return null;}}
 function cpe(value){const x=str(value).split(":");return x.length>=6&&x[0]==="cpe"&&x[1]==="2.3"?{part:x[2],vendor:x[3].toLowerCase(),product:x[4].toLowerCase(),version:x[5]}:null;}
-function comparable(version){const v=str(version).replace(/^v/i,"").split("+")[0].split("-")[0];return /^\d+(?:\.\d+){0,3}$/.test(v)?v.split(".").map(Number):null;}
+function comparable(version){const v=str(version).replace(/^v/i,"");if(!/^\d+(?:\.\d+){0,3}$/.test(v))return null;const parts=v.split(".").map(Number);return parts.every(Number.isSafeInteger)?parts:null;}
 function compare(a,b){const x=comparable(a),y=comparable(b);if(!x||!y)return null;for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d<0?-1:1;}return 0;}
 function versionRange(version,rule){
  const v=str(version),r=str(rule);
+ if(!comparable(v)||/(?:\.x|\.\*)\b|\.\*/i.test(r))return "unknown";
  if(!v||!r||/not specified|see advisory|unknown/i.test(r))return "unknown";
  if(/^Version /i.test(r))return compare(v,r.slice(8))===0?"match":compare(v,r.slice(8))===null?"unknown":"exclude";
  const sets=r.split(/\s*\|\|\s*/);
@@ -58,6 +59,7 @@ function parseInventory(text,filename){
  return raw.map(asAsset);
 }
 function vendorDiscovery(asset,vuln){
+ if(vuln.nvdRejected)return null;
  const q=norm(asset.name),vendor=norm(asset.vendor);
  const family=q||vendor;
  if(!family||family.length<4)return null;
@@ -74,7 +76,7 @@ function identity(asset,system){
  const pkg=/^(npm|composer):\s*(.+)$/i.exec(sName);
  if(aP&&pkg&&aP.type===pkg[1].toLowerCase()&&norm(aP.name)===norm(pkg[2]))return{kind:"package",strength:3};
  const aC=cpe(asset.cpe);const sC=cpe(system.cpe||"");
- if(aC&&sC&&aC.vendor===sC.vendor&&aC.product===sC.product)return{kind:"cpe",strength:3};
+ if(aC&&sC&&aC.part===sC.part&&aC.vendor===sC.vendor&&aC.product===sC.product&&![aC.vendor,aC.product].some(x=>x==="*"||x==="-"||!x))return{kind:"cpe",strength:3};
  const n=norm(asset.name),sn=norm(sName),vendor=norm(asset.vendor);
  if(!n||!sn||n.length<3)return null;
  if(n===sn||(vendor&&sn===(vendor+" "+n)))return{kind:"name",strength:1};
@@ -82,10 +84,12 @@ function identity(asset,system){
  return null;
 }
 function assess(asset,vuln){
+ if(vuln.nvdRejected)return null;
  let best=null;
  for(const system of vuln.affectedSystems||[]){
   const id=identity(asset,system);if(!id)continue;
-  const v=versionRange(asset.version||purl(asset.purl)?.version,system.version);
+  const versions=[asset.version,purl(asset.purl)?.version,cpe(asset.cpe)?.version].filter(x=>x&&x!=="*"&&x!=="-");
+  const v=versions.length&&versions.every(x=>x===versions[0])?versionRange(versions[0],system.version):"unknown";
   if(v==="exclude")continue;
   // A product-name-only match is never confirmed; CPE and PURL still need careful applicability.
   const status=id.strength===3&&v==="match"?"version-match":"review";
@@ -111,6 +115,7 @@ function otScreen(assets,vulns){
   if(!manufacturer||manufacturer.length<2)continue;
   let added=0;
   for(const v of vulns||[]){
+   if(v.nvdRejected)continue;
    const vend=[v.vendor,...(v.affectedSystems||[]).map(x=>x.name)].map(manufacturerName);
    const vendMatched=vend.some(x=>x===manufacturer||(manufacturer.length>=4&&(x.startsWith(manufacturer)||x.includes(manufacturer))));
    if(!vendMatched)continue;
