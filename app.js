@@ -33,8 +33,8 @@ function freshness(){
 function verify(d){
  if(!d||d.schema!==1||!Array.isArray(d.vulnerabilities)||!Array.isArray(d.articles)||!Array.isArray(d.advisories)||!Array.isArray(d.indicators)||!d.sources)throw Error("Invalid dataset schema");
  if(!Date.parse(d.generatedAt))throw Error("Missing valid snapshot timestamp");
- for(const v of d.vulnerabilities.slice(0,5000)){if(!/^CVE-\d{4}-\d{4,}$/.test(v.id))throw Error("Invalid CVE identity");}
- return d;
+ for(const v of d.vulnerabilities){if(!/^CVE-\d{4}-\d{4,}$/.test(v.id))throw Error("Invalid CVE identity");}
+ return {...d,vulnerabilities:d.vulnerabilities.filter(v=>!v.nvdRejected&&(v.source||[]).length)};
 }
 async function fetchData(manual=false){
  if(state.busy)return;
@@ -47,7 +47,7 @@ async function fetchData(manual=false){
   if(!res.ok)throw Error("HTTP "+res.status);
   const data=verify(await res.json());
   state.data=data;render();
-  document.dispatchEvent(new CustomEvent("zeroguard:feed",{detail:{vulnerabilities:data.vulnerabilities}}));
+  document.dispatchEvent(new CustomEvent("zeroguard:feed",{detail:{vulnerabilities:data.vulnerabilities.filter(v=>!v.nvdRejected&&(v.source||[]).length)}}));
   const hours=freshness()/3600000;
   status(hours<12,"Snapshot "+(hours<12?"current":"outdated"));
   $("last-updated").textContent="Last ingested: "+date(data.generatedAt)+" UTC";
@@ -64,7 +64,7 @@ function priority(v){
  return (v.inKEV?50:0)+(number(v.epss)||0)*20+(number(v.cvss)||0)*2;
 }
 function vulnerabilityList(){
- return (state.data?.vulnerabilities||[]).slice().sort((a,b)=>safe(b.published||b.displayDate||b.date).localeCompare(safe(a.published||a.displayDate||a.date))||b.id.localeCompare(a.id));
+ return (state.data?.vulnerabilities||[]).filter(v=>!v.nvdRejected&&(v.source||[]).length).sort((a,b)=>safe(b.published||b.displayDate||b.date).localeCompare(safe(a.published||a.displayDate||a.date))||b.id.localeCompare(a.id));
 }
 function category(v){return v.category||"it";}
 function sourceTag(v){
@@ -200,7 +200,7 @@ function renderIOCs(){
 function renderHealth(){
  const root=$("health-list");clear(root);const d=state.data;if(!d){root.append(empty("No snapshot loaded. Check the GitHub Actions workflow and publish a validated snapshot."));return;}
  const header=element("div","panel");append(header,element("h3","","Dataset freshness"),element("p","muted","Ingested at "+d.generatedAt+" · "+(freshness()/3600000).toFixed(1)+" hours ago"),element("p","muted","A source failure doesn't erase past enrichment; check individual source outcomes and timestamps before taking decisions."));root.append(header);
- for(const [name,details] of Object.entries(d.sources)){const panel=element("div","panel spaced");append(panel,element("h3","",name),element("p",details.ok?"good":"risk",details.ok?"Collection successful":"Collection failed"),element("p","muted",details.error||""));if(details.count!==undefined)panel.append(element("p","muted","Items: "+details.count));if(details.url&&href(details.url)){const a=element("a","", "Official source ↗");a.href=href(details.url);a.target="_blank";a.rel="noopener noreferrer";panel.append(a);}root.append(panel);}
+ for(const [name,details] of Object.entries(d.sources)){const panel=element("div","panel spaced");append(panel,element("h3","",name),element("p",details.ok?"good":"risk",details.partial?"Collection incomplete":details.ok?"Collection successful":"Collection failed"),element("p","muted",details.error||""));if(details.count!==undefined)panel.append(element("p","muted","Items: "+details.count));if(details.totalResults!=null)panel.append(element("p","muted","Window progress: "+details.processed+" / "+details.totalResults));if(details.scope)panel.append(element("p","muted",details.scope));if(details.url&&href(details.url)){const a=element("a","", "Official source ↗");a.href=href(details.url);a.target="_blank";a.rel="noopener noreferrer";panel.append(a);}root.append(panel);}
 }
 function renderView(view){
  const all=state.data?.vulnerabilities||[];

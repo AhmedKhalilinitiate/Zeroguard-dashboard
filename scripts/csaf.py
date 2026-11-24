@@ -176,6 +176,14 @@ def collect(records, fetch_json, max_ot=28, max_it=14):
                 try:
                     doc = fetch_json(source_url)
                     news, changes = parse_advisory(doc, source_url, kind)
+                    # A successfully parsed revision supersedes evidence from this document only.
+                    for record in records.values():
+                        record["affectedSystems"] = [x for x in record.get("affectedSystems", [])
+                                                     if x.get("url") != source_url]
+                        prior = record.get("remediation") or {}
+                        if prior.get("advisoryUrl") == source_url:
+                            record["remediation"] = None
+                            record["action"] = ""
                     count, enriched = apply(records, changes, kind)
                     fixes += count
                     cvss_added += enriched
@@ -187,7 +195,7 @@ def collect(records, fetch_json, max_ot=28, max_it=14):
                     failures += 1
             if not successes:
                 raise ValueError("No CISA CSAF documents could be fetched")
-            health[name] = {"ok": True, "count": successes, "failedDocuments": failures,
+            health[name] = {"ok": failures == 0, "partial": failures > 0, "count": successes, "failedDocuments": failures,
                             "vendorActions": fixes, "cvssAdded": cvss_added,
                             "url": OFFICIAL_REPO,
                             "scope": "Latest public official CISA CSAF " + kind + " advisories"}

@@ -135,6 +135,17 @@ def kev(records):
     data = fetch_json(url)
     if not isinstance(data.get("vulnerabilities"), list) or not data["vulnerabilities"]:
         raise ValueError("CISA KEV payload invalid or empty")
+    ids = [str(v.get("cveID") or "").upper() for v in data["vulnerabilities"]]
+    if any(not CVE.fullmatch(cid) for cid in ids) or len(set(ids)) != len(ids):
+        raise ValueError("Invalid or duplicate KEV identifiers")
+    if data.get("count") is not None and data["count"] != len(ids):
+        raise ValueError("Incomplete KEV catalog")
+    active = set(ids)
+    for cid, old in records.items():
+        if cid not in active and old.get("inKEV"):
+            old.update(inKEV=False, exploitedKnown=False, kevAction="", dueDate="", ransomwareUse="")
+            old["source"] = [x for x in old.get("source", []) if x != "CISA KEV"]
+            old["affectedSystems"] = [x for x in old.get("affectedSystems", []) if x.get("source") != "CISA KEV"]
     for v in data["vulnerabilities"]:
         cid = str(v.get("cveID") or "").upper()
         if not CVE.fullmatch(cid): continue
@@ -159,37 +170,98 @@ def kev(records):
     return len(data["vulnerabilities"])
 
 def nvd(records):
-    # Recent changes, not the entire universe of NVD records. Page using NVD's own totalResults.
+    # Bounded requests with a durable, fixed-window cursor. Never label a partial window complete.
     end = NOW
-    days = max(1, min(int(os.getenv("NVD_DAYS","7")), 90))
+    days = max(1, min(int(os.getenv("NVD_DAYS", "7")), 90))
     start = end - timedelta(days=days)
     base = "https://services.nvd.nist.gov/rest/json/cves/2.0"
-    params = {"lastModStartDate": start.strftime("%Y-%m-%dT%H:%M:%S.000"),
-              "lastModEndDate": end.strftime("%Y-%m-%dT%H:%M:%S.000"),
-              "resultsPerPage": 250}
+    cursor = {}
+    try:
+        snapshot = json.loads((DATA / "intelligence.json").read_text(encoding="utf-8"))
+        previous_nvd = snapshot.get("sources", {}).get("nvd", {})
+        cursor = previous_nvd.get("cursor") or {}
+        if not cursor and previous_nvd.get("completedThrough"):
+            start = datetime.fromisoformat(previous_nvd["completedThrough"]).replace(tzinfo=timezone.utc) - timedelta(seconds=1)
+            end = min(NOW, start + timedelta(days=days))
+    except (OSError, ValueError):
+        pass
+    fmt = lambda dt: dt.strftime("%Y-%m-%dT%H:%M:%S.000")
+    params = {"lastModStartDate": fmt(start), "lastModEndDate": fmt(end), "resultsPerPage": 250}
+    offset = 0
+    if cursor:
+        params.update(lastModStartDate=cursor["start"], lastModEndDate=cursor["end"])
+        offset = int(cursor["offset"])
+        params["resultsPerPage"] = max(1, min(250, int(cursor.get("pageSize", 250))))
     visited = 0
+    total = None
+    error = ""
     for page in range(4):
-        params["startIndex"] = page * 250
-        url = base + "?" + urllib.parse.urlencode(params)
-        data = json.loads(fetch(url, retries=0, max_bytes=3_000_000, timeout=28).decode('utf-8-sig'))
-        batch = data.get("vulnerabilities", [])
-        for item in batch:
-            row = normalize_nvd(item)
-            if not row: continue
-            cid = row["id"]
-            old = records.get(cid)
-            if old:
-                for key in ("cvss", "vector", "modified", "published", "cwe", "references"):
-                    if row.get(key) is not None and row.get(key) != "": old[key] = row[key]
-                if not old.get("description"): old["description"] = row["description"]
-                old["source"] = sorted(set(old.get("source", [])) | {"NVD"})
-                old["affectedSystems"] = affected.combine(old.get("affectedSystems"),row.get("affectedSystems"))
-            else:
-                records[cid] = row
-            visited += 1
-        if (page + 1) * 250 >= data.get("totalResults", 0) or not batch: break
-        time.sleep(6)
-    STATS["nvd"] = {"ok": True, "count": visited, "scope": "Recently modified CVEs, past %d days" % days, "url": base}
+        params["startIndex"] = offset
+        try:
+            while True:
+                url = base + "?" + urllib.parse.urlencode(params)
+                try:
+                    data = json.loads(fetch(url, retries=0, max_bytes=3_000_000, timeout=28).decode("utf-8-sig"))
+                    break
+                except ValueError as exc:
+                    if str(exc) != "source too large" or params["resultsPerPage"] == 1:
+                        raise
+                    params["resultsPerPage"] = max(1, params["resultsPerPage"] // 2)
+                    time.sleep(6)
+            batch = data["vulnerabilities"]
+            total = data["totalResults"]
+            if not isinstance(batch, list) or type(total) is not int or total < 0 or data.get("startIndex", offset) != offset:
+                raise ValueError("Invalid NVD page")
+            if not batch and offset < total:
+                raise ValueError("Unexpected empty NVD page")
+            for item in batch:
+                c = item.get("cve") or {}
+                cid = c.get("id", "")
+                if CVE.fullmatch(cid) and c.get("vulnStatus") in ("Rejected", "REJECT"):
+                    old = records.get(cid)
+                    if not old:
+                        old = {"id": cid, "source": [], "inKEV": False, "affectedSystems": [],
+                               "vendor": "", "product": "", "description": ""}
+                        records[cid] = old
+                    if old:
+                        old["nvdRejected"] = True
+                        old["affectedSystems"] = [x for x in old.get("affectedSystems", []) if x.get("source") != "NVD CPE"]
+                        old["source"] = [x for x in old.get("source", []) if x != "NVD"]
+                        old.update(cvss=None, vector="", cwe=[])
+                    continue
+                row = normalize_nvd(item)
+                if not row:
+                    continue
+                old = records.get(row["id"])
+                if old:
+                    old.pop("nvdRejected", None)
+                    for key in ("cvss", "vector", "modified", "published", "cwe", "references"):
+                        old[key] = row[key]
+                    if not old.get("inKEV"):
+                        old["description"] = row["description"]
+                    old["source"] = sorted(set(old.get("source", [])) | {"NVD"})
+                    other = [x for x in old.get("affectedSystems", []) if x.get("source") != "NVD CPE"]
+                    old["affectedSystems"] = affected.combine(row["affectedSystems"], other)
+                else:
+                    records[row["id"]] = row
+                visited += 1
+            offset += len(batch)
+            if offset >= total:
+                break
+        except Exception as exc:
+            error = str(exc)[:180]
+            break
+        if page < 3:
+            time.sleep(6)
+    complete = total is not None and offset >= total and not error
+    STATS["nvd"] = {"ok": complete, "partial": not complete, "count": visited,
+                    "totalResults": total, "processed": offset, "error": error,
+                    "pageSize": params["resultsPerPage"],
+                    "scope": "Fixed NVD modified window; not historical coverage", "url": base,
+                    "completedThrough": params["lastModEndDate"] if complete else None,
+                    "cursor": None if complete else {"start": params["lastModStartDate"],
+                        "end": params["lastModEndDate"], "offset": offset,
+                        "pageSize": params["resultsPerPage"]}}
     return visited
 
 def epss(records):
@@ -369,7 +441,7 @@ def merge_ghsa(records, rows):
                 refs.append(item["reference"])
             rec["references"]=refs[:15]
             if not rec.get("description"): rec["description"]=item["description"]
-            rec["affectedSystems"]=affected.combine(rec.get("affectedSystems"),item.get("affectedSystems"))
+            rec["affectedSystems"]=affected.combine([x for x in rec.get("affectedSystems", []) if x.get("url") != item["reference"]],item.get("affectedSystems"))
             if not rec.get("published"): rec["published"]=item["date"]
 
 
@@ -389,13 +461,8 @@ def main():
     previous = load_previous()
     # Preserve previously sourced non-KEV CVEs. The previous implementation
     # removed all of them on EVERY refresh, making new disclosures disappear.
-    # Retain recently discovered records for an explicit rolling 120-day window.
-    cutoff = (NOW - timedelta(days=120)).date().isoformat()
-    records = {k:v for k,v in previous.items()
-               if v.get("inKEV") or
-                  "CISA CSAF IT" in (v.get("source") or []) or
-                  "CISA CSAF OT" in (v.get("source") or []) or
-                  (v.get("published") or v.get("date") or "") >= cutoff}
+    # Retain previously collected records; this is not a full historical backfill.
+    records = previous.copy()  # Preserve collected historical records for legacy OT assets.
     # No newly generated data can be published without a successfully validated KEV catalog.
     try:
         count = kev(records)

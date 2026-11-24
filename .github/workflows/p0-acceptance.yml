@@ -1,0 +1,58 @@
+name: P0 release acceptance
+on:
+  push:
+    branches: ['feat/intelligence-assurance-engine']
+    paths: ['.github/workflows/p0-acceptance.yml', 'scripts/**', 'tests/**', 'matcher.js']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Live upstream collection (isolated checkout, no publication)
+        env:
+          NVD_DAYS: '7'
+        run: |
+          python scripts/ingest.py
+          python scripts/validate.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/status.json').read_text())
+          print(json.dumps(d,indent=2))
+          assert d['sources']['kev']['ok'], 'KEV failed'
+          n=d['sources']['nvd']
+          assert n.get('totalResults') is not None and not n.get('error'), 'NVD retrieval error'
+          assert n.get('ok') or (n.get('partial') and n.get('count',0)>0), 'No successful NVD progress'
+          print('LIVE_SOURCE_ACCEPTANCE_PASS (bounded window only)')
+          PY
+      - name: Synthetic matcher scalability benchmark
+        if: always()
+        run: |
+          node <<'JS'
+          const m=require('./matcher.js');
+          const assert=require('node:assert/strict');
+          const {performance}=require('node:perf_hooks');
+          for(const n of [5000,10000,25000]){
+            const records=Array.from({length:n},(_,i)=>({id:'CVE-2026-'+(10000+i),vendor:'Vendor'+i,product:'product'+i,affectedSystems:[{name:'npm: product'+i,version:'<2.0.0',source:'GitHub Advisory (npm)'}]}));
+            const assets=Array.from({length:5000},(_,i)=>({id:'asset'+i,name:'product'+i,purl:'pkg:npm/product'+i+'@1.0.0',version:'1.0.0'}));
+            let t=performance.now();const result=m.scan(assets,records);let ms=performance.now()-t;
+            assert.equal(result.findings.length,5000);assert.equal(result.confirmed,5000);
+            console.log(JSON.stringify({cves:n,assets:assets.length,findings:result.findings.length,elapsedMs:Math.round(ms),heapMB:Math.round(process.memoryUsage().heapUsed/1048576)}));
+            assert.ok(ms<10000,'synthetic indexed matcher exceeded 10 second budget');
+          }
+          JS
+      - name: Regressions
+        if: always()
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py' -v
+          node tests/matcher.test.cjs
