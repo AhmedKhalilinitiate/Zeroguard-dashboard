@@ -43,3 +43,44 @@ class AssuranceTests(unittest.TestCase):
             ingest.nvd(records)
         self.assertTrue(records["CVE-2025-1000"]["nvdRejected"])
         self.assertEqual(records["CVE-2025-1001"]["affectedSystems"], [])
+
+    def test_adaptive_page_size_and_resume(self):
+        from urllib.parse import urlparse, parse_qs
+        calls = []
+        def fetch(url, **kwargs):
+            q = parse_qs(urlparse(url).query)
+            offset, size = int(q["startIndex"][0]), int(q["resultsPerPage"][0])
+            calls.append((offset, size))
+            self.assertEqual(kwargs["max_bytes"], 3_000_000)
+            if size > 62:
+                raise ValueError("source too large")
+            return json.dumps({"totalResults": 250, "startIndex": offset,
+                "vulnerabilities": [{"cve": {"id": f"CVE-2025-{i+1000}"}} for i in range(offset, min(offset+size,250))]}).encode()
+        with tempfile.TemporaryDirectory() as tmp, patch.object(ingest, "DATA", Path(tmp)), patch.object(ingest, "fetch", side_effect=fetch), patch.object(ingest.time, "sleep"):
+            records = {}
+            ingest.nvd(records)
+            self.assertEqual(calls[:3], [(0,250),(0,125),(0,62)])
+            self.assertEqual(ingest.STATS["nvd"]["cursor"]["offset"], 248)
+            self.assertEqual(ingest.STATS["nvd"]["cursor"]["pageSize"], 62)
+            (Path(tmp)/"intelligence.json").write_text(json.dumps({"sources": ingest.STATS}))
+            ingest.nvd(records)
+            self.assertEqual(calls[-1], (248,62))
+            self.assertTrue(ingest.STATS["nvd"]["ok"])
+            self.assertEqual(len(records), 250)
+
+    def test_single_oversized_record_does_not_advance(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(ingest, "DATA", Path(tmp)), patch.object(ingest, "fetch", side_effect=ValueError("source too large")) as fetch, patch.object(ingest.time, "sleep"):
+            ingest.nvd({})
+            self.assertEqual(fetch.call_count, 8)
+            state = ingest.STATS["nvd"]
+            self.assertFalse(state["ok"])
+            self.assertEqual(state["cursor"]["offset"], 0)
+            self.assertEqual(state["cursor"]["pageSize"], 1)
+            self.assertEqual(state["error"], "source too large")
+
+    def test_non_size_error_does_not_shrink(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(ingest, "DATA", Path(tmp)), patch.object(ingest, "fetch", side_effect=ValueError("HTTP 429")) as fetch, patch.object(ingest.time, "sleep"):
+            ingest.nvd({})
+            self.assertEqual(fetch.call_count, 1)
+            self.assertEqual(ingest.STATS["nvd"]["cursor"]["pageSize"], 250)
+            self.assertEqual(ingest.STATS["nvd"]["cursor"]["offset"], 0)
