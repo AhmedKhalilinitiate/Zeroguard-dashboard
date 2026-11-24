@@ -2,7 +2,7 @@ name: P0 release acceptance
 on:
   push:
     branches: ['feat/intelligence-assurance-engine']
-    paths: ['.github/workflows/p0-acceptance.yml']
+    paths: ['.github/workflows/p0-acceptance.yml', 'scripts/**', 'tests/**', 'matcher.js']
   workflow_dispatch:
 permissions:
   contents: read
@@ -32,7 +32,7 @@ jobs:
           assert d['sources']['kev']['ok'], 'KEV failed'
           n=d['sources']['nvd']
           assert n.get('totalResults') is not None and not n.get('error'), 'NVD retrieval error'
-          assert n.get('ok') or n.get('partial'), 'No coverage state'
+          assert n.get('ok') or (n.get('partial') and n.get('count',0)>0), 'No successful NVD progress'
           print('LIVE_SOURCE_ACCEPTANCE_PASS (bounded window only)')
           PY
       - name: Synthetic matcher scalability benchmark
