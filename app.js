@@ -33,8 +33,8 @@ function freshness(){
 function verify(d){
  if(!d||d.schema!==1||!Array.isArray(d.vulnerabilities)||!Array.isArray(d.articles)||!Array.isArray(d.advisories)||!Array.isArray(d.indicators)||!d.sources)throw Error("Invalid dataset schema");
  if(!Date.parse(d.generatedAt))throw Error("Missing valid snapshot timestamp");
- for(const v of d.vulnerabilities.slice(0,5000)){if(!/^CVE-\d{4}-\d{4,}$/.test(v.id))throw Error("Invalid CVE identity");}
- return d;
+ for(const v of d.vulnerabilities){if(!/^CVE-\d{4}-\d{4,}$/.test(v.id))throw Error("Invalid CVE identity");}
+ return {...d,vulnerabilities:d.vulnerabilities.filter(v=>!v.nvdRejected&&(v.source||[]).length)};
 }
 async function fetchData(manual=false){
  if(state.busy)return;
