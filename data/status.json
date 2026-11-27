@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-26T21:33:09Z",
-  "records": 7225,
+  "generatedAt": "2026-11-27T08:35:51Z",
+  "records": 7724,
   "sources": {
     "kev": {
       "ok": true,
@@ -10,9 +10,9 @@
     "nvd": {
       "ok": false,
       "partial": true,
-      "count": 498,
-      "totalResults": 6828,
-      "processed": 3500,
+      "count": 500,
+      "totalResults": 6827,
+      "processed": 4000,
       "error": "",
       "pageSize": 125,
       "scope": "Fixed NVD modified window; not historical coverage",
@@ -21,7 +21,7 @@
       "cursor": {
         "start": "2026-11-17T07:25:34.000",
         "end": "2026-11-24T07:25:34.000",
-        "offset": 3500,
+        "offset": 4000,
         "pageSize": 125
       }
     },
@@ -53,13 +53,13 @@
     },
     "ghsa_composer": {
       "ok": true,
-      "count": 64,
+      "count": 56,
       "url": "https://github.com/advisories",
       "scope": "Published GitHub security advisories for composer"
     },
     "epss": {
       "ok": true,
-      "count": 7199,
+      "count": 7698,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
