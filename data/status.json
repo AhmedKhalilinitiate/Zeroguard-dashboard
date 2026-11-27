@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-11-27T08:35:51Z",
-  "records": 7724,
+  "generatedAt": "2026-11-27T21:17:44Z",
+  "records": 8227,
   "sources": {
     "kev": {
       "ok": true,
-      "count": 1805,
+      "count": 1808,
       "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
     },
     "nvd": {
       "ok": false,
       "partial": true,
-      "count": 500,
-      "totalResults": 6827,
-      "processed": 4000,
+      "count": 493,
+      "totalResults": 6820,
+      "processed": 4500,
       "error": "",
       "pageSize": 125,
       "scope": "Fixed NVD modified window; not historical coverage",
@@ -21,7 +21,7 @@
       "cursor": {
         "start": "2026-11-17T07:25:34.000",
         "end": "2026-11-24T07:25:34.000",
-        "offset": 4000,
+        "offset": 4500,
         "pageSize": 125
       }
     },
@@ -59,7 +59,7 @@
     },
     "epss": {
       "ok": true,
-      "count": 7698,
+      "count": 8192,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
