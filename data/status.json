@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-27T21:17:44Z",
-  "records": 8227,
+  "generatedAt": "2026-11-28T07:50:18Z",
+  "records": 8714,
   "sources": {
     "kev": {
       "ok": true,
@@ -10,9 +10,9 @@
     "nvd": {
       "ok": false,
       "partial": true,
-      "count": 493,
-      "totalResults": 6820,
-      "processed": 4500,
+      "count": 498,
+      "totalResults": 6766,
+      "processed": 5000,
       "error": "",
       "pageSize": 125,
       "scope": "Fixed NVD modified window; not historical coverage",
@@ -21,7 +21,7 @@
       "cursor": {
         "start": "2026-11-17T07:25:34.000",
         "end": "2026-11-24T07:25:34.000",
-        "offset": 4500,
+        "offset": 5000,
         "pageSize": 125
       }
     },
@@ -59,7 +59,7 @@
     },
     "epss": {
       "ok": true,
-      "count": 8192,
+      "count": 8677,
       "url": "https://www.first.org/epss/"
     },
     "rss_BleepingComputer": {
